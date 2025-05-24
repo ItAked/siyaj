@@ -1,10 +1,9 @@
 'use client'
 
-
 import React, { useState } from 'react';
 import { Check, X } from 'lucide-react';
 
-const LargeTestimonial = () => {
+const Subscriptions = () => {
   const [billingPeriod, setBillingPeriod] = useState('monthly');
   
   // Sample subscription data - replace with your actual data
@@ -75,7 +74,7 @@ const LargeTestimonial = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8">
+    <div className="w-full max-w-6xl mx-auto px-4 py-8 my-60">
       <h2 className="text-3xl font-bold text-center mb-2">اختر باقتك</h2>
       <p className="text-gray-600 text-center mb-8">اختر أحد الباقات المناسبة لك</p>
       
@@ -150,4 +149,4 @@ const LargeTestimonial = () => {
   );
 };
 
-export default LargeTestimonial;
+export default Subscriptions;

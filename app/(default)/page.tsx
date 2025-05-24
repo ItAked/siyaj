@@ -4,15 +4,19 @@ export const metadata = {
 };
 
 import Hero from "@/components/hero-home";
-import FeaturesPlanet from "@/components/features-planet";
-import LargeTestimonial from "@/components/large-testimonial";
+import OurServices from "@/components/features-planet";
+import Subscriptions from "@/components/large-testimonial";
+import OurGoals from "@/components/our-goals";
+import ContactUs from "./contact-us/page";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <FeaturesPlanet />
-      <LargeTestimonial />
+      <OurGoals />
+      <OurServices />
+      <Subscriptions />
+      <ContactUs />
     </>
   );
 }
