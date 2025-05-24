@@ -53,7 +53,7 @@ export default function SignUp() {
             <input
               id="phone"
               className="form-input w-full py-2"
-              type="text"
+              type="number"
               placeholder="0555512345"
               required
             />
@@ -61,18 +61,109 @@ export default function SignUp() {
           <div>
             <label
               className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="password"
+              htmlFor="license"
             >
-              كلمة المرور
+              رقم الترخيص المهني
             </label>
             <input
-              id="password"
+              id="license"
               className="form-input w-full py-2"
-              type="password"
-              autoComplete="on"
-              placeholder="••••••••"
+              type="number"
+              placeholder="رقم الترخيص المهني"
               required
             />
+          </div>
+          <div>
+            <label
+              className="mb-1 block text-sm font-medium text-gray-700"
+              htmlFor="medical"
+            >
+              التخصص الطبي
+            </label>
+            <input
+              id="medical"
+              className="form-input w-full py-2"
+              type="text"
+              placeholder="التخصص الطبي"
+              required
+            />
+          </div>
+          <div>
+            <label
+              className="mb-1 block text-sm font-medium text-gray-700"
+              htmlFor="employer"
+            >
+              اسم جهة العمل
+            </label>
+            <input
+              id="employer"
+              className="form-input w-full py-2"
+              type="text"
+              placeholder="شركة أكيد"
+              required
+            />
+          </div>
+          <div className="grid gap-y-5 items-center lg:flex lg:justify-between md:flex md:">
+            <div>
+              <label
+                className="mb-1 block text-sm font-medium text-gray-700"
+                htmlFor="password"
+              >
+                كلمة المرور
+              </label>
+              <input
+                id="password"
+                className="form-input w-full py-2"
+                type="password"
+                autoComplete="on"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <div>
+              <label
+                className="mb-1 block text-sm font-medium text-gray-700"
+                htmlFor="confirm-password"
+              >
+                تأكيد كلمة المرور
+              </label>
+              <input
+                id="confirm-password"
+                className="form-input w-full py-2"
+                type="password"
+                autoComplete="on"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              className="mb-1 block text-sm font-medium text-gray-700"
+              htmlFor="license-file"
+            >
+              رفع صورة الترخيص المهني
+            </label>
+            <input
+              id="license-file"
+              className="form-input w-full py-2"
+              type="file"
+              required
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <input
+              id="license-file"
+              className="py-2"
+              type="checkbox"
+              required
+            />
+            <label
+              className="mb-1 text-sm font-medium text-gray-700"
+              htmlFor="license-file"
+            >
+              الموافقة على الشروط والأحكام
+            </label>
           </div>
         </div>
         <div className="mt-6 space-y-3">
