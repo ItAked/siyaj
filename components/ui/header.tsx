@@ -11,6 +11,21 @@ export default function Header() {
             <Logo />
           </div>
 
+          <ul className="flex items-center justify-center gap-x-4" dir="rtl">
+            <li>
+              <Link href="/">الرئيسية</Link>
+            </li>
+            <li>
+              <Link href="/about-us">نبذة عنا</Link>
+            </li>
+            <li>
+              <Link href="/packages">الأسعار</Link>
+            </li>
+            <li>
+              <Link href="/contact-us">تواصل معنا</Link>
+            </li>
+          </ul>
+
           {/* Desktop sign in links */}
           <ul className="flex flex-1 items-center justify-end gap-3">
             <li>

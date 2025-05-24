@@ -146,11 +146,6 @@ const LargeTestimonial = () => {
           </div>
         ))}
       </div>
-      
-      {/* Money back guarantee */}
-      <div className="text-center mt-10 text-gray-600">
-        <p>30-day money-back guarantee. Cancel anytime.</p>
-      </div>
     </div>
   );
 };

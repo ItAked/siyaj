@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Reset Password - Simple",
+  title: "نسيان كلمة المرور",
   description: "Page description",
 };
 
