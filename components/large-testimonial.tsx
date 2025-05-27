@@ -96,9 +96,9 @@ const Subscriptions = () => {
             <div className={`${subscription.color} px-6 pt-8 pb-6`}>
               <h3 className="text-2xl font-bold mb-1">{subscription.name}</h3>
               <div className="flex items-baseline mb-2">
-                <span className="text-4xl font-bold">{getPrice(subscription)}</span>
+                <span className="text-4xl font-bold">{`${getPrice(subscription)} ريال`}</span>
                 <span className="text-gray-600 ml-2">
-                  /{billingPeriod === 'monthly' ? 'month' : 'year'}
+                  / {billingPeriod === 'monthly' ? 'شهر' : 'سنة'}
                 </span>
               </div>
             </div>

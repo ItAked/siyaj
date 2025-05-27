@@ -26,7 +26,7 @@ export default function DefaultLayout({
     <>
       <Header />
 
-      <main className="grow">{children}</main>
+      <main className="grow" dir="rtl">{children}</main>
 
       <Footer border={true} />
     </>

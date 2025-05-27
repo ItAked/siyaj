@@ -3,7 +3,7 @@ import Logo from "./logo";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   return (
-    <footer>
+    <footer dir="rtl">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Top area: Blocks */}
         <div
