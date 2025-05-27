@@ -9,7 +9,7 @@ export default function ContactUs(){
             <section className="mx-12 my-40 text-right
             xl:mx-[30rem]
             lg:mx-[30rem]
-            md:mx-80">
+            md:mx-80" id="contactUs">
                 <div className="mb-10 grid gap-y-4 place-items-center">
                     <h1 className="text-4xl font-bold">تواصل معنا</h1>
                     <p>نسعد باستقبال الآراء و الاقتراحات ونستمع لشكواكم باهتمام.

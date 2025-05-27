@@ -16,13 +16,13 @@ export default function Header() {
               <Link href="/">الرئيسية</Link>
             </li>
             <li>
-              <Link href="/about-us">نبذة عنا</Link>
+              <Link href="#aboutAs">نبذة عنا</Link>
             </li>
             <li>
-              <Link href="/packages">الأسعار</Link>
+              <Link href="#packages">الأسعار</Link>
             </li>
             <li>
-              <Link href="/contact-us">تواصل معنا</Link>
+              <Link href="#contactUs">تواصل معنا</Link>
             </li>
           </ul>
 

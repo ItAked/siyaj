@@ -34,7 +34,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
               <li>
                 <Link
                   className="text-gray-600 transition hover:text-gray-900"
-                  href="/about-us"
+                  href="#aboutAs"
                 >
                   نبذة عنا
                 </Link>
@@ -49,7 +49,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
               <li>
                 <Link
                   className="text-gray-600 transition hover:text-gray-900"
-                  href="contact-us"
+                  href="#contactUs"
                 >
                   تواصل معنا
                 </Link>

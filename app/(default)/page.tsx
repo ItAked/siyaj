@@ -12,8 +12,8 @@ import ContactUs from "./contact-us/page";
 export default function Home() {
   return (
     <>
-      <Hero />
       <OurGoals />
+      <Hero />
       <OurServices />
       <Subscriptions />
       <ContactUs />
