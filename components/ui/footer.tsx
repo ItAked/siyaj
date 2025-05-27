@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Logo from "./logo";
+import { Mail } from "lucide-react";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   return (
-    <footer dir="rtl">
+    <footer dir="ltr">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Top area: Blocks */}
         <div
@@ -63,7 +64,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
             <ul className="flex gap-1">
               <li>
                 <Link
-                  className="flex items-center justify-center text-[#c1902d] transition hover:text-blue-600"
+                  className="flex items-center justify-center text-[#c1902d] transition"
                   href="#0"
                   aria-label="Twitter"
                 >
@@ -78,32 +79,20 @@ export default function Footer({ border = false }: { border?: boolean }) {
               </li>
               <li>
                 <Link
-                  className="flex items-center justify-center text-[#c1902d] transition hover:text-blue-600"
+                  className="flex items-center my-1.5 justify-center text-[#c1902d] transition"
                   href="#0"
-                  aria-label="Medium"
+                  aria-label="Whatsapp"
                 >
-                  <svg
-                    className="h-8 w-8 fill-current"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M23 8H9a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1Zm-1.708 3.791-.858.823a.251.251 0 0 0-.1.241V18.9a.251.251 0 0 0 .1.241l.838.823v.181h-4.215v-.181l.868-.843c.085-.085.085-.11.085-.241v-4.887l-2.41 6.131h-.329l-2.81-6.13V18.1a.567.567 0 0 0 .156.472l1.129 1.37v.181h-3.2v-.181l1.129-1.37a.547.547 0 0 0 .146-.472v-4.749a.416.416 0 0 0-.138-.351l-1-1.209v-.181H13.8l2.4 5.283 2.122-5.283h2.971l-.001.181Z"></path>
-                  </svg>
+                  <svg height="18px" width="18px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58" fill="#c1902d" stroke="#c1902d"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path style={{fill: "#c1902d"}} d="M0,58l4.988-14.963C2.457,38.78,1,33.812,1,28.5C1,12.76,13.76,0,29.5,0S58,12.76,58,28.5 S45.24,57,29.5,57c-4.789,0-9.299-1.187-13.26-3.273L0,58z"></path> <path style={{fill: "#FFFFFF"}} d="M47.683,37.985c-1.316-2.487-6.169-5.331-6.169-5.331c-1.098-0.626-2.423-0.696-3.049,0.42 c0,0-1.577,1.891-1.978,2.163c-1.832,1.241-3.529,1.193-5.242-0.52l-3.981-3.981l-3.981-3.981c-1.713-1.713-1.761-3.41-0.52-5.242 c0.272-0.401,2.163-1.978,2.163-1.978c1.116-0.627,1.046-1.951,0.42-3.049c0,0-2.844-4.853-5.331-6.169 c-1.058-0.56-2.357-0.364-3.203,0.482l-1.758,1.758c-5.577,5.577-2.831,11.873,2.746,17.45l5.097,5.097l5.097,5.097 c5.577,5.577,11.873,8.323,17.45,2.746l1.758-1.758C48.048,40.341,48.243,39.042,47.683,37.985z"></path> </g> </g></svg>
                 </Link>
               </li>
               <li>
                 <Link
-                  className="flex items-center justify-center text-[#c1902d] transition hover:text-blue-600"
+                  className="flex items-center justify-center text-[#c1902d] transition"
                   href="#0"
                   aria-label="Github"
                 >
-                  <svg
-                    className="h-8 w-8 fill-current"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M16 8.2c-4.4 0-8 3.6-8 8 0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4V22c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8.6-.2 1.3-.3 2-.3s1.4.1 2 .3c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.7-3.7 3.9.3.4.6.9.6 1.6v2.2c0 .2.1.5.6.4 3.2-1.1 5.5-4.1 5.5-7.6-.1-4.4-3.7-8-8.1-8z"></path>
-                  </svg>
+                  <Mail className="w-[22px] h-[22px] text-[#c1902d] my-1 mx-1.5" />
                 </Link>
               </li>
             </ul>
