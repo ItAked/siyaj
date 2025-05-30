@@ -1,6 +1,7 @@
 'use client'
 
 import InputComponent from "@/components/ui/input";
+import { Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState, ChangeEvent } from "react";
 
@@ -32,10 +33,12 @@ export default function SignIn() {
         <form>
           <div className="space-y-4">
             <div>
-              <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
+              <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email}
+              icon={<Mail className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
             <div>
-              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password} />
+              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password}
+              icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
           </div>
           <div className="mt-6">

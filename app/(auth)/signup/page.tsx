@@ -2,6 +2,7 @@
 
 import DialogComponent from "@/components/ui/dialog";
 import InputComponent from "@/components/ui/input";
+import { Building2, Copyright, Lock, Mail, Paperclip, Phone, Stethoscope, User } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -46,34 +47,41 @@ export default function SignUp() {
       <form onSubmit={handleOnSubmit}>
         <div className="space-y-4">
           <div>
-            <InputComponent label="الإسم الثلاثي" name="name" type="text" placeholder="لجين صلاح" changeHandler={handleUserChange} value={user.name} />
+            <InputComponent label="الإسم الثلاثي" name="name" type="text" placeholder="لجين صلاح" changeHandler={handleUserChange} value={user.name} icon={<User className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div>
-            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
+            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email}
+             icon={<Mail className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div>
-            <InputComponent label="رقم الجوال" name="phone" type="number" placeholder="555512345" changeHandler={handleUserChange} value={user.phone} />
+            <InputComponent label="رقم الجوال" name="phone" type="number" placeholder="555512345" changeHandler={handleUserChange} value={user.phone}
+            icon={<Phone className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div>
-            <InputComponent label="رقم الترخيص المهني" name="license" type="text" placeholder="رقم الترخيص المهني" changeHandler={handleUserChange} value={user.license} />
+            <InputComponent label="رقم الترخيص المهني" name="license" type="text" placeholder="رقم الترخيص المهني" changeHandler={handleUserChange} value={user.license}
+            icon={<Copyright className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div>
-            <InputComponent label="التخصص الطبي" name="medical" type="text" placeholder="التخصص الطبي" changeHandler={handleUserChange} value={user.medical} />
+            <InputComponent label="التخصص الطبي" name="medical" type="text" placeholder="التخصص الطبي" changeHandler={handleUserChange} value={user.medical}
+            icon={<Stethoscope className='text-gray-600 w-4 h-4 mb-1.5' /> } />
           </div>
           <div>
-            <InputComponent label="اسم جهة العمل" name="employer" type="text" placeholder="شركة أكيد" changeHandler={handleUserChange} value={user.employer} />
+            <InputComponent label="اسم جهة العمل" name="employer" type="text" placeholder="شركة أكيد" changeHandler={handleUserChange} value={user.employer}
+            icon={<Building2 className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div className="grid gap-y-5 items-center lg:flex lg:gap-x-4 md:flex md:gap-x-4">
             <div className="w-full">
-              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password} />
+              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password}
+              icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
             <div className="w-full">
               <InputComponent label="تأكيد كلمة المرور" name="confirmation_password" type="password" placeholder="••••••••" changeHandler={handleUserChange}
-              value={user.confirmation_password} />
+              value={user.confirmation_password} icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
           </div>
           <div>
-            <InputComponent label="رفع صورة الترخيص المهني" name="license_file" type="file" placeholder="" changeHandler={handleUserChange} value={user.license_file} />
+            <InputComponent label="رفع صورة الترخيص المهني" name="license_file" type="file" placeholder="" changeHandler={handleUserChange} value={user.license_file}
+            icon={<Paperclip className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
           <div className="flex items-center justify-between">
             <DialogComponent />

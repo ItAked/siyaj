@@ -1,6 +1,7 @@
 'use client'
 
 import InputComponent from "@/components/ui/input";
+import { Mail } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
 export default function ResetPassword() {
@@ -30,7 +31,8 @@ export default function ResetPassword() {
       <form>
         <div className="space-y-4">
           <div>
-            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
+            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email}
+              icon={<Mail className='text-gray-600 w-4 h-4 mb-1.5' />} />
           </div>
         </div>
         <div className="mt-6">
