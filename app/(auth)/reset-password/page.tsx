@@ -1,9 +1,25 @@
-export const metadata = {
-  title: "نسيان كلمة المرور",
-  description: "Page description",
-};
+'use client'
+
+import InputComponent from "@/components/ui/input";
+import { ChangeEvent, useState } from "react";
 
 export default function ResetPassword() {
+  const [user, setUser] = useState({ email: "" })
+  const [errorMsg, setErrorMsg] = useState(false)
+      
+  function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+        try {
+          setUser((prevUser) => {
+            console.log({ ...prevUser, [event.target.name]: event.target.value});
+            
+            return { ...prevUser, [event.target.name]: event.target.value}
+          })
+        } catch (error) {
+          console.log(error);
+          
+        }
+      }
+
   return (
     <>
       <div className="mb-10">
@@ -14,19 +30,7 @@ export default function ResetPassword() {
       <form>
         <div className="space-y-4">
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="email"
-            >
-              البريد الإلكتروني
-            </label>
-            <input
-              id="email"
-              className="form-input w-full py-2"
-              type="email"
-              placeholder="lujain@akedco.com"
-              required
-            />
+            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
           </div>
         </div>
         <div className="mt-6">

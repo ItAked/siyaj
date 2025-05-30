@@ -1,14 +1,30 @@
-export const metadata = {
-  title: "تسجيل الدخول",
-  description: "Page description",
-};
+'use client'
 
+import InputComponent from "@/components/ui/input";
 import Link from "next/link";
+import { useState, ChangeEvent } from "react";
 
 export default function SignIn() {
+    const [user, setUser] = useState({
+      email: "",
+      password: ""
+    })
+    const [errorMsg, setErrorMsg] = useState(false)
+  
+    function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+      try {
+        setUser((prevUser) => {
+          console.log({ ...prevUser, [event.target.name]: event.target.value});
+          
+          return { ...prevUser, [event.target.name]: event.target.value}
+        })
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
   return (
     <>
-      <>
         <div className="mb-10">
           <h1 className="text-4xl font-bold">تسجيل الدخول</h1>
         </div>
@@ -16,35 +32,10 @@ export default function SignIn() {
         <form>
           <div className="space-y-4">
             <div>
-              <label
-                className="mb-1 block text-sm font-medium text-gray-700"
-                htmlFor="email"
-              >
-                البريد الإلكتروني
-              </label>
-              <input
-                id="email"
-                className="form-input w-full py-2"
-                type="email"
-                placeholder="lujain@akedco.com"
-                required
-              />
+              <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
             </div>
             <div>
-              <label
-                className="mb-1 block text-sm font-medium text-gray-700"
-                htmlFor="password"
-              >
-                كلمة المرور
-              </label>
-              <input
-                id="password"
-                className="form-input w-full py-2"
-                type="password"
-                autoComplete="on"
-                placeholder="••••••••"
-                required
-              />
+              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password} />
             </div>
           </div>
           <div className="mt-6">
@@ -54,15 +45,20 @@ export default function SignIn() {
           </div>
         </form>
         {/* Bottom link */}
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center grid">
           <Link
             className="text-sm text-gray-700 underline hover:no-underline"
             href="/reset-password"
           >
             هل نسيت كلمة المرور؟
           </Link>
+          <Link
+            className="text-sm text-gray-700 underline hover:no-underline"
+            href="/signup"
+          >
+            ليس لديك حساب؟ لإنشاء حساب
+          </Link>
         </div>
       </>
-    </>
   );
 }

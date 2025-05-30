@@ -1,177 +1,93 @@
-export const metadata = {
-  title: "إنشاء حساب",
-  description: "Page description",
-};
+'use client'
+
+import DialogComponent from "@/components/ui/dialog";
+import InputComponent from "@/components/ui/input";
+import Link from "next/link";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function SignUp() {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    license: "",
+    medical: "",
+    employer: "",
+    password: "",
+    confirmation_password: "",
+    license_file: ""
+  })
+  const [errorMsg, setErrorMsg] = useState(false)
+
+  function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+    try {
+      setUser((prevUser) => {
+        console.log({ ...prevUser, [event.target.name]: event.target.value});
+        
+        return { ...prevUser, [event.target.name]: event.target.value}
+      })
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+  async function handleOnSubmit(event: FormEvent) {
+    event.preventDefault()
+  }
+
   return (
     <>
       <div className="mb-10">
-        <h1 className="text-4xl font-bold">إنشاء حساب</h1>
+        <h1 className="text-4xl font-bold text-center">إنشاء حساب</h1>
       </div>
 
       {/* Form */}
-      <form>
+      <form onSubmit={handleOnSubmit}>
         <div className="space-y-4">
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="name"
-            >
-              الإسم الثلاثي
-            </label>
-            <input
-              id="name"
-              className="form-input w-full py-2"
-              type="text"
-              placeholder="لجين صلاح"
-              required
-            />
+            <InputComponent label="الإسم الثلاثي" name="name" type="text" placeholder="لجين صلاح" changeHandler={handleUserChange} value={user.name} />
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="email"
-            >
-              البريد الإلكتروني
-            </label>
-            <input
-              id="email"
-              className="form-input w-full py-2"
-              type="email"
-              placeholder="lujain@akedco.com"
-              required
-            />
+            <InputComponent label="البريد الإلكتروني" name="email" type="email" placeholder="lujain@akedco.com" changeHandler={handleUserChange} value={user.email} />
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="phone"
-            >
-              رقم الجوال
-            </label>
-            <input
-              id="phone"
-              className="form-input w-full py-2"
-              type="number"
-              placeholder="0555512345"
-              required
-            />
+            <InputComponent label="رقم الجوال" name="phone" type="number" placeholder="555512345" changeHandler={handleUserChange} value={user.phone} />
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="license"
-            >
-              رقم الترخيص المهني
-            </label>
-            <input
-              id="license"
-              className="form-input w-full py-2"
-              type="number"
-              placeholder="رقم الترخيص المهني"
-              required
-            />
+            <InputComponent label="رقم الترخيص المهني" name="license" type="text" placeholder="رقم الترخيص المهني" changeHandler={handleUserChange} value={user.license} />
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="medical"
-            >
-              التخصص الطبي
-            </label>
-            <input
-              id="medical"
-              className="form-input w-full py-2"
-              type="text"
-              placeholder="التخصص الطبي"
-              required
-            />
+            <InputComponent label="التخصص الطبي" name="medical" type="text" placeholder="التخصص الطبي" changeHandler={handleUserChange} value={user.medical} />
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="employer"
-            >
-              اسم جهة العمل
-            </label>
-            <input
-              id="employer"
-              className="form-input w-full py-2"
-              type="text"
-              placeholder="شركة أكيد"
-              required
-            />
+            <InputComponent label="اسم جهة العمل" name="employer" type="text" placeholder="شركة أكيد" changeHandler={handleUserChange} value={user.employer} />
           </div>
-          <div className="grid gap-y-5 items-center lg:flex lg:justify-between md:flex md:">
-            <div>
-              <label
-                className="mb-1 block text-sm font-medium text-gray-700"
-                htmlFor="password"
-              >
-                كلمة المرور
-              </label>
-              <input
-                id="password"
-                className="form-input w-full py-2"
-                type="password"
-                autoComplete="on"
-                placeholder="••••••••"
-                required
-              />
+          <div className="grid gap-y-5 items-center lg:flex lg:gap-x-4 md:flex md:gap-x-4">
+            <div className="w-full">
+              <InputComponent label="كلمة المرور" name="password" type="password" placeholder="••••••••" changeHandler={handleUserChange} value={user.password} />
             </div>
-            <div>
-              <label
-                className="mb-1 block text-sm font-medium text-gray-700"
-                htmlFor="confirm-password"
-              >
-                تأكيد كلمة المرور
-              </label>
-              <input
-                id="confirm-password"
-                className="form-input w-full py-2"
-                type="password"
-                autoComplete="on"
-                placeholder="••••••••"
-                required
-              />
+            <div className="w-full">
+              <InputComponent label="تأكيد كلمة المرور" name="confirmation_password" type="password" placeholder="••••••••" changeHandler={handleUserChange}
+              value={user.confirmation_password} />
             </div>
           </div>
           <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="license-file"
-            >
-              رفع صورة الترخيص المهني
-            </label>
-            <input
-              id="license-file"
-              className="form-input w-full py-2"
-              type="file"
-              required
-            />
+            <InputComponent label="رفع صورة الترخيص المهني" name="license_file" type="file" placeholder="" changeHandler={handleUserChange} value={user.license_file} />
           </div>
           <div className="flex items-center justify-between">
-            <input
-              id="license-file"
-              className="py-2"
-              type="checkbox"
-              required
-            />
-            <label
-              className="mb-1 text-sm font-medium text-gray-700"
-              htmlFor="license-file"
-            >
-              الموافقة على الشروط والأحكام
-            </label>
+            <DialogComponent />
           </div>
         </div>
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 space-y-4 grid place-items-center">
           <button className="btn w-full bg-linear-to-t from-yellow-600 to-yellow-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%]">
             إنشاء حساب
           </button>
+          <Link href="/signin" className="text-sm text-gray-700 underline hover:no-underline">هل لديك حساب؟ 
+          <span className="text-gray-800"> لتسجيل الدخول</span></Link>
         </div>
       </form>
     </>
   );
 }
+
