@@ -120,9 +120,7 @@ export default function OurGoals(){
                             <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">أهدافنا</h2>
                         </div>
 
-                        <div id="membersCard" className="backgroundColor">
-                            <div id="ellipseDec#1" className="ellipseUp" />
-                            <div id="ellipseDec#2" className="ellipseDown" />
+                        <div id="membersCard">
                             <div id="membersContent" className="h-full w-full flex flex-col items-center">
                                 <div id="membersCarousel" className="flex flex-row w-full justify-center items-center relative">
                                     <button onClick={handlePrev} id="prev" className="bg-yellow-600 border-yellow-600 border-2 rounded-full rotate-180 z-10 h-[48px] w-[48px] ml-10 transition-colors shrink-0">
