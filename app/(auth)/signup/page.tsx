@@ -2,6 +2,7 @@
 
 import DialogComponent from "@/components/ui/dialog";
 import InputComponent from "@/components/ui/input";
+import { post } from "@/server/AuthServer/register";
 import { Building2, Copyright, Lock, Mail, Paperclip, Phone, Stethoscope, User } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -15,26 +16,49 @@ export default function SignUp() {
     medical: "",
     employer: "",
     password: "",
-    confirmation_password: "",
+    password_confirmation: "",
     license_file: ""
   })
-  const [errorMsg, setErrorMsg] = useState(false)
 
-  function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleUserChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     try {
-      setUser((prevUser) => {
-        console.log({ ...prevUser, [event.target.name]: event.target.value});
-        
-        return { ...prevUser, [event.target.name]: event.target.value}
-      })
+      if (event.target.type === 'file') {
+            const fileInput = (event.target as HTMLInputElement) || ''
+            setUser((prevUser) => {
+                return { ...prevUser, [event.target.name]: fileInput.files?.[0] }
+            })
+        } else {
+            setUser((prevUser) => {
+                return { ...prevUser, [event.target.name]: event.target.value }
+            })
+        }
     } catch (error) {
-      console.log(error);
+      alert(error)
       
     }
   }
 
   async function handleOnSubmit(event: FormEvent) {
-    event.preventDefault()
+    try {
+      event.preventDefault()
+      
+
+      let formData = new FormData()
+      formData.append('name', user.name)
+      formData.append('email', user.email)
+      formData.append('phone', user.phone)
+      formData.append('license', user.license)
+      formData.append('medical', user.medical)
+      formData.append('employer', user.employer)
+      formData.append('password', user.password)
+      formData.append('password_confirmation', user.password_confirmation)
+      formData.append('license_file', user.license_file)
+      
+      await post(formData)
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 
   return (
@@ -75,13 +99,13 @@ export default function SignUp() {
               icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
             <div className="w-full">
-              <InputComponent label="تأكيد كلمة المرور" name="confirmation_password" type="password" placeholder="••••••••" changeHandler={handleUserChange}
-              value={user.confirmation_password} icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
+              <InputComponent label="تأكيد كلمة المرور" name="password_confirmation" type="password" placeholder="••••••••" changeHandler={handleUserChange}
+              value={user.password_confirmation} icon={<Lock className='text-gray-600 w-4 h-4 mb-1.5' />} />
             </div>
           </div>
           <div>
-            <InputComponent label="رفع صورة الترخيص المهني" name="license_file" type="file" placeholder="" changeHandler={handleUserChange} value={user.license_file}
-            icon={<Paperclip className='text-gray-600 w-4 h-4 mb-1.5' />} />
+            <InputComponent label="رفع صورة الترخيص المهني" name="license_file" type="file" placeholder="" changeHandler={handleUserChange}
+            icon={<Paperclip className='text-gray-600 w-4 h-4 mb-1.5' />} value={undefined} />
           </div>
           <div className="flex items-center justify-between">
             <DialogComponent />
