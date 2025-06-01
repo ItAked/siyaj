@@ -30,7 +30,8 @@ export default function SignIn() {
         formData.append('email', user.email)
         formData.append('password', user.password)
   
-        await post(formData)
+        let response = await post(formData)
+        alert(response)
       } catch (error) {
         console.log(error);
       }

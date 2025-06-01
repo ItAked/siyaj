@@ -54,7 +54,8 @@ export default function SignUp() {
       formData.append('password_confirmation', user.password_confirmation)
       formData.append('license_file', user.license_file)
       
-      await post(formData)
+      let response = await post(formData)
+      alert(response)
     } catch (error) {
       console.log(error);
       
