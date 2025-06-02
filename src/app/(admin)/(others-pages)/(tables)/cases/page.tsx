@@ -1,6 +1,7 @@
+import { CasesStatus } from "@/components/CasesStatus";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import BasicTableOne from "@/components/tables/BasicTableOne";
+import NewCasesTable from "@/components/NewCasesTable";
 import { Metadata } from "next";
 import React from "react";
 
@@ -14,10 +15,13 @@ export const metadata: Metadata = {
 export default function BasicTables() {
   return (
     <div>
-      <PageBreadcrumb pageTitle="Basic Table" />
+      <div className="col-span-12 space-y-6">
+        <CasesStatus />
+      </div>
+      <PageBreadcrumb pageTitle="القضايا" />
       <div className="space-y-6">
-        <ComponentCard title="Basic Table 1">
-          <BasicTableOne />
+        <ComponentCard>
+          <NewCasesTable />
         </ComponentCard>
       </div>
     </div>

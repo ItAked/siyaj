@@ -32,7 +32,7 @@ const navItems: NavItem[] = [
   {
     name: "القضايا",
     icon: <TableIcon />,
-    path: "/basic-tables"
+    path: "/cases"
   },
   {
     icon: <CalenderIcon />,
