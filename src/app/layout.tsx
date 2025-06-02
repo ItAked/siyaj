@@ -5,7 +5,8 @@ import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 
 const tajawal = Tajawal({
-  subsets: ["Tajawal"]
+  weight: ["200", "300", "400", "500", "700", "800", "900"],
+  subsets: ["arabic"]
 });
 
 export default function RootLayout({
