@@ -45,9 +45,14 @@ const navItems: NavItem[] = [
     path: "/lawyers"
   },
   {
+    name: "الممارسين الصحيين",
+    icon: <TableIcon />,
+    path: "/practitioners"
+  },
+  {
     icon: <UserCircleIcon />,
     name: "الإعدادات",
-    path: "/profile",
+    path: "/profile"
   }
 ];
 

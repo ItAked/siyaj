@@ -1,10 +1,7 @@
 'use client'
 
 import Select from "@/components/form/Select";
-import { Modal } from "@/components/ui/modal";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { useModal } from "@/hooks/useModal";
-import { useState } from "react";
 
 interface Order {
   id: number;
@@ -115,26 +112,6 @@ const options = [
                             ]
 
 export default function Lawyers() {
-    const { isOpen, openModal, closeModal } = useModal();
-    const [lawyerName, setLawyerName] = useState("")
-    const [lawyerEmail, setLawyerEmail] = useState("")
-    const [lawyerPassword, setLawyerPassword] = useState("")
-
-    function resetModalFeild(){
-      setLawyerName("")
-      setLawyerEmail("")
-      setLawyerPassword("")
-    }
-
-    function handleAddLawyer() {
-      const formData = new FormData()
-      formData.append('email', lawyerEmail)
-      formData.append('name', lawyerName)
-      formData.append('password', lawyerPassword)
-      console.log(Object.fromEntries(formData.entries()));
-      closeModal()
-      resetModalFeild()
-    }
 
     const handleSelectChange = (value: string) => {
     console.log("Selected value:", value);
@@ -145,68 +122,11 @@ export default function Lawyers() {
             <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-                        قائمة المحامين
+                        قائمة الممارسين الصحيين
                     </h3>
                 </div>
 
-                <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] p-6 lg:p-10">
-                    <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
-                        <div>
-                            <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة محامي</h5>
-                        </div>
-                        <div className="mt-8">
-                            <div>
-                                <div>
-                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم المحامي</label>
-                                    <input name="laywer_name" type="text" value={lawyerName} onChange={(e) => setLawyerName(e.target.value)}
-                                    className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
-                                    shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-8">
-                            <div>
-                                <div>
-                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">البريد الإلكتروني</label>
-                                    <input name="laywer_email" type="email" value={lawyerEmail} onChange={(e) => setLawyerEmail(e.target.value)}
-                                    className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
-                                    shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mt-8">
-                            <div>
-                                <div>
-                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">كلمة المرور</label>
-                                    <input name="laywer_password" type="password" value={lawyerPassword} onChange={(e) => setLawyerPassword(e.target.value)}
-                                    className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
-                                    shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end">
-                            <button
-                            onClick={handleAddLawyer}
-                            type="button"
-                            className="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto"
-                            >
-                            إضافة محامي
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
-
                 <div className="flex items-center gap-3">
-                    <button
-                            onClick={openModal}
-                            type="button"
-                            className="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto"
-                            >
-                            إضافة محامي
-                            </button>
                     <button className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700
                     shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]
                     dark:hover:text-gray-200">
@@ -237,13 +157,13 @@ export default function Lawyers() {
                         isHeader
                         className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                        اسم المحامي
+                        اسم الممارس الصحي
                     </TableCell>
                     <TableCell
                         isHeader
                         className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                        التاريخ
+                        المسار المهني
                     </TableCell>
                     <TableCell
                         isHeader
