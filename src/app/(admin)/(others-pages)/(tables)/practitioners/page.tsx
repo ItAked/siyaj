@@ -98,12 +98,6 @@ const tableData: Order[] = [
   },
 ];
 
-const options = [
-    { value: "marketing", label: "Marketing" },
-    { value: "template", label: "Template" },
-    { value: "development", label: "Development" },
-  ];
-
   const status = [
                               { value: "Delivered", label: "تم التسليم" },
                               { value: "Pending", label: "قيد الانتظار" },
@@ -163,19 +157,25 @@ export default function Lawyers() {
                         isHeader
                         className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                        المسار المهني
+                        رقم الترخيص المهني
                     </TableCell>
                     <TableCell
                         isHeader
                         className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                        القضية
+                       التخصص الطبي
                     </TableCell>
                     <TableCell
                         isHeader
                         className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                        الحالة
+                       اسم جهة العمل
+                    </TableCell>
+                    <TableCell
+                        isHeader
+                        className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                    >
+                        حالة الحساب
                     </TableCell>
                     </TableRow>
                 </TableHeader>
@@ -201,7 +201,10 @@ export default function Lawyers() {
                         {product.budget}
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                        <Select className="max-w-xs" options={options} onChange={handleSelectChange} />
+                        {product.budget}
+                        </TableCell>
+                        <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                        {product.budget}
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                           <Select
