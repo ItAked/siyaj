@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Next.js Basic Table | TailAdmin - Next.js Dashboard Template",
+  title: "القضايا",
   description:
     "This is Next.js Basic Table  page for TailAdmin  Tailwind CSS Admin Dashboard Template",
   // other metadata
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 export default function BasicTables() {
   return (
     <div>
+      <PageBreadcrumb pageTitle="القضايا" />
       <div className="col-span-12 space-y-6">
         <CasesStatus />
       </div>
-      <PageBreadcrumb pageTitle="القضايا" />
       <div className="space-y-6">
         <ComponentCard>
           <NewCasesTable />

@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
   {
     name: "المحامين",
     icon: <TableIcon />,
-    path: "/basic-tables"
+    path: "/lawyers"
   },
   {
     icon: <UserCircleIcon />,

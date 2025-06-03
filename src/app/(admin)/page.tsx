@@ -5,7 +5,7 @@ import { CasesStatus } from "@/components/CasesStatus";
 
 export const metadata: Metadata = {
   title:
-    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
+    "الصفحة الرئيسية",
   description: "This is Next.js Home for TailAdmin Dashboard Template",
 };
 
