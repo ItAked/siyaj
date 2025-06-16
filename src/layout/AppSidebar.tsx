@@ -24,32 +24,32 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "نظرة عامة",
-    path: "/"
+    path: "/admin"
   },
   {
     name: "القضايا",
     icon: <TableIcon />,
-    path: "/cases"
+    path: "/admin/cases"
   },
   {
     icon: <CalenderIcon />,
     name: "جدولة القضايا",
-    path: "/calendar",
+    path: "/admin/calendar",
   },
   {
     name: "المحامين",
     icon: <TableIcon />,
-    path: "/lawyers"
+    path: "/admin/lawyers"
   },
   {
     name: "الممارسين الصحيين",
     icon: <TableIcon />,
-    path: "/practitioners"
+    path: "/admin/practitioners"
   },
   {
     icon: <UserCircleIcon />,
     name: "الإعدادات",
-    path: "/profile"
+    path: "/admin/profile"
   }
 ];
 

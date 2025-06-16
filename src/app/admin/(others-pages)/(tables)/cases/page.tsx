@@ -16,9 +16,6 @@ export default function BasicTables() {
   return (
     <div>
       <PageBreadcrumb pageTitle="القضايا" />
-      <div className="col-span-12 space-y-6">
-        <CasesStatus />
-      </div>
       <div className="space-y-6">
         <ComponentCard>
           <NewCasesTable />

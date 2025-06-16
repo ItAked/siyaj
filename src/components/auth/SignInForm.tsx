@@ -1,14 +1,48 @@
-"use client";
+'use client'
 
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { post } from "../../../server/AuthServer/login";
+import { useRouter } from "next/navigation";
+
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({
+    'email': '',
+    'password': ''
+  })
+  const router = useRouter()
+
+//   async function Login() {
+//   let response = await post()
+// }
+  function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+    try {
+      setUser((prevUser) => {
+        return { ...prevUser, [event.target.name]: event.target.value}
+      })
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  async function handleOnSubmit(event: FormEvent) {
+    event.preventDefault()
+
+    const formData = new FormData()
+    formData.append('email', user.email)
+    formData.append('password', user.password)
+
+    const response = await post(formData)
+    alert(response)
+    router.push('/admin')
+  }
+
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
@@ -22,13 +56,13 @@ export default function SignInForm() {
             </p>
           </div>
           <div>
-            <form>
+            <form onSubmit={handleOnSubmit}>
               <div className="space-y-6 text-right">
                 <div>
                   <Label>
                     البريد الإلكتروني <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" type="email" />
+                  <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
                 </div>
                 <div>
                   <Label>
@@ -38,6 +72,9 @@ export default function SignInForm() {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      onChange={handleUserChange}
+                      name="password"
+                      defaultValue={user.password}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
