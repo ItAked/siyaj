@@ -5,104 +5,45 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 
 interface Order {
   id: number;
-  user: {
-    image: string;
-    name: string;
-    role: string;
-  };
-  projectName: string;
-  team: {
-    images: string[];
-  };
-  budget: string;
+  name: string
+  licence_number: number;
+  major: string
+  company: string;
+  account_status: string;
 }
 
 // Define the table data using the interface
 const tableData: Order[] = [
   {
     id: 1,
-    user: {
-      image: "/images/user/user-17.jpg",
-      name: "Lindsey Curtis",
-      role: "Web Designer",
-    },
-    projectName: "Agency Website",
-    team: {
-      images: [
-        "/images/user/user-22.jpg",
-        "/images/user/user-23.jpg",
-        "/images/user/user-24.jpg",
-      ],
-    },
-    budget: "3.9K"
+    name: "Lindsey Curtis",
+    licence_number: 1,
+    major: "ممارس صحي ١",
+    company: "شركة ١",
+    account_status: 'مفعل'
   },
   {
     id: 2,
-    user: {
-      image: "/images/user/user-18.jpg",
-      name: "Kaiya George",
-      role: "Project Manager",
-    },
-    projectName: "Technology",
-    team: {
-      images: ["/images/user/user-25.jpg", "/images/user/user-26.jpg"],
-    },
-    budget: "24.9K"
+    name: "Kaiya George",
+    licence_number: 2,
+    major: "ممارس صحي 2",
+    company: "شركة 2",
+    account_status: 'معلق'
   },
   {
     id: 3,
-    user: {
-      image: "/images/user/user-17.jpg",
-      name: "Zain Geidt",
-      role: "Content Writing",
-    },
-    projectName: "Blog Writing",
-    team: {
-      images: ["/images/user/user-27.jpg"],
-    },
-    budget: "12.7K"
-  },
-  {
-    id: 4,
-    user: {
-      image: "/images/user/user-20.jpg",
-      name: "Abram Schleifer",
-      role: "Digital Marketer",
-    },
-    projectName: "Social Media",
-    team: {
-      images: [
-        "/images/user/user-28.jpg",
-        "/images/user/user-29.jpg",
-        "/images/user/user-30.jpg",
-      ],
-    },
-    budget: "2.8K"
-  },
-  {
-    id: 5,
-    user: {
-      image: "/images/user/user-21.jpg",
-      name: "Carla George",
-      role: "Front-end Developer",
-    },
-    projectName: "Website",
-    team: {
-      images: [
-        "/images/user/user-31.jpg",
-        "/images/user/user-32.jpg",
-        "/images/user/user-33.jpg",
-      ],
-    },
-    budget: "4.5K"
-  },
+    name: "Zain Geidt",
+    licence_number: 3,
+    major: "ممارس صحي 3",
+    company: "شركة 3",
+    account_status: 'محذوف'
+  }
 ];
 
   const status = [
-                              { value: "Delivered", label: "تم التسليم" },
-                              { value: "Pending", label: "قيد الانتظار" },
-                              { value: "Active", label: "نشط" },
-                              { value: "Cancel", label: "ملغي" }
+                              { value: "محذوف", label: "محذوف" },
+                              { value: "معلق", label: "معلق" },
+                              { value: "مفعل", label: "مفعل" }
                             ]
 
 export default function Lawyers() {
@@ -189,28 +130,22 @@ export default function Lawyers() {
                         <div className="flex items-center gap-3">
                             <div>
                             <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                {product.projectName}
+                                {product.name}
                             </p>
-                            <span className="text-gray-500 text-theme-xs dark:text-gray-400">
-                                {product.budget}
-                            </span>
                             </div>
                         </div>
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                        {product.budget}
+                        {product.licence_number}
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                        {product.budget}
+                        {product.major}
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                        {product.budget}
+                        {product.company}
                         </TableCell>
                         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                          <Select
-                            options={status}
-                            onChange={handleSelectChange}
-                          />
+                          <Select defaultValue={product.account_status} options={status} onChange={handleSelectChange} />
                         </TableCell>
                     </TableRow>
                     ))}

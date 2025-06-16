@@ -9,7 +9,7 @@ import {
 } from "./ui/table";
 import Badge from "./ui/badge/Badge";
 import React, { useEffect, useState } from "react";
-import { get } from "../../server/cases";
+import { get } from "../../server/Cases/cases";
 
 interface Case {
   id: number;
@@ -29,7 +29,7 @@ export default function NewCasesTable() {
     const [, setPractitioner] = useState<Practitioner[]>([])
 
   async function getCases() {
-    const response = await get()
+    const response = await get()    
 
     setCases(response.data.data)
 

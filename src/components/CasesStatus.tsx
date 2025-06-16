@@ -1,7 +1,21 @@
 "use client";
 import {BoxIconLine, GroupIcon } from "@/icons";
+import { useEffect, useState } from "react";
+import { get } from "../../server/Cases/cases_status";
 
 export const CasesStatus = () => {
+  const [casesStatus, setCasesStatus] = useState([])
+
+  async function getCasesStatus() {
+    const response = await get()
+
+    setCasesStatus(Object.values(response.data))
+  }
+
+  useEffect(() => {
+    getCasesStatus()
+  }, [])
+
   return (
     <div className="grid grid-cols-1 mx-auto gap-4 sm:grid-cols-3 md:gap-6 my-16">
       {/* <!-- Metric Item Start --> */}
@@ -16,7 +30,7 @@ export const CasesStatus = () => {
               القضايا المغلقة
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              3,782
+              {casesStatus[0]}
             </h4>
           </div>
         </div>
@@ -34,7 +48,7 @@ export const CasesStatus = () => {
               القضايا المعلقة
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              5,359
+              {casesStatus[2]}
             </h4>
           </div>
         </div>
@@ -52,7 +66,7 @@ export const CasesStatus = () => {
               القضايا الحالية
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              5,359
+              {casesStatus[1]}
             </h4>
           </div>
         </div>
