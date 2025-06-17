@@ -7,7 +7,11 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/signin');
+    if (localStorage.getItem('token') == null) {
+      router.push('/signin');
+    } else {
+      router.push('/admin');
+    }
   });
 
   return null; // or a loading spinner

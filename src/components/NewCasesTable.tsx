@@ -13,7 +13,7 @@ import { get } from "../../server/Cases/cases";
 
 interface Case {
   id: number;
-  description: string;
+  title: string;
   status: string;
   created_at: string;
   practitioner: Practitioner
@@ -150,7 +150,7 @@ export default function NewCasesTable() {
                   {item.created_at}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.description}
+                  {item.title}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   <Badge

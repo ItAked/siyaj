@@ -47,7 +47,7 @@ const Calendar: React.FC = () => {
   async function readAppointments() {
     try {
       setLoading(true);
-      const response = await get(); // Make sure you have the 'get' function defined or imported
+      const response = await get(); 
       setAppointments(response.data);
     } catch (err) {
       setError("Failed to fetch appointments");
@@ -56,6 +56,14 @@ const Calendar: React.FC = () => {
       setLoading(false);
     }
   }
+
+  // async function createAppointment() {
+  //   try {
+      
+  //   } catch (error) {
+      
+  //   }
+  // }
 
   useEffect(() => {
     readAppointments();
