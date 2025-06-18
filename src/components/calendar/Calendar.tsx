@@ -12,24 +12,25 @@ import {
 } from "@fullcalendar/core";
 import { useModal } from "@/hooks/useModal";
 import { Modal } from "@/components/ui/modal";
-import { get } from "../../../server/appointments";
+import { get } from "../../../server/AppointmentsServer/appointments";
+import { post } from "../../../server/AppointmentsServer/create_appointment";
+import Select from '@/components/form/Select'
 
 interface Appointment {
   id: number;
   case_id: number;
+  practitioner_id: number;
+  lawyer_id: number;
   date: string;
   time: string;
   status: string;
-  title: string;
-  lawyer_id: number;
-  practitioner_id: number;
-  created_at: string;
-  updated_at: string;
 }
 
 const Calendar: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [appointmentTitle, setAppointmentTitle] = useState("");
+  const [appointmentLawyer, setAppointmentLawyer] = useState("");
+  const [appointmentPractitioner, setAppointmentPractitioner] = useState("");
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("");
@@ -38,32 +39,57 @@ const Calendar: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
   const { isOpen, openModal, closeModal } = useModal();
+  const[cases, setCases] = useState([])
+  const[lawyers, setLawyers] = useState([])
+  const[practitioner, setPractitioner] = useState([])
 
   const statusOptions = {
     "ملغي الحجز": "danger",
     "محجوز": "success"
   };
 
+  const handleTitleChange = (value: string) => {
+    setAppointmentTitle(value);
+  };
+  const handleLawyerChange = (value: string) => {
+    setAppointmentLawyer(value);
+  };
+  const handlePractitionerChange = (value: string) => {
+    setAppointmentPractitioner(value);
+  };
+
   async function readAppointments() {
     try {
       setLoading(true);
-      const response = await get(); 
+
+      const response = await get();
+      
+      const c = response.data.map((caseItem: { case_id: number; case_name: string; }) => ({
+        value: caseItem.case_id,
+        label: caseItem.case_name
+      }));
+      setCases(c)
+
+      const l = response.data.map((lawyer: { lawyer_id: number; lawyer_name: string; }) => ({
+        value: lawyer.lawyer_id,
+        label: lawyer.lawyer_name
+      }));
+      setLawyers(l)
+
+      const p = response.data.map((practitioner: { practitioner_id: number; practitioner_name: string; }) => ({
+        value: practitioner.practitioner_id,
+        label: practitioner.practitioner_name
+      }));
+      setPractitioner(p)
+    
+
       setAppointments(response.data);
     } catch (err) {
-      setError("Failed to fetch appointments");
-      console.error("Error fetching appointments:", err);
+      setError(String(err));
     } finally {
       setLoading(false);
     }
   }
-
-  // async function createAppointment() {
-  //   try {
-      
-  //   } catch (error) {
-      
-  //   }
-  // }
 
   useEffect(() => {
     readAppointments();
@@ -81,6 +107,8 @@ const Calendar: React.FC = () => {
     if (appointment) {
       setSelectedAppointment(appointment);
       setAppointmentTitle(event.title);
+      setAppointmentLawyer(appointment.lawyer_id.toString())
+      setAppointmentPractitioner(appointment.practitioner_id.toString())
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
@@ -90,10 +118,7 @@ const Calendar: React.FC = () => {
 
   const handleAddOrUpdateAppointment = async () => {
     try {
-      // Here you would typically make an API call to save the appointment
-      // For now, we'll just update the local state
       if (selectedAppointment) {
-        // Update existing appointment
         setAppointments(prevAppointments =>
           prevAppointments.map(appointment =>
             appointment.id === selectedAppointment.id
@@ -101,27 +126,24 @@ const Calendar: React.FC = () => {
                   ...appointment,
                   title: appointmentTitle,
                   date: appointmentDate,
-                  time: appointmentTime + ":00", // Add seconds for API format
+                  time: appointmentTime + ":00",
                   status: appointmentStatus
                 }
               : appointment
           )
         );
       } else {
-        // Add new appointment
         const newAppointment: Appointment = {
-          id: Date.now(), // Temporary ID - in a real app, this would come from the API
-          case_id: 0, // You'll need to set this appropriately
-          title: appointmentTitle,
+          id: Date.now(),
+          case_id: Number(appointmentTitle),
           date: appointmentDate,
           time: appointmentTime + ":00", // Add seconds for API format
           status: appointmentStatus,
-          lawyer_id: 0, // Set appropriately
-          practitioner_id: 0, // Set appropriately
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          lawyer_id: Number(appointmentLawyer), // Set appropriately
+          practitioner_id: Number(appointmentPractitioner), // Set appropriately
         };
-        setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
+        const response = await post(newAppointment);
+        setAppointments(prevAppointments => [...prevAppointments, response]);
       }
       closeModal();
       resetModalFields();
@@ -142,7 +164,6 @@ const Calendar: React.FC = () => {
   // Convert appointments to FullCalendar events
   const calendarEvents = appointments.map(appointment => ({
     id: appointment.id.toString(),
-    title: appointment.title,
     start: `${appointment.date}T${appointment.time}`,
     extendedProps: { 
       calendar: statusOptions[appointment.status as keyof typeof statusOptions] || "primary",
@@ -200,13 +221,23 @@ const Calendar: React.FC = () => {
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                   عنوان القضية
                 </label>
-                <input
-                  id="appointment-title"
-                  type="text"
-                  value={appointmentTitle}
-                  onChange={(e) => setAppointmentTitle(e.target.value)}
-                  className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                />
+                <Select options={cases} onChange={handleTitleChange} />
+              </div>
+            </div>
+            <div className="my-8">
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                  المحامي
+                </label>
+                <Select options={lawyers} onChange={handleLawyerChange} />
+              </div>
+            </div>
+            <div className="my-8">
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                  الممارس الصحي
+                </label>
+                <Select options={practitioner} onChange={handlePractitionerChange} />
               </div>
             </div>
             <div className="mt-6">
@@ -214,34 +245,32 @@ const Calendar: React.FC = () => {
                 حالة القضية
               </label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-                {Object.keys(statusOptions).map((status) => (
-                  <div key={status} className="n-chk">
-                    <div
-                      className={`form-check form-check-${statusOptions[status as keyof typeof statusOptions]} form-check-inline`}
-                    >
+                {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
+                  <div key={`status-${statusKey}`} className="n-chk">
+                    <div className={`form-check form-check-${statusValue} form-check-inline`}>
                       <label
                         className="flex items-center text-sm text-gray-700 form-check-label dark:text-gray-400"
-                        htmlFor={`modal-${status}`}
+                        htmlFor={`modal-${statusKey}`}
                       >
                         <span className="relative">
                           <input
                             className="sr-only form-check-input"
                             type="radio"
                             name="appointment-status"
-                            value={status}
-                            id={`modal-${status}`}
-                            checked={appointmentStatus === status}
-                            onChange={() => setAppointmentStatus(status)}
+                            value={statusKey}
+                            id={`modal-${statusKey}`}
+                            checked={appointmentStatus === statusKey}
+                            onChange={() => setAppointmentStatus(statusKey)}
                           />
                           <span className="flex items-center justify-center w-5 h-5 mr-2 border border-gray-300 rounded-full box dark:border-gray-700">
                             <span
                               className={`h-2 w-2 rounded-full bg-white ${
-                                appointmentStatus === status ? "block" : "hidden"
-                              }`}  
+                                appointmentStatus === statusKey ? "block" : "hidden"
+                              }`}
                             ></span>
                           </span>
                         </span>
-                        {status}
+                        {statusKey}
                       </label>
                     </div>
                   </div>
@@ -306,9 +335,7 @@ const renderEventContent = (eventInfo: EventContentArg) => {
   const colorClass = status === "ملغي الحجز" ? "fc-bg-danger" : "fc-bg-success"
   
   return (
-    <div
-      className={`event-fc-color flex fc-event-main ${colorClass} p-1 rounded-sm`}
-    >
+    <div className={`event-fc-color flex fc-event-main ${colorClass}`}>
       <div className="fc-daygrid-event-dot"></div>
       <div className="fc-event-time">{eventInfo.timeText}</div>
       <div className="fc-event-title">{eventInfo.event.title}</div>

@@ -1,7 +1,7 @@
 "use client";
 import {BoxIconLine, GroupIcon } from "@/icons";
 import { useEffect, useState } from "react";
-import { get } from "../../server/Cases/cases_status";
+import { get } from "../../server/CasesServer/cases_status";
 
 export const CasesStatus = () => {
   const [casesStatus, setCasesStatus] = useState([])

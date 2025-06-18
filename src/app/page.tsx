@@ -1,18 +1,36 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { get } from "../../server/AuthServer/check_token";
 
 export default function Home() {
   const router = useRouter();
+  const [message, setMessage] = useState("");
+
+  async function checkToken() {
+    try {
+      const response = await get();
+    
+      setMessage(response.message);
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+  }
 
   useEffect(() => {
-    if (localStorage.getItem('token') == null) {
-      router.push('/signin');
-    } else {
+    checkToken();
+  }, []);
+
+  useEffect(() => {
+    if (message === 'Token is valid') {
       router.push('/admin');
     }
-  });
 
-  return null; // or a loading spinner
+    if (message === "Unauthenticated.") {
+      router.push('/signin');
+    }
+  }, [message, router]);
+
+  return null;
 }

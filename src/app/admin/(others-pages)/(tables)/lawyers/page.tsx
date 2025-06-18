@@ -54,14 +54,13 @@ export default function Lawyers() {
       formData.append('email', lawyerEmail)
       formData.append('name', lawyerName)
       formData.append('password', lawyerPassword)
-      console.log(Object.fromEntries(formData.entries()));
       closeModal()
       resetModalFeild()
     }
 
     const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+        console.log("Selected value:", value);
+    };
 
   useEffect(() => {
     getLawyers()

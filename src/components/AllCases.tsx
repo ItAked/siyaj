@@ -24,7 +24,7 @@ interface Practitioner {
   name: string
 }
 
-export default function NewCasesTable() {
+export default function AllCases() {
     const [cases, setCases] = useState<Case[]>([])
     const [, setPractitioner] = useState<Practitioner[]>([])
 
@@ -33,11 +33,9 @@ export default function NewCasesTable() {
 
     setCases(response.data.data)
 
-    const practitionersFromCases = response.data.data.map((caseItem: { practitioner: { id: number; name: string; email: string; license: string; }; }) => ({
+    const practitionersFromCases = response.data.data.map((caseItem: { practitioner: { id: number; name: string; }; }) => ({
       id: caseItem.practitioner.id,
-      name: caseItem.practitioner.name,
-      email: caseItem.practitioner.email,
-      license: caseItem.practitioner.license
+      name: caseItem.practitioner.name
     }));
     
     setPractitioner(practitionersFromCases);
@@ -52,7 +50,7 @@ export default function NewCasesTable() {
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            طلبات القضايا الجديدة
+            جميع القضايا
           </h3>
         </div>
 
