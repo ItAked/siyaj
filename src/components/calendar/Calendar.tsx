@@ -12,12 +12,15 @@ import {
 } from "@fullcalendar/core";
 import { useModal } from "@/hooks/useModal";
 import { Modal } from "@/components/ui/modal";
-import { get } from "../../../server/AppointmentsServer/appointments";
+import { getAppointments } from "../../../server/AppointmentsServer/appointments";
 import { post } from "../../../server/AppointmentsServer/create_appointment";
 import Select from '@/components/form/Select'
+import { getCases } from "../../../server/CasesServer/cases";
+import { get } from "../../../server/lawyers";
+import { getPractitioners } from "../../../server/practitioners";
 
 interface Appointment {
-  id: number;
+  id: string;
   case_id: number;
   practitioner_id: number;
   lawyer_id: number;
@@ -58,31 +61,28 @@ const Calendar: React.FC = () => {
     setAppointmentPractitioner(value);
   };
 
+  async function readCases() {
+    try {
+      setLoading(true)
+
+      const response = await getCases()
+      
+      const c = response.data.data.map((caseItem: { id: number; title: string; }) => ({
+        value: caseItem.id,
+        label: caseItem.title
+      }));
+      setCases(c)
+    } catch (error) {
+      setError(String(error));
+    } finally {
+      setLoading(false)
+    }
+  }
   async function readAppointments() {
     try {
       setLoading(true);
 
-      const response = await get();
-      
-      const c = response.data.map((caseItem: { case_id: number; case_name: string; }) => ({
-        value: caseItem.case_id,
-        label: caseItem.case_name
-      }));
-      setCases(c)
-
-      const l = response.data.map((lawyer: { lawyer_id: number; lawyer_name: string; }) => ({
-        value: lawyer.lawyer_id,
-        label: lawyer.lawyer_name
-      }));
-      setLawyers(l)
-
-      const p = response.data.map((practitioner: { practitioner_id: number; practitioner_name: string; }) => ({
-        value: practitioner.practitioner_id,
-        label: practitioner.practitioner_name
-      }));
-      setPractitioner(p)
-    
-
+      const response = await getAppointments();
       setAppointments(response.data);
     } catch (err) {
       setError(String(err));
@@ -90,9 +90,30 @@ const Calendar: React.FC = () => {
       setLoading(false);
     }
   }
+  async function readLawyers() {
+    const response = await get()
+
+    const l = response.data.data.map((lawyerItem: { id: number; name: string; }) => ({
+        value: lawyerItem.id,
+        label: lawyerItem.name
+    }));
+    setLawyers(l)
+  }
+  async function readPractitioners() {
+    const response = await getPractitioners()
+
+    const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
+        value: practitionerItem.id,
+        label: practitionerItem.name
+    }));
+    setPractitioner(p)
+  }
 
   useEffect(() => {
     readAppointments();
+    readCases()
+    readLawyers()
+    readPractitioners()
   }, []);
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -134,7 +155,7 @@ const Calendar: React.FC = () => {
         );
       } else {
         const newAppointment: Appointment = {
-          id: Date.now(),
+          id: Date.now().toString(),
           case_id: Number(appointmentTitle),
           date: appointmentDate,
           time: appointmentTime + ":00", // Add seconds for API format
@@ -163,7 +184,7 @@ const Calendar: React.FC = () => {
 
   // Convert appointments to FullCalendar events
   const calendarEvents = appointments.map(appointment => ({
-    id: appointment.id.toString(),
+    id: appointment.id,
     start: `${appointment.date}T${appointment.time}`,
     extendedProps: { 
       calendar: statusOptions[appointment.status as keyof typeof statusOptions] || "primary",
