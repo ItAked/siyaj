@@ -5,7 +5,8 @@ import { Modal } from "@/components/ui/modal";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useModal } from "@/hooks/useModal";
 import { useEffect, useState } from "react";
-import { get } from "../../../../../../server/lawyers";
+import { get } from "../../../../../../server/LawyersServer/lawyers";
+import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
 
 interface Lawyers {
   id: number;
@@ -49,11 +50,15 @@ export default function Lawyers() {
       
     }
 
-    function handleAddLawyer() {
+    async function handleAddLawyer() {
       const formData = new FormData()
       formData.append('email', lawyerEmail)
       formData.append('name', lawyerName)
       formData.append('password', lawyerPassword)
+      const response = await createLawyer(formData)
+      console.log(response.data);
+      
+
       closeModal()
       resetModalFeild()
     }
