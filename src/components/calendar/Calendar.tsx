@@ -18,6 +18,7 @@ import Select from '@/components/form/Select'
 import { getCases } from "../../../server/CasesServer/cases";
 import { get } from "../../../server/lawyers";
 import { getPractitioners } from "../../../server/practitioners";
+import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
 
 interface Appointment {
   id: string;
@@ -145,14 +146,28 @@ const Calendar: React.FC = () => {
             appointment.id === selectedAppointment.id
               ? {
                   ...appointment,
-                  title: appointmentTitle,
+                  case_id: Number(appointmentTitle),
                   date: appointmentDate,
                   time: appointmentTime + ":00",
-                  status: appointmentStatus
+                  status: appointmentStatus,
+                  lawyer_id: Number(appointmentLawyer),
+                  practitioner_id: Number(appointmentPractitioner)
                 }
               : appointment
           )
         );
+        const updatedAppointment = {
+          ...selectedAppointment,
+          case_id: Number(appointmentTitle),
+          date: appointmentDate,
+          time: appointmentTime + ":00",
+          status: appointmentStatus,
+          lawyer_id: Number(appointmentLawyer),
+          practitioner_id: Number(appointmentPractitioner)
+        };
+        const response = await updateAppointment(updatedAppointment, Number(selectedAppointment.id));
+        console.log(response);
+        
       } else {
         const newAppointment: Appointment = {
           id: Date.now().toString(),
@@ -160,8 +175,8 @@ const Calendar: React.FC = () => {
           date: appointmentDate,
           time: appointmentTime + ":00", // Add seconds for API format
           status: appointmentStatus,
-          lawyer_id: Number(appointmentLawyer), // Set appropriately
-          practitioner_id: Number(appointmentPractitioner), // Set appropriately
+          lawyer_id: Number(appointmentLawyer),
+          practitioner_id: Number(appointmentPractitioner)
         };
         const response = await post(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
