@@ -23,12 +23,8 @@ export default function NewCasesTable() {
     const [cases, setCases] = useState<Case[]>([])
 
   async function readCases(value: string) {
-    console.log(value);
-    
     const response = await getCases(value)
-    console.log(response.data.data);
     
-
     setCases(response.data.data)
   }
 
