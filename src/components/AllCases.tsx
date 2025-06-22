@@ -20,7 +20,7 @@ interface Case {
 }
 
 export default function AllCases() {
-    const [cases, setCases] = useState<Case[]>([])
+  const [cases, setCases] = useState<Case[]>([])
 
   async function readCases(value: string) {
     const response = await getCases(value)
