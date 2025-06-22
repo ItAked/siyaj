@@ -13,32 +13,19 @@ import { getCases } from "../../server/CasesServer/cases";
 
 interface Case {
   id: number;
-  title: string;
-  status: string;
-  created_at: string;
-  practitioner: Practitioner
-}
-
-interface Practitioner {
-  id: number,
-  name: string
+  practitioner_name: string;
+  date: string;
+  case: string;
+  status: string
 }
 
 export default function AllCases() {
     const [cases, setCases] = useState<Case[]>([])
-    const [, setPractitioner] = useState<Practitioner[]>([])
 
   async function readCases() {
-    const response = await getCases()    
-
-    setCases(response.data.data)
-
-    const practitionersFromCases = response.data.data.map((caseItem: { practitioner: { id: number; name: string; }; }) => ({
-      id: caseItem.practitioner.id,
-      name: caseItem.practitioner.name
-    }));
+    const response = await getCases("")    
     
-    setPractitioner(practitionersFromCases);
+    setCases(response.data.data)
   }
 
   useEffect(() => {
@@ -139,16 +126,16 @@ export default function AllCases() {
                   <div className="flex items-center gap-3">
                     <div>
                       <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {item.practitioner.name}
+                        {item.practitioner_name}
                       </p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.created_at}
+                  {item.date}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.title}
+                  {item.case}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   <Badge

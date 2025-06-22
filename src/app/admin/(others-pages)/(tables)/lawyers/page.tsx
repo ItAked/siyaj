@@ -45,6 +45,7 @@ export default function Lawyers() {
 
     async function getLawyers() {
       const response = await get()
+      
 
       setLawyers(response.data.data)
       
@@ -58,7 +59,6 @@ export default function Lawyers() {
       const response = await createLawyer(formData)
       console.log(response.data);
       
-
       closeModal()
       resetModalFeild()
     }

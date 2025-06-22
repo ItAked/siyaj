@@ -66,7 +66,7 @@ const Calendar: React.FC = () => {
     try {
       setLoading(true)
 
-      const response = await getCases()
+      const response = await getCases("")
       
       const c = response.data.data.map((caseItem: { id: number; title: string; }) => ({
         value: caseItem.id,
@@ -165,9 +165,7 @@ const Calendar: React.FC = () => {
           lawyer_id: Number(appointmentLawyer),
           practitioner_id: Number(appointmentPractitioner)
         };
-        const response = await updateAppointment(updatedAppointment, Number(selectedAppointment.id));
-        console.log(response);
-        
+        await updateAppointment(updatedAppointment, Number(selectedAppointment.id));        
       } else {
         const newAppointment: Appointment = {
           id: Date.now().toString(),
