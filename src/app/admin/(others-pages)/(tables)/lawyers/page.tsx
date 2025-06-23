@@ -5,13 +5,24 @@ import { useModal } from "@/hooks/useModal";
 import { useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
+// import { post } from "../../../../../../server/CasesServer/assign_cases";
 
 interface Lawyers {
   id: number;
-  assigned_cases: [];
-  unassigned_cases: [];
+  assigned_cases: AssignedCases[];
+  unassigned_cases: UnAssignedCases[];
   phone: string
   name: string
+}
+
+interface AssignedCases {
+    id: number
+    title: string
+}
+
+interface UnAssignedCases {
+    id: number
+    title: string
 }
 
 export default function Lawyers() {
@@ -20,6 +31,7 @@ export default function Lawyers() {
     const [lawyerEmail, setLawyerEmail] = useState("")
     const [lawyerPassword, setLawyerPassword] = useState("")
     const [lawyers, setLawyers] = useState<Lawyers[]>([])
+    // const [selectedCases, setSelectedCases] = useState<number[]>([])
 
     function resetModalFeild(){
       setLawyerName("")
@@ -27,8 +39,8 @@ export default function Lawyers() {
       setLawyerPassword("")
     }
 
-    async function getLawyers() {
-      const response = await get()
+    async function getLawyers(value: string) {
+      const response = await get(value)
 
       setLawyers(response.data.data)
     }
@@ -46,8 +58,23 @@ export default function Lawyers() {
       resetModalFeild()
     }
 
+    // async function handleCheckCases(event: ChangeEvent<HTMLInputElement>, lawyerId: number) {
+    //     const value = event.target.value
+    //     const isChecked = event.target.checked
+
+    //     if (isChecked) {
+    //         setSelectedCases([...selectedCases, Number(value)])
+    //     } else {
+    //         setSelectedCases(selectedCases.filter((c) => c !== Number(value)))
+    //     }
+    //     // const response = await post(lawyerId, selectedCases)
+
+    //     // console.log(response.data);
+        
+    // }
+
   useEffect(() => {
-    getLawyers()
+    getLawyers("")
   }, [])
 
     return (
@@ -107,15 +134,15 @@ export default function Lawyers() {
                     </div>
                 </dialog>
 
-                {/* <div className="flex items-center gap-3">
-                    <form className="filter">
-                        <input className="btn btn-square" type="reset" onChange={(e) => readCases(e.target.value)} value="x" />
-                        <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="" name="status" aria-label="الكل"/>
-                        <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها" name="status" aria-label="القضايا المغلقة"/>
-                        <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="معلقة" name="status" aria-label="القضايا المعلقة"/>
-                        <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل" name="status" aria-label="القضايا الحالية"/>
-                    </form>
-                </div> */}
+                <div className="flex items-center gap-3">
+                    <select onChange={(e) => getLawyers(e.target.value)} defaultValue="اختر المحامي" className="select">
+                        <option disabled={true}>اختر المحامي</option>
+                        <option value="">الكل</option>
+                        { lawyers.map((lawyer) => (
+                        <option value={lawyer.name} key={lawyer.id}>{lawyer.name}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <div className="max-w-full overflow-x-auto">
                 <Table>
@@ -143,10 +170,16 @@ export default function Lawyers() {
                                     { lawyer.assigned_cases.length != 0 && (
                                         <fieldset className="fieldset bg-base-100 border-base-300 rounded-box border p-4">
                                             <div className="grid grid-cols-4 gap-4">
-                                                {lawyer.assigned_cases.map((caseItem: never, idx: number) => (
-                                                    <label className="label" key={idx}>
-                                                        <input type="checkbox" defaultChecked className="checkbox" />
-                                                        {caseItem}
+                                                {lawyer.assigned_cases.map((caseItem: AssignedCases) => (
+                                                    <label className="label" key={caseItem.id}>
+                                                        <input
+                                                            type="checkbox"
+                                                            value={caseItem.id}
+                                                            className="checkbox"
+                                                            defaultChecked
+                                                            // onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                        />
+                                                        {caseItem.title}
                                                     </label>
                                                 ))}
                                             </div>
@@ -157,10 +190,15 @@ export default function Lawyers() {
                                     { lawyer.unassigned_cases.length != 0 && (
                                         <fieldset className="fieldset bg-base-100 border-base-300 rounded-box border p-4">
                                             <div className="grid grid-cols-4 gap-4">
-                                                {lawyer.unassigned_cases.map((caseItem: never, idx: number) => (
-                                                    <label className="label" key={idx}>
-                                                        <input type="checkbox" className="checkbox" />
-                                                        {caseItem}
+                                                {lawyer.unassigned_cases.map((caseItem: UnAssignedCases) => (
+                                                    <label className="label" key={caseItem.id}>
+                                                        <input
+                                                            type="checkbox"
+                                                            value={caseItem.id}
+                                                            className="checkbox"
+                                                            // onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                        />
+                                                        {caseItem.title}
                                                     </label>
                                                 ))}
                                             </div>
