@@ -22,12 +22,13 @@ export default function Home() {
     checkToken();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (message === 'Token is valid') {
       router.push('/admin');
     }
 
     if (message === "Unauthenticated.") {
+      localStorage.removeItem('token')
       router.push('/signin');
     }
   }, [message, router]);
