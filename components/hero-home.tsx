@@ -14,10 +14,11 @@ export default function HeroHome() {
           </h1>
             <div className="mx-auto max-w-3xl mt-3">
               <p className="mb-8 text-2xl text-white max-sm:text-[20px]" data-aos="zoom-y-out" data-aos-delay={300}>
-                منصة رقمية متخصصة تقدم للممارسين الصحيين حلولًا قانونية متكاملة، من الاستشارة إلى المتابعة، لتمنحك الأمان القانوني الكامل أثناء ممارسة عملك.
+                منصة رقمية متخصصة تقدم
+                للممارسين الصحيين حلولًا قانونية متكاملة، من الاستشارة إلى المتابعة، لتمنحك الأمان القانوني الكامل أثناء ممارسة عملك.
               </p>
-
-              <Link className="py-2.5 px-10 btn text-white bg-yellow-600 hover:bg-gray-900 shadow-none" href="/signup">سجّل الآن</Link>
+              <Link className="py-2.5 px-10 btn text-white bg-yellow-600 hover:bg-gray-900 shadow-none"
+              href="/signup">سجّل الآن</Link>
             </div>
         </div>
       </div>
