@@ -1,17 +1,17 @@
 import Link from "next/link";
-import Logo from "./logo";
+import Logo from "@/public/images/Logo.png";
+import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="fixed top-2 z-30 w-full md:top-6">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative flex h-14 items-center justify-between gap-3 rounded-2xl bg-white px-3 shadow-lg shadow-black/[0.03] backdrop-blur-xs before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent">
-          {/* Site branding */}
+    <header className="fixed z-30 w-full">
+      <div className="w-full">
+        <div className="relative flex items-center justify-between gap-3 bg-white py-8 px-14">
           <div className="flex flex-1 items-center">
-            <Logo />
+            <Image alt="logo" width={175} height={55} src={Logo} />
           </div>
 
-          <ul className="flex items-center justify-center gap-x-4" dir="rtl">
+          <ul className="flex items-center text-2xl justify-center gap-x-10" dir="rtl">
             <li>
               <Link href="/">الرئيسية</Link>
             </li>
@@ -26,24 +26,9 @@ export default function Header() {
             </li>
           </ul>
 
-          {/* Desktop sign in links */}
-          <ul className="flex flex-1 items-center justify-end gap-3">
-            <li>
-              <Link
-                href="/signin"
-                className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
-              >
-                تسجيل الدخول
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/signup"
-                className="btn-sm bg-gray-800 text-gray-200 shadow-sm hover:bg-gray-900"
-              >
-                إنشاء حساب
-              </Link>
-            </li>
+          <ul className="flex flex-1 items-center justify-end gap-3 text-[16px] text-center">
+            <li><Link href="/signin" className="btn-sm shadow-none border border-gray-800 bg-white text-gray-800 hover:bg-gray-50">تسجيل الدخول</Link></li>
+            <li><Link href="/signup" className="btn-sm shadow-none bg-gray-800 text-gray-200 hover:bg-gray-900">إنشاء حساب</Link></li>
           </ul>
         </div>
       </div>

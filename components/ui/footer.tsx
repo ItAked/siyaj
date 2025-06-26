@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Logo from "./logo";
 import { Mail } from "lucide-react";
 
 export default function Footer({ border = false }: { border?: boolean }) {
@@ -13,7 +12,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
           {/* 1st block */}
           <div className="space-y-2 sm:col-span-12 lg:col-span-4">
             <div>
-              <Logo />
+              {/* <Logo /> */}
             </div>
             <div className="text-sm text-gray-600">
               &copy; جميع الحقوق محفوظة لشركة أكيد
