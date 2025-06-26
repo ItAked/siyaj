@@ -9,12 +9,14 @@ import Subscriptions from "@/components/large-testimonial";
 import OurGoals from "@/components/our-goals";
 import ContactUs from "./contact-us/page";
 import About from "@/components/about";
+import Vision from "@/components/vision";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <About />
+      <Vision />
       <OurGoals />
       <OurServices />
       <Subscriptions />
