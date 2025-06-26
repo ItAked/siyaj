@@ -3,154 +3,138 @@
 import goals from "@/public/data/goals";
 import Image from "next/image";
 import carousel_arrow from "@/public/images/carousel_arrow.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Clock, LaptopMinimal, Shield, Tag } from "lucide-react";
 
-export default function OurGoals(){
-    const [isMounted, setIsmounted] = useState(false);
-    const [isClicked, setIsClicked] = useState(false);
-    useEffect(() => setIsmounted(true), [])
-    let isNext = false;
-    let animationTime = 350;
-    let highlightElevation = 60
-    let easing = "ease-in-out"
-    const wrapper = isMounted ? document.getElementById("wrapper") : null
-    
-    function handleNext() {
-        if (!isMounted) return
-        if (isClicked) return
-        setIsClicked(true)
-        isNext = true
-        animateUnHighlight()
-        setTimeout(() => {
-            if (!wrapper) return;
-            const oldElements = calculatePos(wrapper.children)
-            wrapper.append(wrapper.removeChild(wrapper.children[0]))
-            const newElements = calculatePos(wrapper.children)
-            animateChange(wrapper, oldElements, newElements)
-            setTimeout(() => { setIsClicked(false) }, animationTime * 2)
-        }, animationTime)
-    }
+export default function OurGoals() {
+    const icons = [
+        <Clock className="text-yellow-600 w-[70px] h-[70px]" />,
+        <Shield className="text-yellow-600 w-[70px] h-[70px]" />,
+        <Tag className="text-yellow-600 w-[70px] h-[70px]" />,
+        <LaptopMinimal className="text-yellow-600 w-[70px] h-[70px]" />
+    ];
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const animationTime = 300;
+    const carouselRef = useRef<HTMLDivElement>(null);
 
-    function handlePrev() {
-        if (!isMounted) return
-        if (isClicked) return
-        setIsClicked(true)
-        isNext = false
-        animateUnHighlight()
-        setTimeout(() => {
-            if (!wrapper) return;
-            const oldElements = calculatePos(wrapper.children)
-            wrapper.prepend(wrapper.removeChild(wrapper.children[wrapper.children.length - 1]))
-            const newElements = calculatePos(wrapper.children)
-            animateChange(wrapper, oldElements, newElements)
-            setTimeout(() => { setIsClicked(false) }, animationTime * 2)
-        }, animationTime)
-    }
+    const handleNext = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex(prev => (prev + 1) % goals.length);
+        setTimeout(() => setIsAnimating(false), animationTime);
+    };
 
-    function calculatePos(elements: HTMLCollection | Element[]) {
-        const elementsPos = []
-        const arr = Array.from(elements as ArrayLike<Element>);
-        for (const element of arr) {
-            const pos = (element as HTMLElement).getBoundingClientRect()
-            elementsPos.push({ element: element, x: pos.left, y: pos.top })
+    const handlePrev = () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setCurrentIndex(prev => (prev - 1 + goals.length) % goals.length);
+        setTimeout(() => setIsAnimating(false), animationTime);
+    };
+
+    // Animation effect
+    useEffect(() => {
+        const carousel = carouselRef.current;
+        if (!carousel) return;
+
+        // Reset animation classes
+        carousel.classList.remove('slide-in-left', 'slide-in-right', 'slide-out-left', 'slide-out-right');
+
+        // Force reflow to restart animation
+        void carousel.offsetWidth;
+
+        // Add appropriate animation class
+        if (isAnimating) {
+            carousel.classList.add('slide-out-left');
+            setTimeout(() => {
+                carousel.classList.remove('slide-out-left');
+                carousel.classList.add('slide-in-right');
+            }, animationTime / 2);
         }
-        return elementsPos
-    }
-
-    function animateChange(wrapper: HTMLElement, oldElements: any[], newElements: any[]) {
-        if (!wrapper) return;
-        const centerIndex = Math.floor(wrapper.children.length / 2);
-        
-        for (let index = 0; index < newElements.length; index++) {
-            const newElement = newElements[index];
-            const oldElement = oldElements.find(oldElement => oldElement.element === newElement.element)
-            const translateX = oldElement.x - newElement.x
-            const translateY = oldElement.y - newElement.y
-
-            if (isNext && index === wrapper.children.length - 1) continue;
-            if (!isNext && index === 0) continue;
-
-            newElement.element.animate([
-                { transform: `translate(${translateX}px,${translateY}px)` },
-                { transform: "none" }
-            ], { duration: animationTime, easing: easing })
-        }
-        setTimeout(() => { animateHighlight() }, animationTime)
-    }
-
-    function animateHighlight() {
-        if (!wrapper) return;
-        if (!wrapper) return;
-        const centerIndex = Math.floor(wrapper.children.length / 2);
-        const highlightedElement = wrapper.children[centerIndex] as HTMLElement
-        highlightedElement.style.transform = `translateY(-${highlightElevation}px)`
-        highlightedElement.animate([
-            { transform: "none" }, 
-            { transform: `translateY(${-highlightElevation}px)` }
-        ], { duration: animationTime, easing: easing })
-    }
-
-    function animateUnHighlight() {
-        if (!wrapper) return;
-        const centerIndex = Math.floor(wrapper.children.length / 2);
-        const highlightedElement = wrapper.children[centerIndex] as HTMLElement
-        highlightedElement.style.transform = "translateY(0px)"
-        highlightedElement.style.marginBottom = "0"
-        highlightedElement.animate([
-            { transform: `translateY(${-highlightElevation}px)` }, 
-            { transform: "none" }
-        ], { duration: animationTime, easing: easing })
-        setTimeout(() => highlightedElement.animate(
-            [
-                { marginBottom: "-3%" },
-                { marginBottom: "0%" }
-            ],
-            { duration: animationTime, easing: easing }
-        ), animationTime)
-    }
-
-    const centerIndex = Math.floor(goals.length / 2);
+    }, [currentIndex, isAnimating]);
 
     return (
         <>
-            <section className="relative before:absolute before:inset-0 before:-z-20 before:bg-gray-100 my-60">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6">
-                    <div className="py-12 md:py-20">
-                        <div className="mx-auto max-w-3xl pb-16 text-center md:pb-20">
-                            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">أهدافنا</h2>
-                        </div>
-
-                        <div id="membersCard">
-                            <div id="membersContent" className="h-full w-full flex flex-col items-center">
-                                <div id="membersCarousel" className="flex flex-row w-full justify-center items-center relative">
-                                    <button onClick={handlePrev} id="prev" className="bg-yellow-600 border-yellow-600 border-2 rounded-full rotate-180 z-10 h-[48px] w-[48px] ml-10 transition-colors shrink-0">
-                                        <Image alt="a next button" src={carousel_arrow} layout='responsive' quality={100} />
-                                    </button>
-                                    <div id="membersList" className="my-20 relative overflow-hidden mx-[-5%]">
-                                        <div id="wrapper" className="flex justify-center flex-nowrap relative z-1 pt-16 mb-[-48px]">
-                                            {goals.map((goal, index) => (
-                                                <div 
-                                                    key={index} 
-                                                    className="flex flex-col justify-center items-center px-4 whitespace-nowrap flex-shrink-0"
-                                                    style={{ 
-                                                        transform: (index === centerIndex ? `translateY(${-highlightElevation}px)` : ``),
-                                                        width: `${100 / (centerIndex + 1)}%`
-                                                    }}
-                                                >
-                                                    <p className="text-center font-bold text-xs my-3 text-gray-900 md:text-2xl lg:text-2xl">{goal.goal}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <button onClick={handleNext} id="prev" className="bg-yellow-600 border-yellow-600 border-2 rounded-full mr-10 z-10 h-[48px] w-[48px] transition-colors shrink-0">
-                                        <Image alt="a next button" src={carousel_arrow} layout='responsive' quality={100} />
-                                    </button>
-                                </div>
+            <div id="membersContent" className="max-sm:w-full max-sm:flex max-sm:flex-col max-sm:items-center hidden max-sm:bg-gray-900">
+                <div id="membersCarousel" className="flex flex-row w-full justify-center items-center relative">
+                    <button 
+                        onClick={handleNext} 
+                        className="rounded-full mr-10 z-10 h-[48px] w-[48px] transition-colors shrink-0"
+                        disabled={isAnimating}
+                    >
+                        <Image alt="a previous button" src={carousel_arrow} layout='responsive' quality={100} />
+                    </button>
+                    
+                    <div className="my-20 relative overflow-hidden w-[60%] h-[200px] flex items-center justify-center">
+                        <div 
+                            ref={carouselRef}
+                            className="absolute w-full text-center transition-transform duration-300"
+                        >
+                            <div className="flex flex-col items-center" data-aos="flip-down">
+                                {icons[currentIndex]}
+                                <p className="text-center font-bold text-xs my-3 text-white md:text-2xl lg:text-2xl">
+                                    {goals[currentIndex].title}
+                                </p>
+                                <p className="text-center font-bold text-xs my-3 text-white md:text-2xl lg:text-2xl">
+                                    {goals[currentIndex].goal}
+                                </p>
                             </div>
                         </div>
                     </div>
+                    
+                    <button 
+                        onClick={handlePrev} 
+                        className="rounded-full rotate-180 z-10 h-[48px] w-[48px] ml-10 transition-colors shrink-0"
+                        disabled={isAnimating}
+                    >
+                        <Image alt="a next button" src={carousel_arrow} layout='responsive' quality={100} />
+                    </button>
+                </div>
+            </div>
+
+            {/* Add these styles for the animations */}
+            <style jsx global>{`
+                .slide-in-right {
+                    animation: slideInRight ${animationTime}ms ease-out forwards;
+                }
+                .slide-out-left {
+                    animation: slideOutLeft ${animationTime}ms ease-out forwards;
+                }
+                .slide-in-left {
+                    animation: slideInLeft ${animationTime}ms ease-out forwards;
+                }
+                .slide-out-right {
+                    animation: slideOutRight ${animationTime}ms ease-out forwards;
+                }
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutLeft {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(-100%); opacity: 0; }
+                }
+                @keyframes slideInLeft {
+                    from { transform: translateX(-100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `}</style>
+
+            <section className="bg-gray-900 text-white py-20 max-sm:hidden">
+                <div className="grid grid-cols-4">
+                    {goals.map((goal, index) => (
+                        <article key={index} className="grid place-items-center gap-y-2.5 text-balance text-center" data-aos="flip-down">
+                            {icons[index]}
+                            <h3 className="text-2xl font-medium">{goal.title}</h3>
+                            <p className="text-[20px]">{goal.goal}</p>
+                        </article>
+                    ))}
                 </div>
             </section>
         </>
-    )
+    );
 }
