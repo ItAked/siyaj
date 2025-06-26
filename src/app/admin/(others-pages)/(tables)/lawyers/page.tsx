@@ -2,10 +2,10 @@
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useModal } from "@/hooks/useModal";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
-// import { post } from "../../../../../../server/CasesServer/assign_cases";
+import { post } from "../../../../../../server/CasesServer/assign_cases";
 
 interface Lawyers {
   id: number;
@@ -31,7 +31,7 @@ export default function Lawyers() {
     const [lawyerEmail, setLawyerEmail] = useState("")
     const [lawyerPassword, setLawyerPassword] = useState("")
     const [lawyers, setLawyers] = useState<Lawyers[]>([])
-    // const [selectedCases, setSelectedCases] = useState<number[]>([])
+    const [selectedCases, setSelectedCases] = useState<string[]>([])
 
     function resetModalFeild(){
       setLawyerName("")
@@ -67,11 +67,31 @@ export default function Lawyers() {
     //     } else {
     //         setSelectedCases(selectedCases.filter((c) => c !== Number(value)))
     //     }
-    //     // const response = await post(lawyerId, selectedCases)
+    //     console.log(selectedCases);
+        
+    //     const resposnse = await post(lawyerId, selectedCases)
 
-    //     // console.log(response.data);
+    //     console.log(resposnse.data);
+
+    //     // "foreach() argument must be of type array|object, null given"
         
     // }
+    async function handleCheckCases(event: ChangeEvent<HTMLInputElement>, lawyerId: number) {
+    const value = (event.target.value);
+    const isChecked = event.target.checked;
+
+    // Use functional update to get the latest state immediately
+    setSelectedCases(prev => {
+        const newSelected = isChecked 
+            ? [...prev, value] 
+            : prev.filter(c => c !== value);
+        
+        // Send the updated array to the backend
+        post(lawyerId, { cases: newSelected }); // Note: Wrapping in an object
+        
+        return newSelected;
+    });
+}
 
   useEffect(() => {
     getLawyers("")
@@ -174,10 +194,10 @@ export default function Lawyers() {
                                                     <label className="label" key={caseItem.id}>
                                                         <input
                                                             type="checkbox"
-                                                            value={caseItem.id}
+                                                            value={caseItem.title}
                                                             className="checkbox"
                                                             defaultChecked
-                                                            // onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            onChange={(e) => handleCheckCases(e, lawyer.id)}
                                                         />
                                                         {caseItem.title}
                                                     </label>
@@ -196,7 +216,7 @@ export default function Lawyers() {
                                                             type="checkbox"
                                                             value={caseItem.id}
                                                             className="checkbox"
-                                                            // onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            onChange={(e) => handleCheckCases(e, lawyer.id)}
                                                         />
                                                         {caseItem.title}
                                                     </label>
