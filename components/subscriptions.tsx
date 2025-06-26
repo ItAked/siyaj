@@ -2,66 +2,10 @@
 
 import React, { useState } from 'react';
 import { Check, X } from 'lucide-react';
+import subscriptions from '@/public/data/subscriptions';
 
 const Subscriptions = () => {
   const [billingPeriod, setBillingPeriod] = useState('monthly');
-  
-  // Sample subscription data - replace with your actual data
-  const subscriptions = [
-    {
-      id: 1,
-      name: 'البرونزية',
-      monthlyPrice: 9.99,
-      yearlyPrice: 99.99,
-      features: [
-        'الميزة الأولى',
-        'الميزة الثانية',
-        'الميزة الثالثة',
-        'الميزة الرابعة'
-      ],
-      notIncluded: [
-        'الميزة الأولى',
-        'الميزة الثانية',
-        'الميزة الثالثة',
-        'الميزة الرابعة'
-      ],
-      popular: false,
-      color: 'bg-gray-100'
-    },
-    {
-      id: 2,
-      name: 'الفضية',
-      monthlyPrice: 19.99,
-      yearlyPrice: 199.99,
-      features: [
-        'الميزة الأولى',
-        'الميزة الثانية',
-        'الميزة الثالثة',
-        'الميزة الرابعة'
-      ],
-      notIncluded: [
-        'الميزة الأولى',
-        'الميزة الثانية'
-      ],
-      popular: true,
-      color: 'bg-orange-100'
-    },
-    {
-      id: 3,
-      name: 'الذهبية',
-      monthlyPrice: 29.99,
-      yearlyPrice: 299.99,
-      features: [
-        'الميزة الأولى',
-        'الميزة الثانية',
-        'الميزة الثالثة',
-        'الميزة الرابعة'
-      ],
-      notIncluded: [],
-      popular: false,
-      color: 'bg-gray-100'
-    }
-  ];
 
   const handleBillingPeriodChange = (period: React.SetStateAction<string>) => {
     setBillingPeriod(period);
@@ -74,12 +18,11 @@ const Subscriptions = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8 my-60" id='packages'>
-      <h2 className="text-3xl font-bold text-center mb-2">اختر باقتك</h2>
-      <p className="text-gray-600 text-center mb-8">اختر أحد الباقات المناسبة لك</p>
+    <div className="w-full max-w-6xl mx-auto px-4 py-8 my-32" id='packages'>
+      <h2 className="text-6xl font-light text-center mb-2">اختر باقتك</h2>
       
       {/* Subscription cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14">
         {subscriptions.map((subscription) => (
           <div 
             key={subscription.id}
@@ -89,7 +32,7 @@ const Subscriptions = () => {
           >
             {subscription.popular && (
               <div className="absolute top-0 right-0 bg-yellow-500 text-white px-3 py-1 text-xs font-semibold rounded-bl-lg">
-                الباقة الأكثر طلبًا
+                الأكثر مبيعًا
               </div>
             )}
             
@@ -139,7 +82,7 @@ const Subscriptions = () => {
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
                 }`}
               >
-                اختر الباقة {subscription.name}
+                اختر الباقة
               </button>
             </div>
           </div>
