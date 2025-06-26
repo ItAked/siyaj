@@ -9,6 +9,7 @@ import Subscriptions from "@/components/subscriptions";
 import OurGoals from "@/components/our-goals";
 import About from "@/components/about";
 import Vision from "@/components/vision";
+import ContactUs from "@/components/contact-us";
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
       <OurGoals />
       <OurServices />
       <Subscriptions />
-      {/* <ContactUs /> */}
+      <ContactUs />
     </>
   );
 }
