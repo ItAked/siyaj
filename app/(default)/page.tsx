@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 import Hero from "@/components/hero-home";
-import OurServices from "@/components/features-planet";
+import OurServices from "@/components/our-services";
 import Subscriptions from "@/components/large-testimonial";
 import OurGoals from "@/components/our-goals";
 import ContactUs from "./contact-us/page";
