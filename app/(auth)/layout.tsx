@@ -1,5 +1,3 @@
-import Logo from "@/components/ui/logo";
-
 export default function AuthLayout({
   children,
 }: {
@@ -12,7 +10,7 @@ export default function AuthLayout({
           <div className="flex h-16 items-center justify-between md:h-20">
             {/* Site branding */}
             <div className="mr-4 shrink-0">
-              <Logo />
+              {/* <Logo /> */}
             </div>
           </div>
         </div>
