@@ -19,10 +19,10 @@ const Subscriptions = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-8 my-32" id='packages'>
-      <h2 className="text-6xl font-light text-center mb-2 max-sm:text-4xl">اختر باقتك</h2>
+      <h2 className="text-6xl font-light text-center mb-2 max-sm:text-4xl" data-aos="zoom-y-out">اختر باقتك</h2>
       
       {/* Subscription cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14" data-aos="zoom-in">
         {subscriptions.map((subscription) => (
           <div 
             key={subscription.id}

@@ -10,7 +10,7 @@ export default function OurServices() {
             <h2 className="text-6xl text-gray-900">خدماتنا</h2>
           </div>
           {/* Grid */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-aos="zoom-in">
             { services.map((service, index) => (
                 <article key={index} className="text-balance text-gray-900 shadow-md rounded-md py-8 px-10">
                   <h3 className="mb-2 flex items-center space-x-2 font-medium text-2xl">{service.title}</h3>
