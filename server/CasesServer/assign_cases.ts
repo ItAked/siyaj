@@ -6,7 +6,7 @@ import axios from "axios"
 //     return response
 // }
 
-export async function post(id: number, data: { cases: string[] }) {
+export async function post(id: number, data: { cases: number[], is_checked: boolean }) {
     const response = await axios.post(
         `http://127.0.0.1:8000/api/assign-case/${id}`,
         data, // Send as object with 'cases' key
