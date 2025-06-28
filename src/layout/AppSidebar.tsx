@@ -47,6 +47,11 @@ const navItems: NavItem[] = [
     path: "/admin/practitioners"
   },
   {
+    name: "الإشتراكات",
+    icon: <TableIcon />,
+    path: "/admin/subscriptions"
+  },
+  {
     icon: <UserCircleIcon />,
     name: "الإعدادات",
     path: "/admin/profile"
