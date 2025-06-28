@@ -17,7 +17,7 @@ import { post } from "../../../server/AppointmentsServer/create_appointment";
 import Select from '@/components/form/Select'
 import { getCases } from "../../../server/CasesServer/cases";
 import { get } from "../../../server/LawyersServer/lawyers";
-import { getPractitioners } from "../../../server/practitioners";
+import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
 import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
 
 interface Appointment {
