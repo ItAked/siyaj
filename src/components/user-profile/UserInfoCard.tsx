@@ -3,12 +3,17 @@ import React, { useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
-import { readSetting } from "../../../server/read_setting";
+import { readSetting } from "../../../server/SettingServer/read_setting";
+import { updateSetting } from "../../../server/SettingServer/update_setting";
 
 export default function UserInfoCard() {
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
+  async function handleSave (){
+    await updateSetting({
+      name: profileName !== "" ? profileName : profile.name,
+      email: profileEmail !== "" ? profileEmail : profile.email,
+      phone: profilePhone !== "" ? profilePhone : profile.phone
+    })
+    getProfileData()
   };
 
 
@@ -20,6 +25,9 @@ export default function UserInfoCard() {
     };
   
     const [profile, setProfile] = useState<Profile>({})
+    const [profileName, setProfileName] = useState("")
+    const [profileEmail, setProfileEmail] = useState("")
+    const [profilePhone, setProfilePhone] = useState("")
   
     async function getProfileData() {
       const response = await readSetting()
@@ -91,17 +99,17 @@ export default function UserInfoCard() {
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div className="col-span-2 lg:col-span-1">
                     <Label>الإسم</Label>
-                    <Input type="text" defaultValue={profile.name} />
+                    <Input onChange={(e) => setProfileName(e.target.value)} type="text" defaultValue={profile.name} />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>البريد الإلكتروني</Label>
-                    <Input type="email" defaultValue={profile.email} />
+                    <Input type="email" onChange={(e) => setProfileEmail(e.target.value)} defaultValue={profile.email} />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>رقم الجوال</Label>
-                    <Input type="number" defaultValue={profile.phone} />
+                    <Input type="number" onChange={(e) => setProfilePhone(e.target.value)} defaultValue={profile.phone} />
                   </div>
                 </div>
               </div>

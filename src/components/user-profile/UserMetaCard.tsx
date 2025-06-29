@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { readSetting } from "../../../server/read_setting";
+import { readSetting } from "../../../server/SettingServer/read_setting";
 
 
 export default function UserMetaCard() {
