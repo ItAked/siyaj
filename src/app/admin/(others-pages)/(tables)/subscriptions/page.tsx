@@ -2,11 +2,11 @@
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import { readSubscriptions } from "../../../../../../server/read_subscriptions";
+import { readSubscriptions } from "../../../../../../server/SubscriptionsServer/read_subscriptions";
 import { CreateFeature } from "../../../../../../server/FeaturesServer/create_new_feature";
-import { useModal } from "@/hooks/useModal";
 import { readFeatures } from "../../../../../../server/FeaturesServer/read_features";
 import { deleteFeature } from "../../../../../../server/FeaturesServer/delete_feature";
+import { createSubscriptions } from "../../../../../../server/SubscriptionsServer/create_subscription";
 
 interface Faetures {
     id: number;
@@ -23,10 +23,10 @@ interface Subscription {
 }
 
 export default function Subscriptions() {
-    const { closeModal } = useModal();
     const [titleFeature, setTitleFeature] = useState("");
-    const [lawyerEmail, setLawyerEmail] = useState("");
-    const [lawyerPassword, setLawyerPassword] = useState("");
+    const [featureType, setFeatureType] = useState("");
+    const [featurePrice, setFeaturePrice] = useState("");
+    const [featureAssigned, setFeaturesAssigned] = useState<number[]>([]);
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
     const [features, setFeatures] = useState<Faetures[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -64,8 +64,9 @@ export default function Subscriptions() {
 
             form.append('title', titleFeature)
             await CreateFeature(form)
-            closeModal();
+            getFeatures()
             getSubscriptions()
+            setTitleFeature("")
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
@@ -76,6 +77,11 @@ export default function Subscriptions() {
     async function handleRemoveFeature(id: number) {
         await deleteFeature(id);
         getFeatures()
+        getSubscriptions()
+    }
+
+    async function handleAddSubscription() {
+        await createSubscriptions({name: titleFeature, type: featureType, price: featurePrice, features: featureAssigned})
     }
 
     useEffect(() => {
@@ -94,13 +100,13 @@ export default function Subscriptions() {
                     <div className="modal-box">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div>
-                                <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة محامي</h5>
+                                <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة باقة جديدة</h5>
                             </div>
                             <div className="mt-8">
                                 <div>
                                     <div>
                                         <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">الباقة</label>
-                                        <input name="laywer_name" type="text" value={titleFeature} onChange={(e) => setTitleFeature(e.target.value)}
+                                        <input name="name" type="text" value={titleFeature} onChange={(e) => setTitleFeature(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
                                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
@@ -111,7 +117,7 @@ export default function Subscriptions() {
                                 <div>
                                     <div>
                                         <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">نوع الباقة</label>
-                                        <input name="laywer_email" type="email" value={lawyerEmail} onChange={(e) => setLawyerEmail(e.target.value)}
+                                        <input name="type" type="text" value={featureType} onChange={(e) => setFeatureType(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
                                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
@@ -122,16 +128,47 @@ export default function Subscriptions() {
                                 <div>
                                     <div>
                                         <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر الباقة</label>
-                                        <input name="laywer_password" type="password" value={lawyerPassword} onChange={(e) => setLawyerPassword(e.target.value)}
+                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
                                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                                     </div>
                                 </div>
                             </div>
+                            <div className="mt-8">
+                                <div>
+                                    <div>
+                                        <details className="dropdown">
+                                            <summary className="btn m-1">المميزات المفعلة</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                { features.map((feature) => (
+                                                    <li key={feature.id}>
+                                                        <label className="label">
+                                                            <input
+                                                                type="checkbox"
+                                                                value={feature.id}
+                                                                checked={featureAssigned.includes(feature.id)}
+                                                                onChange={(e) => {
+                                                                    const id = Number(e.target.value);
+                                                                    setFeaturesAssigned(prev =>
+                                                                        e.target.checked
+                                                                            ? [...prev, id]
+                                                                            : prev.filter(fid => fid !== id)
+                                                                    );
+                                                                }}
+                                                                className="checkbox"
+                                                            /> {feature.title}
+                                                        </label>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </details>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto" onClick={handleAddSubscription}>إضافة باقة جديدة</button>
                                 <form method="dialog">
                                     <button className="btn">إغلاق</button>
                                 </form>
@@ -141,7 +178,7 @@ export default function Subscriptions() {
                 </dialog>
                 <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box">
-                        <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
+                        <div className="flex flex-col px-2">
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">تعديل المميزات</h5>
                             </div>
@@ -186,7 +223,7 @@ export default function Subscriptions() {
                             const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                             if (modal) modal.showModal();
                         }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                    py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
+                                    py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة باقة جديدة</button>
                     <button onClick={() => {
                             const modal = document.getElementById('my_modal_6') as HTMLDialogElement | null;
                             if (modal) modal.showModal();

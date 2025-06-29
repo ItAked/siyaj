@@ -69,18 +69,15 @@ export default function Lawyers() {
         const isChecked = event.target.checked;
 
         try {
-            // Send to backend
             await post(lawyerId, { 
                 cases: [caseId], 
                 is_checked: isChecked 
             });
 
-            // Optimistic UI update
             setLawyers(prev => prev.map(lawyer => {
                 if (lawyer.id !== lawyerId) return lawyer;
 
                 if (isChecked) {
-                    // Move from unassigned to assigned
                     const caseItem = lawyer.unassigned_cases.find(c => c.id === caseId);
                     if (caseItem) {
                         return {
@@ -105,7 +102,7 @@ export default function Lawyers() {
         } catch (error) {
             console.error('Failed to update case status:', error);
             // Optionally revert the UI change if the API call fails
-            getLawyers(""); // Refresh data from server
+            getLawyers("");
         }
     }
 
