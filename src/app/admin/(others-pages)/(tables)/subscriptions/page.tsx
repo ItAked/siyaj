@@ -3,8 +3,10 @@
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { readSubscriptions } from "../../../../../../server/read_subscriptions";
-import { CreateFeature } from "../../../../../../server/create_new_feature";
+import { CreateFeature } from "../../../../../../server/FeaturesServer/create_new_feature";
 import { useModal } from "@/hooks/useModal";
+import { readFeatures } from "../../../../../../server/FeaturesServer/read_features";
+import { deleteFeature } from "../../../../../../server/FeaturesServer/delete_feature";
 
 interface Faetures {
     id: number;
@@ -26,6 +28,7 @@ export default function Subscriptions() {
     const [lawyerEmail, setLawyerEmail] = useState("");
     const [lawyerPassword, setLawyerPassword] = useState("");
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+    const [features, setFeatures] = useState<Faetures[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     async function getSubscriptions() {
@@ -34,6 +37,19 @@ export default function Subscriptions() {
             const response = await readSubscriptions();
             
             setSubscriptions(response);
+        } catch (error) {
+            console.error("Failed to fetch lawyers:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function getFeatures() {
+        setIsLoading(true);
+        try {
+            const response = await readFeatures();
+            
+            setFeatures(response);
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
@@ -57,8 +73,14 @@ export default function Subscriptions() {
         }
     }
 
+    async function handleRemoveFeature(id: number) {
+        await deleteFeature(id);
+        getFeatures()
+    }
+
     useEffect(() => {
         getSubscriptions();
+        getFeatures();
     }, []);
 
     return (
@@ -140,6 +162,20 @@ export default function Subscriptions() {
                                 <form method="dialog">
                                     <button className="btn">إغلاق</button>
                                 </form>
+                            </div>
+                            <div className="grid grid-cols-3 place-items-center gap-y-8 mt-8">
+                                { features.map((feature) => (
+                                   <div key={feature.id} className="indicator">
+                                        <div className="indicator-item indicator-top">
+                                            <button className="btn btn-error" onClick={()=> handleRemoveFeature(feature.id)}>حذف</button>
+                                        </div>
+                                        <div className="card border-base-300 border shadow-sm">
+                                            <div className="card-body">
+                                                <h2 className="card-title">{feature.title}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
