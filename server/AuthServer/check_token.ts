@@ -1,10 +1,22 @@
 import axios from "axios";
 
-export async function get () {
-    const data = await axios.get('http://127.0.0.1:8000/api/checkToken', {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+export async function get() {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
 
-    console.log(data.data);
-    
+        const response = await axios.get('http://127.0.0.1:8000/api/checkToken', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
+        });
 
-    return data.data;
+        return response.data;
+    } catch (error) {
+        console.error('Token validation failed:', error);
+        throw error;
+    }
 }

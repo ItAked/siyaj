@@ -18,9 +18,6 @@ export default function SignInForm() {
   })
   const router = useRouter()
 
-//   async function Login() {
-//   let response = await post()
-// }
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     try {
       setUser((prevUser) => {
@@ -39,8 +36,14 @@ export default function SignInForm() {
     formData.append('password', user.password)
 
     const response = await post(formData)
-    alert(response)
-    router.push('/admin')
+    console.log(response);
+    
+    alert('مرحبًا من جديد')
+    if (response === 'admin') {
+      router.push('/admin')
+    } else {
+      router.push('/lawyer')
+    }
   }
 
   return (

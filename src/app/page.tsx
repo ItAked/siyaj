@@ -1,37 +1,65 @@
 'use client'
-
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { get } from "../../server/AuthServer/check_token";
 
 export default function Home() {
-  const router = useRouter();
-  const [message, setMessage] = useState("");
+    const router = useRouter();
+    const [authState, setAuthState] = useState<{
+        loading: boolean;
+        message: string;
+        role: 'admin' | 'lawyer' | null;
+    }>({
+        loading: true,
+        message: '',
+        role: null
+    });
 
-  async function checkToken() {
-    try {
-      const response = await get();
-    
-      setMessage(response.message);
-    } catch (error) {
-      setMessage(error.response.data.message);
+    async function checkToken() {
+        try {
+            const response = await get();
+            setAuthState({
+                loading: false,
+                message: response.message,
+                role: response.role
+            });
+        } catch (error) {
+            setAuthState({
+                loading: false,
+                message: error.response?.data?.message || "Authentication failed",
+                role: null
+            });
+            localStorage.removeItem('token');
+        }
     }
-  }
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+    useEffect(() => {
+        checkToken();
+    }, []);
 
-  useEffect(() => {    
-    if (message === 'Token is valid') {
-      router.push('/admin');
+    useEffect(() => {
+        if (authState.loading) return;
+        
+        if (authState.message === 'Token is valid') {
+            // Redirect based on role
+            switch(authState.role) {
+                case 'admin':
+                    router.push('/admin');
+                    break;
+                case 'lawyer':
+                    router.push('/lawyer');
+                    break;
+                default:
+                    router.push('/unauthorized');
+            }
+        } else {
+            router.push('/signin');
+        }
+    }, [authState, router]);
+
+    if (authState.loading) {
+        return <div>Loading...</div>; // Add a proper loading component
     }
 
-    if (message === "Unauthenticated.") {
-      localStorage.removeItem('token')
-      router.push('/signin');
-    }
-  }, [message, router]);
-
-  return null;
+    return null;
 }

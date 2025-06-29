@@ -9,5 +9,5 @@ export async function post (user:FormData) {
 
     localStorage.setItem('token', tokenSubstring)
 
-    return 'مرحبا بك من جديد'
+    return data.data.message.role
 }
