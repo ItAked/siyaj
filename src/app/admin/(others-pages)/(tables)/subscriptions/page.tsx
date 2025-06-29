@@ -8,6 +8,7 @@ import { readFeatures } from "../../../../../../server/FeaturesServer/read_featu
 import { deleteFeature } from "../../../../../../server/FeaturesServer/delete_feature";
 import { createSubscriptions } from "../../../../../../server/SubscriptionsServer/create_subscription";
 import { updateSubscription } from "../../../../../../server/SubscriptionsServer/update_subscription";
+import { deleteSubscriptions } from "../../../../../../server/SubscriptionsServer/delete_subscription";
 
 interface Faetures {
     id: number;
@@ -88,6 +89,12 @@ export default function Subscriptions() {
 
     async function handleUpdateSubscription (id: number) {
         await updateSubscription(id, {name: titleFeature, type: featureType, price: featurePrice, features: featureAssigned})
+        getSubscriptions();
+        getFeatures();
+    }
+
+    async function handleRemoveSubscription(id: number) {
+        await deleteSubscriptions(id)
         getSubscriptions();
         getFeatures();
     }
@@ -375,15 +382,16 @@ export default function Subscriptions() {
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <button onClick={() => {
-                            const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
-                            if (modal) modal.showModal();
-                            setTitleFeature(subscription.name)
-                            setFeaturePrice(subscription.price.toString())
-                            setFeatureType(subscription.type)
-                            setFeaturesAssigned(subscription.assigned_features.map(f => f.id))
-                            setSubscriptionId(subscription.id)
-                        }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
+                                        const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
+                                        if (modal) modal.showModal();
+                                        setTitleFeature(subscription.name)
+                                        setFeaturePrice(subscription.price.toString())
+                                        setFeatureType(subscription.type)
+                                        setFeaturesAssigned(subscription.assigned_features.map(f => f.id))
+                                        setSubscriptionId(subscription.id)
+                                    }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                                     py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">تعديل الباقة</button>
+                                    <div onClick={() => handleRemoveSubscription(subscription.id)} className="btn btn-error">حذف</div>
                                 </TableCell>
                             </TableRow>
                         ))}
