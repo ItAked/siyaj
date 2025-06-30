@@ -1,10 +1,10 @@
 "use client";
 
-import { useSidebar } from "@/context/SidebarContext";
-import AppHeader from "@/layout/AppHeader";
-import AppSidebar from "@/layout/AppSidebar";
-import Backdrop from "@/layout/Backdrop";
+import AppHeader from "../../layout/AppHeader";
+import Backdrop from "../../layout/Backdrop";
 import React from "react";
+import AppSidebarLawyers from "../../layout/AppSidebarLawyers";
+import { useSidebar } from "../../context/SidebarContext";
 
 export default function AdminLayout({
   children,
@@ -23,7 +23,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen xl:flex" dir="rtl">
       {/* Sidebar and Backdrop */}
-      <AppSidebar />
+      <AppSidebarLawyers />
       <Backdrop />
       {/* Main Content Area */}
       <div
