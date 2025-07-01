@@ -7,9 +7,9 @@ import { useSidebar } from "../context/SidebarContext";
 import {
   CalenderIcon,
   ChevronDownIcon,
+  DocsIcon,
   GridIcon,
   HorizontaLDots,
-  TableIcon,
   UserCircleIcon,
 } from "../icons/index";
 
@@ -23,12 +23,12 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "نظرة عامة",
+    name: "الرئيسية",
     path: "/lawyer"
   },
   {
     name: "القضايا",
-    icon: <TableIcon />,
+    icon: <DocsIcon />,
     path: "/lawyer/cases"
   },
   {
@@ -189,7 +189,6 @@ const AppSidebarLawyers: React.FC = () => {
   }, [pathname,isActive]);
 
   useEffect(() => {
-    // Set the height of the submenu items when the submenu is opened
     if (openSubmenu !== null) {
       const key = `${openSubmenu.type}-${openSubmenu.index}`;
       if (subMenuRefs.current[key]) {
@@ -216,7 +215,8 @@ const AppSidebarLawyers: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-sky-950 dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
+        duration-300 ease-in-out z-50 border-r border-gray-200 
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"
@@ -230,34 +230,32 @@ const AppSidebarLawyers: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex  ${
-          !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
-        }`}
+        className={`py-8 flex justify-center`}
       >
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <Image
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src="/images/logo/Logo.png"
                 alt="Logo"
-                width={220}
-                height={220}
+                width={51}
+                height={53}
               />
               <Image
                 className="hidden dark:block"
-                src="/images/logo/logo.svg"
+                src="/images/logo/Logo.png"
                 alt="Logo"
-                width={220}
-                height={220}
+                width={51}
+                height={53}
               />
             </>
           ) : (
             <Image
-              src="/images/logo/logo.svg"
+              src="/images/logo/Logo.png"
               alt="Logo"
-              width={32}
-              height={32}
+              width={51}
+              height={53}
             />
           )}
         </Link>
