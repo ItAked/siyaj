@@ -1,9 +1,9 @@
 'use client'
 
-import Input from "@/components/form/input/InputField";
-import Label from "@/components/form/Label";
-import Button from "@/components/ui/button/Button";
-import { EyeCloseIcon, EyeIcon } from "@/icons";
+import Input from "../../components/form/input/InputField";
+import Label from "../../components/form/Label";
+import Button from "../../components/ui/button/Button";
+import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { post } from "../../../server/AuthServer/login";
@@ -36,7 +36,6 @@ export default function SignInForm() {
     formData.append('password', user.password)
 
     const response = await post(formData)
-    console.log(response);
     
     alert('مرحبًا من جديد')
     if (response === 'admin') {

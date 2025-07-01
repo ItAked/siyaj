@@ -41,6 +41,7 @@ export default function Home() {
         if (authState.loading) return;
         
         if (authState.message === 'Token is valid') {
+            console.log(localStorage.getItem('token'));
             // Redirect based on role
             switch(authState.role) {
                 case 'admin':
