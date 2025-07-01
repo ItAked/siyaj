@@ -1,5 +1,5 @@
 "use client";
-import {BoxIconLine, GroupIcon } from "@/icons";
+import {BoxIconLine, GroupIcon } from "../icons";
 import { useEffect, useState } from "react";
 import { get } from "../../server/CasesServer/cases_status";
 

@@ -30,7 +30,7 @@ export default function AllCasesLawyer() {
   }
 
   async function updateCase(caseId: number, event: string) {
-    const response = await updateCaseStatus(caseId, {status: event})
+    await updateCaseStatus(caseId, {status: event})
     readCases("")
   }
 

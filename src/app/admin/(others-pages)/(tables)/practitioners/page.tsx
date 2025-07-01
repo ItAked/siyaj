@@ -1,7 +1,7 @@
 'use client'
 
-import Badge from "@/components/ui/badge/Badge";
-import { Table, TableHeader, TableRow, TableCell, TableBody } from "@/components/ui/table";
+import Badge from "../../../../../components/ui/badge/Badge";
+import { Table, TableHeader, TableRow, TableCell, TableBody } from "../../../../../components/ui/table";
 import React, { useEffect, useState } from "react";
 import { getPractitioners } from "../../../../../../server/PractitionersServer/practitioners";
 import { updatePractitionerStatus } from "../../../../../../server/PractitionersServer/update_practitioner_status";

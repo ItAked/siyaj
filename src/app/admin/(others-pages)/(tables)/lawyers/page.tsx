@@ -1,7 +1,7 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { useModal } from "@/hooks/useModal";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
+import { useModal } from "../../../../../hooks/useModal";
 import { ChangeEvent, useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";

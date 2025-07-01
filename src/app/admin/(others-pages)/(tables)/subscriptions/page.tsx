@@ -1,6 +1,6 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
 import { useEffect, useState } from "react";
 import { readSubscriptions } from "../../../../../../server/SubscriptionsServer/read_subscriptions";
 import { CreateFeature } from "../../../../../../server/FeaturesServer/create_new_feature";

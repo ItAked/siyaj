@@ -1,8 +1,8 @@
 import { Tajawal } from 'next/font/google';
 import './globals.css';
 
-import { SidebarProvider } from '@/context/SidebarContext';
-import { ThemeProvider } from '@/context/ThemeContext';
+import { SidebarProvider } from '../context/SidebarContext';
+import { ThemeProvider } from '../context/ThemeContext';
 
 const tajawal = Tajawal({
   weight: ["200", "300", "400", "500", "700", "800", "900"],
