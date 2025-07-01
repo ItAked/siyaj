@@ -10,6 +10,8 @@ import {
 import Badge from "./ui/badge/Badge";
 import React, { useEffect, useState } from "react";
 import { getCases } from "../../server/CasesServer/cases";
+import { HorizontaLDots } from "../icons";
+import Pagination from "./tables/Pagination";
 
 interface Case {
   id: number;
@@ -19,36 +21,56 @@ interface Case {
   status: string
 }
 
+type Meta = {
+  current_page?: number;
+  last_page?: number;
+}
+
 export default function NewCasesTable() {
     const [cases, setCases] = useState<Case[]>([])
+    const [pagination, setPagination] = useState<Meta>({})
 
-  async function readCases(value: string) {
-    const response = await getCases(value)
+  async function readCases(value: string, search?: string, page: number = 1) {
+    const response = await getCases(value, search, page)
     
-    setCases(response.data.data)
+    setCases(response.data)
+    setPagination(response.meta);
   }
 
   useEffect(() => {
-    readCases("")
+    readCases("", "", 1)
   }, [])
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            طلبات القضايا الجديدة
-          </h3>
+          <h3 className="text-base font-medium text-gray-800 dark:text-white/90">القضايا الجديدة</h3>
         </div>
 
         <div className="flex items-center gap-3">
-          <form className="filter">
-            <input className="btn btn-square" type="reset" onChange={(e) => readCases(e.target.value)} value="x" />
-            <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="" name="status" aria-label="الكل"/>
-            <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها" name="status" aria-label="القضايا المغلقة"/>
-            <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="معلقة" name="status" aria-label="القضايا المعلقة"/>
-            <input className="btn" type="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل" name="status" aria-label="القضايا الحالية"/>
-          </form>
+          <label className="input">
+            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان القضية" />
+          </label>
+          <details className="dropdown">
+            <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
+            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
+              <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
+              name="status" />الكل</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها"
+              name="status" />القضايا المغلقة</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="معلقة"
+              name="status" />القضايا المعلقة</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل"
+              name="status" />القضايا الحالية</label></li>
+            </ul>
+          </details>
         </div>
       </div>
       <div className="max-w-full overflow-x-auto">
@@ -121,6 +143,7 @@ export default function NewCasesTable() {
             ))}
           </TableBody>
         </Table>
+        <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number): void => {readCases("", "", page);}} />
       </div>
     </div>
   );
