@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
-import NewCasesTable from "@/components/NewCasesTable";
-import { CasesStatus } from "@/components/CasesStatus";
+import NewCasesTable from "../../components/NewCasesTable";
+import { CasesStatus } from "../../components/CasesStatus";
 
 export const metadata: Metadata = {
   title:

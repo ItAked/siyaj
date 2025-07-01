@@ -10,11 +10,11 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { useModal } from "@/hooks/useModal";
-import { Modal } from "@/components/ui/modal";
+import { useModal } from "../../hooks/useModal";
+import { Modal } from "../../components/ui/modal";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
 import { post } from "../../../server/AppointmentsServer/create_appointment";
-import Select from '@/components/form/Select'
+import Select from '../../components/form/Select'
 import { getCases } from "../../../server/CasesServer/cases";
 import { get } from "../../../server/LawyersServer/lawyers";
 import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
@@ -92,7 +92,7 @@ const Calendar: React.FC = () => {
     }
   }
   async function readLawyers() {
-    const response = await get()
+    const response = await get('')
 
     const l = response.data.data.map((lawyerItem: { id: number; name: string; }) => ({
         value: lawyerItem.id,
@@ -101,7 +101,7 @@ const Calendar: React.FC = () => {
     setLawyers(l)
   }
   async function readPractitioners() {
-    const response = await getPractitioners()
+    const response = await getPractitioners('')
 
     const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
@@ -195,7 +195,6 @@ const Calendar: React.FC = () => {
     setSelectedAppointment(null);
   };
 
-  // Convert appointments to FullCalendar events
   const calendarEvents = appointments.map(appointment => ({
     id: appointment.id,
     start: `${appointment.date}T${appointment.time}`,
