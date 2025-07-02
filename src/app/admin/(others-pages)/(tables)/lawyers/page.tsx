@@ -6,19 +6,23 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
 import { post } from "../../../../../../server/CasesServer/assign_cases";
+import Pagination from "../../../../../components/tables/Pagination";
 
 interface CaseItem {
     id: number;
     title: string;
-    is_checked?: boolean; // Add this to match your backend
+    is_checked?: boolean;
 }
-
 interface Lawyer {
     id: number;
     assigned_cases: CaseItem[];
     unassigned_cases: CaseItem[];
     phone: string;
     name: string;
+}
+type Meta = {
+  current_page?: number;
+  last_page?: number;
 }
 
 export default function Lawyers() {
@@ -28,6 +32,7 @@ export default function Lawyers() {
     const [lawyerPassword, setLawyerPassword] = useState("");
     const [lawyers, setLawyers] = useState<Lawyer[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [pagination, setPagination] = useState<Meta>({})
 
     function resetModalField() {
         setLawyerName("");
@@ -35,11 +40,12 @@ export default function Lawyers() {
         setLawyerPassword("");
     }
 
-    async function getLawyers(value: string) {
+    async function getLawyers(search?: string, page: number = 1) {
         setIsLoading(true);
         try {
-            const response = await get(value);
+            const response = await get(search, page);
             setLawyers(response.data.data);
+            setPagination(response.data.meta)
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
@@ -54,11 +60,10 @@ export default function Lawyers() {
         formData.append('password', lawyerPassword);
         
         try {
-            const response = await createLawyer(formData);
-            console.log(response.data);
+            await createLawyer(formData);
             closeModal();
             resetModalField();
-            getLawyers(""); // Refresh the list
+            getLawyers("", 1);
         } catch (error) {
             console.error("Failed to add lawyer:", error);
         }
@@ -101,24 +106,23 @@ export default function Lawyers() {
             }));
         } catch (error) {
             console.error('Failed to update case status:', error);
-            // Optionally revert the UI change if the API call fails
-            getLawyers("");
+            getLawyers("", 1);
         }
     }
 
     useEffect(() => {
-        getLawyers("");
+        getLawyers("", 1);
     }, []);
 
     return (
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
             <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">قائمة المحامين</h3>
+                <div className="grid gap-y-18">
+                    <h3 className="text-2xl font-medium text-gray-800 dark:text-white/90">المحامين</h3>
                 </div>
 
                 <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box">
+                    <div className="modal-box dark:bg-gray-900">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة محامي</h5>
@@ -167,20 +171,22 @@ export default function Lawyers() {
                     </div>
                 </dialog>
 
-                <button onClick={() => {
+                <div className="flex items-center gap-x-4">
+                    <label className="input">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="w-full" placeholder="ابحث بإسم المحامي" />
+                    </label>
+
+                    <button onClick={() => {
                         const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                         if (modal) modal.showModal();
-                    }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
-
-                <div className="flex items-center gap-3">
-                    <select onChange={(e) => getLawyers(e.target.value)} defaultValue="اختر المحامي" className="select">
-                        <option disabled={true}>اختر المحامي</option>
-                        <option value="">الكل</option>
-                        { lawyers.map((lawyer) => (
-                        <option value={lawyer.name} key={lawyer.id}>{lawyer.name}</option>
-                        ))}
-                    </select>
+                        }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
+                        py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
                 </div>
             </div>
 
@@ -189,9 +195,6 @@ export default function Lawyers() {
                     <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
                         <TableRow>
                             <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">اسم المحامي</TableCell>
-                            <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">رقم الهاتف</TableCell>
-                            <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">القضايا المسندة له</TableCell>
-                            <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">القضايا الغير مسندة له</TableCell>
                         </TableRow>
                     </TableHeader>
 
@@ -203,47 +206,64 @@ export default function Lawyers() {
                         ) : lawyers.map((lawyer) => (
                             <TableRow key={lawyer.id}>
                                 <TableCell className="py-3">
-                                    <div className="flex items-center gap-3">
+                                    <div className="grid gap-y-4 gap-3">
                                         <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{lawyer.name}</p>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{lawyer.phone}</TableCell>
-                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                    <div className="grid grid-cols-1 gap-2">
-                                        {lawyer.assigned_cases.map((caseItem) => (
-                                            <label key={caseItem.id} className="flex items-center gap-2">
-                                                <input
-                                                    type="checkbox"
-                                                    value={caseItem.id}
-                                                    checked={true}
-                                                    onChange={(e) => handleCheckCases(e, lawyer.id)}
-                                                    className="checkbox checkbox-primary"
-                                                />
-                                                <span>{caseItem.title}</span>
-                                            </label>
-                                        ))}
+                                        <p className="font-medium text-gray-400 text-theme-sm dark:text-white/90">{lawyer.phone}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <div className="grid grid-cols-1 gap-2">
-                                        {lawyer.unassigned_cases.map((caseItem) => (
-                                            <label key={caseItem.id} className="flex items-center gap-2">
-                                                <input
-                                                    type="checkbox"
-                                                    value={caseItem.id}
-                                                    checked={false}
-                                                    onChange={(e) => handleCheckCases(e, lawyer.id)}
-                                                    className="checkbox checkbox-primary"
-                                                />
-                                                <span>{caseItem.title}</span>
-                                            </label>
-                                        ))}
+                                        <details className="dropdown">
+                                            <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
+                                            rounded-lg">القضايا المسندة له</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
+                                                {lawyer.assigned_cases.map((caseItem) => (
+                                                    <i key={caseItem.id} className="my-2">
+                                                    <label className="flex items-center gap-2">
+                                                        <input
+                                                            type="checkbox"
+                                                            value={caseItem.id}
+                                                            checked={true}
+                                                            onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            className="checkbox"
+                                                        />
+                                                        <span>{caseItem.title}</span>
+                                                    </label>
+                                                    </i>
+                                                ))}
+                                            </ul>
+                                        </details>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                                    <div className="grid grid-cols-1 gap-2">
+                                        <details className="dropdown">
+                                            <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
+                                            rounded-lg">القضايا غير المسندة له</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
+                                                {lawyer.unassigned_cases.map((caseItem) => (
+                                                    <i key={caseItem.id} className="my-2">
+                                                    <label className="flex items-center gap-2">
+                                                        <input
+                                                            type="checkbox"
+                                                            value={caseItem.id}
+                                                            checked={false}
+                                                            onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            className="checkbox"
+                                                        />
+                                                        <span>{caseItem.title}</span>
+                                                    </label>
+                                                    </i>
+                                                ))}
+                                            </ul>
+                                        </details>
                                     </div>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number): void => {getLawyers("", page);}} />
             </div>
         </div>
     );
