@@ -1,9 +1,13 @@
-import axios from "axios"
+import axios from "axios";
 
-export async function post (user: FormData) {
-    let data  = await axios.post(`http://127.0.0.1:8000/api/login`, user)
+export async function post (user:FormData) {
+    const data = await axios.post('http://127.0.0.1:8000/api/login', user);
 
-    localStorage.setItem('token', data.data.message.access_token)
+    const token = data.data.message.access_token;
+    const pipeIndex = token.indexOf('|');
+    const tokenSubstring = token.substring(pipeIndex + 1)
 
-    return 'مرحبًا بك من جديد'
+    localStorage.setItem('token', tokenSubstring)
+
+    return data.data.message.role
 }

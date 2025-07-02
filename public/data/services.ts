@@ -1,4 +1,4 @@
-let services = [
+const services = [
     {
       'id': 1,
       'title': 'الخدمة الأولى',

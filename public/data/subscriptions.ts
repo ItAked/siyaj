@@ -1,4 +1,4 @@
-let subscriptions = [
+const subscriptions = [
         {
           id: 1,
           name: 'البرونزية',

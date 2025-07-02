@@ -1,4 +1,4 @@
-let goals = [
+const goals = [
         {
             id: 1,
             title: 'رفع الكفاءة القانونية',
