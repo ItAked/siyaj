@@ -10,8 +10,6 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { useModal } from "../../hooks/useModal";
-import { Modal } from "../../components/ui/modal";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
 import { post } from "../../../server/AppointmentsServer/create_appointment";
 import Select from '../../components/form/Select'
@@ -42,7 +40,6 @@ const Calendar: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const { isOpen, openModal, closeModal } = useModal();
   const[cases, setCases] = useState([])
   const[lawyers, setLawyers] = useState([])
   const[practitioner, setPractitioner] = useState([])
@@ -66,12 +63,12 @@ const Calendar: React.FC = () => {
     try {
       setLoading(true)
 
-      const response = await getCases("")
-      
-      const c = response.data.data.map((caseItem: { id: number; title: string; }) => ({
+      const response = await getCases("", "", 1)
+      const c = response.data.map((caseItem: { id: number; case: string; }) => ({
         value: caseItem.id,
-        label: caseItem.title
-      }));
+        label: caseItem.case
+      }));      
+
       setCases(c)
     } catch (error) {
       setError(String(error));
@@ -79,34 +76,38 @@ const Calendar: React.FC = () => {
       setLoading(false)
     }
   }
+
   async function readAppointments() {
     try {
       setLoading(true);
 
       const response = await getAppointments();
       setAppointments(response.data);
+
     } catch (err) {
       setError(String(err));
     } finally {
       setLoading(false);
     }
   }
+
   async function readLawyers() {
     const response = await get('')
-
     const l = response.data.data.map((lawyerItem: { id: number; name: string; }) => ({
         value: lawyerItem.id,
         label: lawyerItem.name
     }));
+
     setLawyers(l)
   }
+
   async function readPractitioners() {
     const response = await getPractitioners('')
-
     const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
         label: practitionerItem.name
     }));
+
     setPractitioner(p)
   }
 
@@ -120,12 +121,12 @@ const Calendar: React.FC = () => {
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     resetModalFields();
     setAppointmentDate(selectInfo.startStr.split("T")[0]);
-    openModal();
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     const event = clickInfo.event;
     const appointment = appointments.find(a => a.id.toString() === event.id);
+    
     if (appointment) {
       setSelectedAppointment(appointment);
       setAppointmentTitle(event.title);
@@ -134,13 +135,12 @@ const Calendar: React.FC = () => {
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
-      openModal();
     }
   };
 
   const handleAddOrUpdateAppointment = async () => {
     try {
-      if (selectedAppointment) {
+      if (selectedAppointment) {        
         setAppointments(prevAppointments =>
           prevAppointments.map(appointment =>
             appointment.id === selectedAppointment.id
@@ -156,7 +156,7 @@ const Calendar: React.FC = () => {
               : appointment
           )
         );
-        const updatedAppointment = {
+        const updatedSelectedAppointment = {
           ...selectedAppointment,
           case_id: Number(appointmentTitle),
           date: appointmentDate,
@@ -165,7 +165,8 @@ const Calendar: React.FC = () => {
           lawyer_id: Number(appointmentLawyer),
           practitioner_id: Number(appointmentPractitioner)
         };
-        await updateAppointment(updatedAppointment, Number(selectedAppointment.id));        
+        
+        await updateAppointment(updatedSelectedAppointment, Number(selectedAppointment.id));        
       } else {
         const newAppointment: Appointment = {
           id: Date.now().toString(),
@@ -179,7 +180,7 @@ const Calendar: React.FC = () => {
         const response = await post(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
-      closeModal();
+      readAppointments();
       resetModalFields();
     } catch (err) {
       console.error("Error saving appointment:", err);
@@ -231,24 +232,23 @@ const Calendar: React.FC = () => {
           eventContent={renderEventContent}
           customButtons={{
             addEventButton: {
-              text: "إضافة موعد +",
-              click: openModal,
+              text: selectedAppointment ? "تعديل الموعد" : "إضافة موعد",
+              click: () => {
+                const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+                if (modal && typeof modal.showModal === 'function') {
+                  modal.showModal();
+                }
+              },
             },
           }}
         />
       </div>
-      <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
-        className="max-w-[700px] p-6 lg:p-10"
-      >
-        <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
-          <div>
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <div className="mt-8">
             <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">
               {selectedAppointment ? "تعديل الموعد" : "إضافة موعد"}
             </h5>
-          </div>
-          <div className="mt-8">
             <div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -341,24 +341,20 @@ const Calendar: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto"
-            >
-              إغلاق
-            </button>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">إغلاق</button>
+            </form>
             <button
               onClick={handleAddOrUpdateAppointment}
               type="button"
-              className="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto"
+              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto"
             >
               {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}
             </button>
           </div>
         </div>
-      </Modal>
+      </dialog>
     </div>
   );
 };
