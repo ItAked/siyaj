@@ -9,12 +9,13 @@ import { deleteFeature } from "../../../../../../server/FeaturesServer/delete_fe
 import { createSubscriptions } from "../../../../../../server/SubscriptionsServer/create_subscription";
 import { updateSubscription } from "../../../../../../server/SubscriptionsServer/update_subscription";
 import { deleteSubscriptions } from "../../../../../../server/SubscriptionsServer/delete_subscription";
+import { HorizontaLDots } from "../../../../../icons";
+import Pagination from "../../../../../components/tables/Pagination";
 
 interface Faetures {
     id: number;
     title: string;
 }
-
 interface Subscription {
     id: number;
     name: string;
@@ -22,6 +23,10 @@ interface Subscription {
     price: number;
     assigned_features: Faetures[];
     unassigned_features: Faetures[];
+}
+type Meta = {
+  current_page?: number;
+  last_page?: number;
 }
 
 export default function Subscriptions() {
@@ -33,13 +38,15 @@ export default function Subscriptions() {
     const [features, setFeatures] = useState<Faetures[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [subscreptionId, setSubscriptionId] = useState(0)
+    const [pages, setPages] = useState<Meta>({})
 
-    async function getSubscriptions() {
+    async function getSubscriptions(page = 1) {
         setIsLoading(true);
         try {
-            const response = await readSubscriptions();
+            const response = await readSubscriptions(page);
             
-            setSubscriptions(response);
+            setSubscriptions(response.data);
+            setPages(response.meta)
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
@@ -107,12 +114,24 @@ export default function Subscriptions() {
     return (
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
             <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
+                <div className="grid gap-y-4">
                     <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">الباقات</h3>
+                    <div className="flex items-center gap-x-4">
+                        <button onClick={() => {
+                                const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
+                                if (modal) modal.showModal();
+                            }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
+                                        py-2.5 text-base font-medium text-white hover:bg-yellow-600 sm:w-auto">+ إضافة باقة جديدة</button>
+                        <button onClick={() => {
+                                const modal = document.getElementById('my_modal_6') as HTMLDialogElement | null;
+                                if (modal) modal.showModal();
+                            }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-yellow-600 px-4
+                                        py-2.5 text-sm font-medium text-white sm:w-auto">تعديل المميزات</button>
+                    </div>
                 </div>
 
                 <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box">
+                    <div className="modal-box dark:bg-gray-900">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة باقة جديدة</h5>
@@ -192,7 +211,7 @@ export default function Subscriptions() {
                 </dialog>
 
                 <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box">
+                    <div className="modal-box dark:bg-gray-900">
                         <div className="flex flex-col px-2">
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">تعديل المميزات</h5>
@@ -223,7 +242,7 @@ export default function Subscriptions() {
                                         </div>
                                         <div className="card border-base-300 border shadow-sm">
                                             <div className="card-body">
-                                                <h2 className="card-title">{feature.title}</h2>
+                                                <h2 className="card-title dark:text-white">{feature.title}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -313,20 +332,6 @@ export default function Subscriptions() {
                         </div>
                     </div>
                 </dialog>
-
-                <div className="flex items-center">
-                    <button onClick={() => {
-                            const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
-                            if (modal) modal.showModal();
-                        }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                    py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة باقة جديدة</button>
-                    <button onClick={() => {
-                            const modal = document.getElementById('my_modal_6') as HTMLDialogElement | null;
-                            if (modal) modal.showModal();
-                        }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                    py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">تعديل المميزات</button>
-                </div>
-
             </div>
 
             <div className="max-w-full overflow-x-auto">
@@ -338,7 +343,6 @@ export default function Subscriptions() {
                             <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">سعر الباقة</TableCell>
                             <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">المميزات المفعلة</TableCell>
                             <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">المميزات الغير مفعلة</TableCell>
-                            <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">تعديل</TableCell>
                         </TableRow>
                     </TableHeader>
 
@@ -362,41 +366,57 @@ export default function Subscriptions() {
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{subscription.price}</TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <div className="grid grid-cols-1 gap-2">
-                                        {subscription.assigned_features.map((caseItem) => (
-                                            <label key={caseItem.id} className="flex items-center gap-2">
-                                                <input readOnly type="checkbox" value={caseItem.id} checked={true} className="checkbox checkbox-primary" />
-                                                <span>{caseItem.title}</span>
-                                            </label>
-                                        ))}
+                                        <ul>
+                                            {subscription.assigned_features.map((caseItem) => (
+                                                <li key={caseItem.id}>
+                                                    <span>{caseItem.title}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <div className="grid grid-cols-1 gap-2">
-                                        {subscription.unassigned_features.map((caseItem) => (
-                                            <label key={caseItem.id} className="flex items-center gap-2">
-                                                <input readOnly type="checkbox" value={caseItem.id} checked={false} className="checkbox checkbox-primary" />
-                                                <span>{caseItem.title}</span>
-                                            </label>
-                                        ))}
+                                        <ul>
+                                            {subscription.unassigned_features.map((caseItem) => (
+                                                <li key={caseItem.id}>
+                                                    <span>{caseItem.title}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                    <button onClick={() => {
-                                        const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
-                                        if (modal) modal.showModal();
-                                        setTitleFeature(subscription.name)
-                                        setFeaturePrice(subscription.price.toString())
-                                        setFeatureType(subscription.type)
-                                        setFeaturesAssigned(subscription.assigned_features.map(f => f.id))
-                                        setSubscriptionId(subscription.id)
-                                    }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                    py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">تعديل الباقة</button>
-                                    <div onClick={() => handleRemoveSubscription(subscription.id)} className="btn btn-error">حذف</div>
+                                    <details className="dropdown">
+                                        <summary className="btn btn-ghost dark:text-white hover:bg-transparent shadow-none border-none m-1"><HorizontaLDots /></summary>
+                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm left-4">
+                                            <li>
+                                                <button onClick={() => {
+                                                    const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
+                                                    if (modal) modal.showModal();
+                                                    setTitleFeature(subscription.name)
+                                                    setFeaturePrice(subscription.price.toString())
+                                                    setFeatureType(subscription.type)
+                                                    setFeaturesAssigned(subscription.assigned_features.map(f => f.id))
+                                                    setSubscriptionId(subscription.id)
+                                                }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg btn-ghost px-4
+                                                py-2.5 text-sm font-medium hover:bg-transparent text-gray-900 sm:w-auto">تعديل</button>
+                                            </li>
+                                            <li>
+                                                <button onClick={() => handleRemoveSubscription(subscription.id)} type="button" className="btn btn-update-event flex w-full
+                                                justify-center rounded-lg btn-ghost px-4 py-2.5 text-sm font-medium hover:bg-transparent text-error
+                                                sm:w-auto">حذف</button>
+                                            </li>
+                                        </ul>
+                                    </details>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <Pagination currentPage={pages.current_page} totalPages={pages.last_page} onPageChange={function (page: number): void {
+                    getSubscriptions(page)
+                } } />
             </div>
         </div>
     );

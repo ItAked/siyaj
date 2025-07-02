@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export async function readSubscriptions() {
-    const response = await axios.get('http://127.0.0.1:8000/api/subscriptions', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
+export async function readSubscriptions(page: number = 1) {
+    const params: Record<string, unknown> = {page};
 
-    return response.data.data
+    const response = await axios.get('http://127.0.0.1:8000/api/subscriptions', { params, headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
+
+    return response.data
 }

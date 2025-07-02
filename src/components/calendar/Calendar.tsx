@@ -244,7 +244,7 @@ const Calendar: React.FC = () => {
         />
       </div>
       <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
+        <div className="modal-box dark:bg-gray-900">
           <div className="mt-8">
             <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">
               {selectedAppointment ? "تعديل الموعد" : "إضافة موعد"}
