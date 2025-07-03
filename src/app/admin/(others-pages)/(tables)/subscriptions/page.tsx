@@ -348,7 +348,9 @@ export default function Subscriptions() {
 
                     <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {isLoading ? (
-                            <span className="loading loading-spinner text-warning"></span>
+                            <TableRow>
+                                <TableCell><span className="loading loading-spinner text-warning"></span></TableCell>
+                            </TableRow>
                         ) : subscriptions.map((subscription) => (
                             <TableRow key={subscription.id}>
                                 <TableCell className="py-3">

@@ -26,7 +26,6 @@ export default function Home() {
     async function checkToken() {
         try {
             const response = await get();
-            
             setAuthState({
                 loading: false,
                 message: response.message,
@@ -48,6 +47,7 @@ export default function Home() {
 
     useEffect(() => {
         if (authState.loading) return;
+        
 
         if (authState.message === "Unauthenticated.") {
             router.push('/');

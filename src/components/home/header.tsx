@@ -30,20 +30,6 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Desktop Auth Buttons */}
-          <ul className="hidden md:flex flex-1 items-center justify-end gap-3 text-[16px] text-center">
-            <li>
-              <Link href="/signin" className="btn btn-sm shadow-none border border-gray-800 bg-white text-gray-800 hover:bg-gray-50">
-                تسجيل الدخول
-              </Link>
-            </li>
-            <li>
-              <Link href="/signup" className="btn btn-sm shadow-none bg-gray-800 text-gray-200 hover:bg-gray-900">
-                إنشاء حساب
-              </Link>
-            </li>
-          </ul>
-
           {/* Hamburger Icon */}
           <button className="md:hidden flex items-center text-3xl" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open menu">
             {menuOpen ? 'X' : '='}
@@ -61,16 +47,6 @@ export default function Header() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/signin" className="btn btn-sm w-full border border-gray-800 bg-white text-gray-800 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
-                تسجيل الدخول
-              </Link>
-            </li>
-            <li>
-              <Link href="/signup" className="btn btn-sm w-full bg-gray-800 text-gray-200 hover:bg-gray-900" onClick={() => setMenuOpen(false)}>
-                إنشاء حساب
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

@@ -10,7 +10,7 @@ import { post } from "../../../server/AuthServer/login";
 import { useRouter } from "next/navigation";
 
 
-export default function SignInForm() {
+export default function SignInPractitionerForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
     'email': '',
@@ -36,9 +36,6 @@ export default function SignInForm() {
     formData.append('password', user.password)
 
     const response = await post(formData)
-
-    console.log(response);
-    
     
     alert('مرحبًا من جديد')
     if (response === 'admin') {
@@ -99,15 +96,15 @@ export default function SignInForm() {
                 </div>
                 <div className="flex items-center justify-between" dir="rtl">
                   <Link
-                    href="/reset-password"
+                    href="/signup"
                     className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
                   >
-                    نسيت كلمة المرور؟
+                    ليس لديك حساب؟
                   </Link>
                 </div>
-                <div>
-                  <Button className="w-full" size="sm">
-                    تسجيل الدخول
+                <div className="pb-40">
+                  <Button className="w-full bg-yellow-600" size="sm">
+                     تسجيل الدخول
                   </Button>
                 </div>
               </div>

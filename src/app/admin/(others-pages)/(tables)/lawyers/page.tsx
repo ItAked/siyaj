@@ -200,7 +200,11 @@ export default function Lawyers() {
 
                     <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {isLoading ? (
-                            <span className="loading loading-spinner text-warning"></span>
+                            <TableRow>
+                                <TableCell className="py-6 text-center">
+                                    <span className="loading loading-spinner text-warning"></span>
+                                </TableCell>
+                            </TableRow>
                         ) : lawyers.map((lawyer) => (
                             <TableRow key={lawyer.id}>
                                 <TableCell className="py-3">
