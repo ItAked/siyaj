@@ -5,8 +5,7 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: "الحساب الشخصي",
-  description:
-    "This is Next.js Profile page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+  description: "صفحة الحساب الشخصي",
 };
 
 export default function Profile() {

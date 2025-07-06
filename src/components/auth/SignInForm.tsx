@@ -40,8 +40,6 @@ export default function SignInForm() {
     alert('مرحبًا من جديد')
     if (response === 'admin') {
       router.push('/admin')
-    } else {
-      router.push('/lawyer')
     }
   }
 

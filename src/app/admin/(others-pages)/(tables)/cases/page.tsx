@@ -6,8 +6,7 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: "القضايا",
-  description:
-    "This is Next.js Basic Table  page for TailAdmin  Tailwind CSS Admin Dashboard Template"
+  description: "صفحة القضايا"
 };
 
 export default function BasicTables() {

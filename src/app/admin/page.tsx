@@ -4,9 +4,8 @@ import NewCasesTable from "../../components/NewCasesTable";
 import { CasesStatus } from "../../components/CasesStatus";
 
 export const metadata: Metadata = {
-  title:
-    "الصفحة الرئيسية",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
+  title: "الصفحة الرئيسية",
+  description: "الصفحة الرئيسية للآدمن",
 };
 
 export default function AdminPanel() {
