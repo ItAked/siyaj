@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function post (user:FormData) {
+export async function login (user:FormData) {
     const data = await axios.post('http://127.0.0.1:8000/api/login', user);
 
     const token = data.data.message.access_token;

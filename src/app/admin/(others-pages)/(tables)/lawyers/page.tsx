@@ -5,7 +5,7 @@ import { useModal } from "../../../../../hooks/useModal";
 import { ChangeEvent, useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
-import { post } from "../../../../../../server/CasesServer/assign_cases";
+import { assignCases } from "../../../../../../server/CasesServer/assign_cases";
 import Pagination from "../../../../../components/tables/Pagination";
 
 interface CaseItem {
@@ -74,7 +74,7 @@ export default function Lawyers() {
         const isChecked = event.target.checked;
 
         try {
-            await post(lawyerId, { 
+            await assignCases(lawyerId, { 
                 cases: [caseId], 
                 is_checked: isChecked 
             });

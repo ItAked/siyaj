@@ -11,12 +11,12 @@ import {
   EventContentArg,
 } from "@fullcalendar/core";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
-import { post } from "../../../server/AppointmentsServer/create_appointment";
 import Select from '../../components/form/Select'
 import { getCases } from "../../../server/CasesServer/cases";
 import { get } from "../../../server/LawyersServer/lawyers";
 import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
 import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
+import { createAppointment } from "../../../server/AppointmentsServer/create_appointment";
 
 interface Appointment {
   id: string;
@@ -177,7 +177,7 @@ const Calendar: React.FC = () => {
           lawyer_id: Number(appointmentLawyer),
           practitioner_id: Number(appointmentPractitioner)
         };
-        const response = await post(newAppointment);
+        const response = await createAppointment(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
       readAppointments();

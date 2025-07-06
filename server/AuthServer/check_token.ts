@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function get() {
+export async function getToken() {
     try {
         const token = localStorage.getItem('token');
         if (!token) {

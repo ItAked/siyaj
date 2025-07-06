@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { get } from "../../server/AuthServer/check_token";
+import { getToken } from "../../server/AuthServer/check_token";
 
 export default function Home() {
     const router = useRouter();
@@ -17,7 +17,7 @@ export default function Home() {
 
     async function checkToken() {
         try {
-            const response = await get();
+            const response = await getToken();
             setAuthState({
                 loading: false,
                 message: response.message,
