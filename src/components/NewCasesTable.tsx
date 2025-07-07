@@ -56,7 +56,7 @@ export default function NewCasesTable() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان القضية" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="أدخل إسم الممارس الصحي" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>

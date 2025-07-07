@@ -11,12 +11,9 @@ import {
   EventContentArg,
 } from "@fullcalendar/core";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
-import Select from '../../components/form/Select'
 import { getCases } from "../../../server/CasesServer/cases";
 import { get } from "../../../server/LawyersServer/lawyers";
 import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
-import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
-import { createAppointment } from "../../../server/AppointmentsServer/create_appointment";
 
 interface Appointment {
   id: string;
@@ -30,9 +27,9 @@ interface Appointment {
 
 const Calendar: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
-  const [appointmentTitle, setAppointmentTitle] = useState("");
-  const [appointmentLawyer, setAppointmentLawyer] = useState("");
-  const [appointmentPractitioner, setAppointmentPractitioner] = useState("");
+  const [, setAppointmentTitle] = useState("");
+  const [, setAppointmentLawyer] = useState("");
+  const [, setAppointmentPractitioner] = useState("");
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("");
@@ -40,23 +37,13 @@ const Calendar: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const[cases, setCases] = useState([])
-  const[lawyers, setLawyers] = useState([])
-  const[practitioner, setPractitioner] = useState([])
+  const[, setCases] = useState([])
+  const[, setLawyers] = useState([])
+  const[, setPractitioner] = useState([])
 
   const statusOptions = {
     "ملغي الحجز": "danger",
     "محجوز": "success"
-  };
-
-  const handleTitleChange = (value: string) => {
-    setAppointmentTitle(value);
-  };
-  const handleLawyerChange = (value: string) => {
-    setAppointmentLawyer(value);
-  };
-  const handlePractitionerChange = (value: string) => {
-    setAppointmentPractitioner(value);
   };
 
   async function readCases() {
@@ -138,56 +125,6 @@ const Calendar: React.FC = () => {
     }
   };
 
-  const handleAddOrUpdateAppointment = async () => {
-    try {
-      if (selectedAppointment) {        
-        setAppointments(prevAppointments =>
-          prevAppointments.map(appointment =>
-            appointment.id === selectedAppointment.id
-              ? {
-                  ...appointment,
-                  case_id: Number(appointmentTitle),
-                  date: appointmentDate,
-                  time: appointmentTime + ":00",
-                  status: appointmentStatus,
-                  lawyer_id: Number(appointmentLawyer),
-                  practitioner_id: Number(appointmentPractitioner)
-                }
-              : appointment
-          )
-        );
-        const updatedSelectedAppointment = {
-          ...selectedAppointment,
-          case_id: Number(appointmentTitle),
-          date: appointmentDate,
-          time: appointmentTime + ":00",
-          status: appointmentStatus,
-          lawyer_id: Number(appointmentLawyer),
-          practitioner_id: Number(appointmentPractitioner)
-        };
-        
-        await updateAppointment(updatedSelectedAppointment, Number(selectedAppointment.id));        
-      } else {
-        const newAppointment: Appointment = {
-          id: Date.now().toString(),
-          case_id: Number(appointmentTitle),
-          date: appointmentDate,
-          time: appointmentTime + ":00", // Add seconds for API format
-          status: appointmentStatus,
-          lawyer_id: Number(appointmentLawyer),
-          practitioner_id: Number(appointmentPractitioner)
-        };
-        const response = await createAppointment(newAppointment);
-        setAppointments(prevAppointments => [...prevAppointments, response]);
-      }
-      readAppointments();
-      resetModalFields();
-    } catch (err) {
-      console.error("Error saving appointment:", err);
-      setError("Failed to save appointment");
-    }
-  };
-
   const resetModalFields = () => {
     setAppointmentTitle("");
     setAppointmentDate("");
@@ -230,17 +167,6 @@ const Calendar: React.FC = () => {
           select={handleDateSelect}
           eventClick={handleEventClick}
           eventContent={renderEventContent}
-          customButtons={{
-            addEventButton: {
-              text: selectedAppointment ? "تعديل الموعد" : "إضافة موعد",
-              click: () => {
-                const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
-                if (modal && typeof modal.showModal === 'function') {
-                  modal.showModal();
-                }
-              },
-            },
-          }}
         />
       </div>
       <dialog id="my_modal_1" className="modal">
@@ -254,7 +180,7 @@ const Calendar: React.FC = () => {
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                   عنوان القضية
                 </label>
-                <Select options={cases} onChange={handleTitleChange} />
+                {/* <Select options={cases} /> */}
               </div>
             </div>
             <div className="my-8">
@@ -262,7 +188,6 @@ const Calendar: React.FC = () => {
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                   المحامي
                 </label>
-                <Select options={lawyers} onChange={handleLawyerChange} />
               </div>
             </div>
             <div className="my-8">
@@ -270,7 +195,6 @@ const Calendar: React.FC = () => {
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                   الممارس الصحي
                 </label>
-                <Select options={practitioner} onChange={handlePractitionerChange} />
               </div>
             </div>
             <div className="mt-6">
@@ -345,13 +269,6 @@ const Calendar: React.FC = () => {
             <form method="dialog">
               <button className="btn">إغلاق</button>
             </form>
-            <button
-              onClick={handleAddOrUpdateAppointment}
-              type="button"
-              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto"
-            >
-              {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}
-            </button>
           </div>
         </div>
       </dialog>
