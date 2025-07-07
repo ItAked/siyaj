@@ -33,6 +33,7 @@ export default function Lawyers() {
     const [isLoading, setIsLoading] = useState(false);
     const [pagination, setPagination] = useState<Meta>({})
     const [errorMsg, setErrorMsg] = useState('')
+    const [isError, setIsError] = useState(false)
 
     function resetModalField() {
         setLawyerName("");
@@ -45,7 +46,8 @@ export default function Lawyers() {
         try {
             const response = await get(search, page);
             setLawyers(response.data.data);
-            setPagination(response.data.meta)
+            setPagination(response.data.meta)            
+            
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
@@ -60,12 +62,14 @@ export default function Lawyers() {
         formData.append('password', lawyerPassword);
         
         try {
-            await createLawyer(formData);
+            const response = await createLawyer(formData);
             
-            setErrorMsg('')
+            setIsError(false)
+            setErrorMsg(response.message)
             resetModalField();
             getLawyers("", 1);
         } catch (error) {
+            setIsError(true)
             setErrorMsg(error.response.data.message)
         }
     }
@@ -128,9 +132,13 @@ export default function Lawyers() {
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة محامي</h5>
                             </div>
-                            {errorMsg != '' && (
-                                <Alert variant={"error"} title="حدث خطأ!" message={errorMsg} />
-                            )}
+                            {errorMsg != '' ? (
+                                isError ? (
+                                    <Alert variant={"error"} title="حدث خطأ!" message={errorMsg} />
+                                ) : (
+                                    <Alert variant={"success"} title="العملية ناجحة" message={errorMsg} />
+                                )
+                            ) : null}
                             <div className="mt-8">
                                 <div>
                                     <div>
@@ -174,7 +182,7 @@ export default function Lawyers() {
                                 <button onClick={handleAddLawyer} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                                 py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
                                 <form method="dialog">
-                                    <button className="btn">إغلاق</button>
+                                    <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
                                 </form>
                             </div>
                         </div>
@@ -273,7 +281,7 @@ export default function Lawyers() {
                         ))}
                     </TableBody>
                 </Table>
-                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number): void => {getLawyers("", page);}} />
+                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number): void => {getLawyers("", page)}} />
             </div>
         </div>
     );
