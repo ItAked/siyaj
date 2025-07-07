@@ -43,12 +43,12 @@ export default function NewCasesTable() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
-      <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-8">
         <div>
-          <h3 className="text-base font-medium text-gray-800 dark:text-white/90">القضايا الجديدة</h3>
+          <h3 className="text-base font-medium text-gray-800 dark:text-white/90">جميع القضايا</h3>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mt-4">
           <label className="input">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
@@ -82,6 +82,12 @@ export default function NewCasesTable() {
                 isHeader
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
+                القضية
+              </TableCell>
+              <TableCell
+                isHeader
+                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+              >
                 اسم الممارس الصحي
               </TableCell>
               <TableCell
@@ -89,12 +95,6 @@ export default function NewCasesTable() {
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
                 التاريخ
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                القضية
               </TableCell>
               <TableCell
                 isHeader
@@ -114,16 +114,16 @@ export default function NewCasesTable() {
                   <div className="flex items-center gap-3">
                     <div>
                       <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {item.practitioner_name}
+                        {item.case}
                       </p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.date}
+                  {item.practitioner_name}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.case}
+                  {item.date}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   <Badge

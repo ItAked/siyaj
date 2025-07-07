@@ -1,12 +1,12 @@
 'use client'
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
-import { useModal } from "../../../../../hooks/useModal";
 import { ChangeEvent, useEffect, useState } from "react";
 import { get } from "../../../../../../server/LawyersServer/lawyers";
 import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
 import { assignCases } from "../../../../../../server/CasesServer/assign_cases";
 import Pagination from "../../../../../components/tables/Pagination";
+import Alert from "../../../../../components/ui/alert/Alert";
 
 interface CaseItem {
     id: number;
@@ -26,13 +26,13 @@ type Meta = {
 }
 
 export default function Lawyers() {
-    const { closeModal } = useModal();
     const [lawyerName, setLawyerName] = useState("");
     const [lawyerEmail, setLawyerEmail] = useState("");
     const [lawyerPassword, setLawyerPassword] = useState("");
     const [lawyers, setLawyers] = useState<Lawyer[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [pagination, setPagination] = useState<Meta>({})
+    const [errorMsg, setErrorMsg] = useState('')
 
     function resetModalField() {
         setLawyerName("");
@@ -61,11 +61,12 @@ export default function Lawyers() {
         
         try {
             await createLawyer(formData);
-            closeModal();
+            
+            setErrorMsg('')
             resetModalField();
             getLawyers("", 1);
         } catch (error) {
-            console.error("Failed to add lawyer:", error);
+            setErrorMsg(error.response.data.message)
         }
     }
 
@@ -127,36 +128,45 @@ export default function Lawyers() {
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">إضافة محامي</h5>
                             </div>
+                            {errorMsg != '' && (
+                                <Alert variant={"error"} title="حدث خطأ!" message={errorMsg} />
+                            )}
                             <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم المحامي</label>
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم المحامي <span
+                                        className="text-error">*</span></label>
                                         <input name="laywer_name" type="text" value={lawyerName} onChange={(e) => setLawyerName(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                                        required />
                                     </div>
                                 </div>
                             </div>
                             <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">البريد الإلكتروني</label>
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">البريد الإلكتروني <span
+                                        className="text-error">*</span></label>
                                         <input name="laywer_email" type="email" value={lawyerEmail} onChange={(e) => setLawyerEmail(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                                        required />
                                     </div>
                                 </div>
                             </div>
                             <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">كلمة المرور</label>
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">كلمة المرور <span
+                                        className="text-error">*</span></label>
                                         <input name="laywer_password" type="password" value={lawyerPassword} onChange={(e) => setLawyerPassword(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                                        required />
                                     </div>
                                 </div>
                             </div>

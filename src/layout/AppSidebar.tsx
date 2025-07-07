@@ -27,11 +27,6 @@ const navItems: NavItem[] = [
     path: "/admin"
   },
   {
-    name: "القضايا",
-    icon: <TableIcon />,
-    path: "/admin/cases"
-  },
-  {
     icon: <CalenderIcon />,
     name: "جدولة القضايا",
     path: "/admin/calendar",
