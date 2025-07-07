@@ -8,7 +8,7 @@ import About from "../components/home/About";
 import Vision from "../components/home/Vision";
 import OurGoals from "../components/home/Goals";
 import OurServices from "../components/home/our-services";
-import Subscriptions from "../components/home/Subscriptions";
+import Subscriptions from "../components/home/Categories";
 import ContactUs from "../components/home/ContactUs";
 
 export default function Home() {
