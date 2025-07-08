@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { post } from "../../../server/AuthServer/login";
 import { useRouter } from "next/navigation";
+import Alert from "../ui/alert/Alert";
 
 
 export default function SignInForm() {
@@ -17,6 +18,7 @@ export default function SignInForm() {
     'password': ''
   })
   const router = useRouter()
+  const [errorMsg, setErrorMsg] = useState('')
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -29,7 +31,8 @@ export default function SignInForm() {
   }
 
   async function handleOnSubmit(event: FormEvent) {
-    event.preventDefault()
+    try {
+      event.preventDefault()
 
     const formData = new FormData()
     formData.append('email', user.email)
@@ -37,18 +40,19 @@ export default function SignInForm() {
 
     const response = await post(formData)
 
-    console.log(response);
-    
-    
-    alert('مرحبًا من جديد')
-    if (response === 'admin') {
-      router.push('/admin')
+    if (response.message.role === undefined) {
+      setErrorMsg(response.message.message)
     }
-    if(response === 'lawyer') {
+    if(response.message.role === 'lawyer') {
+      setErrorMsg('')
       router.push('/lawyer')
     }
-    if(response === 'practitioner') {
+    if(response.message.role === 'practitioner') {
+      setErrorMsg('')
       router.push('/practitioner')
+    }
+    } catch (error) {
+      setErrorMsg(error.response.data.message);
     }
   }
 
@@ -56,7 +60,8 @@ export default function SignInForm() {
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
-          <div className="mb-5 sm:mb-8">
+          <div className="mb-5 sm:mb-8 grid gap-y-4">
+            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md text-right">
               تسجيل الدخول
             </h1>
