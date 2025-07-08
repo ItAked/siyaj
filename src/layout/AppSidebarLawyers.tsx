@@ -7,7 +7,6 @@ import { useSidebar } from "../context/SidebarContext";
 import {
   CalenderIcon,
   ChevronDownIcon,
-  DocsIcon,
   GridIcon,
   HorizontaLDots,
   UserCircleIcon,
@@ -25,11 +24,6 @@ const navItems: NavItem[] = [
     icon: <GridIcon />,
     name: "الرئيسية",
     path: "/lawyer"
-  },
-  {
-    name: "القضايا",
-    icon: <DocsIcon />,
-    path: "/lawyer/cases"
   },
   {
     icon: <CalenderIcon />,
@@ -213,7 +207,7 @@ const AppSidebarLawyers: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-sky-950 dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-yellow-950 dark:bg-yellow-950 dark:border-gray-900 text-gray-900 h-screen transition-all
         duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48
         ${
           isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]"
