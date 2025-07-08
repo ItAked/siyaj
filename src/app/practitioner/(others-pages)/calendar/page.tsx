@@ -1,7 +1,7 @@
-import Calendar from "../../../../components/calendar/Calendar";
 import PageBreadcrumb from "../../../../components/common/PageBreadCrumb";
 import { Metadata } from "next";
 import React from "react";
+import CalendarPractitioner from "../../../../components/calendar/CalendarPractitioner";
 
 export const metadata: Metadata = {
   title: "جدولة القضايا",
@@ -12,7 +12,7 @@ export default function page() {
   return (
     <div>
       <PageBreadcrumb pageTitle="جدولة القضايا" />
-      <Calendar />
+      <CalendarPractitioner />
     </div>
   );
 }

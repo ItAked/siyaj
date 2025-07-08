@@ -17,9 +17,9 @@ export default function Hero() {
               </p>
               <div className="flex items-center gap-x-4 justify-center">
                 <Link className="py-2.5 px-10 btn text-white bg-gray-900 shadow-none"
-                href="/signin">الدخول كمحامي</Link>
+                href="/lawyer/auth/signin">الدخول كمحامي</Link>
                 <Link className="py-2.5 px-10 btn text-white bg-yellow-600 shadow-none"
-                href="/signup">الدخول كممارس صحي</Link>
+                href="/practitioner/auth/signup">الدخول كممارس صحي</Link>
               </div>
             </div>
         </div>

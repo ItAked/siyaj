@@ -46,19 +46,19 @@ export default function SignInForm() {
     if(response.message.role === 'lawyer') {
       setErrorMsg('')
       router.push('/lawyer')
+    } else {
+      setErrorMsg('الحساب لا يخص المحامين')
+      return;
     }
-    if(response.message.role === 'practitioner') {
-      setErrorMsg('')
-      router.push('/practitioner')
-    }
+
     } catch (error) {
       setErrorMsg(error.response.data.message);
     }
   }
 
   return (
-    <div className="flex flex-col flex-1 lg:w-1/2 w-full">
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+    <div className="flex flex-col flex-1 lg:w-1/2 w-full mx-auto">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto mt-60">
         <div>
           <div className="mb-5 sm:mb-8 grid gap-y-4">
             { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}

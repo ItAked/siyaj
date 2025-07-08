@@ -8,7 +8,6 @@ import {
   CalenderIcon,
   ChevronDownIcon,
   GridIcon,
-  HorizontaLDots,
   UserCircleIcon,
 } from "../icons/index";
 
@@ -53,8 +52,8 @@ const AppSidebarPractitioner: React.FC = () => {
               onClick={() => handleSubmenuToggle(index, menuType)}
               className={`menu-item group  ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
-                  ? "menu-item-active"
-                  : "menu-item-inactive"
+                  ? "bg-sky-950 text-white dark:bg-gray-900/[0.12] dark:text-white;"
+                  : "text-sky-950 hover:bg-gray-100 hover:text-sky-950 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;"
               } cursor-pointer ${
                 !isExpanded ? "lg:justify-center" : "lg:justify-start"
               }`}
@@ -62,8 +61,8 @@ const AppSidebarPractitioner: React.FC = () => {
               <span
                 className={` ${
                   openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? "menu-item-icon-active"
-                    : "menu-item-icon-inactive"
+                    ? "text-white dark:text-brand-400"
+                    : "text-sky-950 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300"
                 }`}
               >
                 {nav.icon}
@@ -87,14 +86,14 @@ const AppSidebarPractitioner: React.FC = () => {
               <Link
                 href={nav.path}
                 className={`menu-item group ${
-                  isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
+                  isActive(nav.path) ? "bg-sky-950 text-white dark:bg-gray-900/[0.12] dark:text-white;" : "text-sky-950 hover:bg-gray-100 hover:text-sky-950 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;"
                 }`}
               >
                 <span
                   className={`${
                     isActive(nav.path)
-                      ? "menu-item-icon-active"
-                      : "menu-item-icon-inactive"
+                      ? "text-white dark:text-brand-400"
+                      : "text-sky-950 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300"
                   }`}
                 >
                   {nav.icon}
@@ -207,8 +206,8 @@ const AppSidebarPractitioner: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-sky-950 dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
-        duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-white dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
+        duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48 border-l-2
         ${
           isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]"
         }
@@ -223,7 +222,7 @@ const AppSidebarPractitioner: React.FC = () => {
             <>
               <Image
                 className="dark:hidden"
-                src="/images/logo/Logo.png"
+                src="/images/logo/logo-blue.png"
                 alt="Logo"
                 width={51}
                 height={53}
@@ -250,17 +249,6 @@ const AppSidebarPractitioner: React.FC = () => {
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
             <div>
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded ? "lg:justify-center" : "justify-start"
-                }`}
-              >
-                {isExpanded || isMobileOpen ? (
-                  "Menu"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
               {renderMenuItems(navItems, "main")}
             </div>
 
