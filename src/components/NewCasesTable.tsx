@@ -82,6 +82,12 @@ export default function NewCasesTable() {
                 isHeader
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
+                القضية
+              </TableCell>
+              <TableCell
+                isHeader
+                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+              >
                 اسم الممارس الصحي
               </TableCell>
               <TableCell
@@ -89,12 +95,6 @@ export default function NewCasesTable() {
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
                 التاريخ
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                القضية
               </TableCell>
               <TableCell
                 isHeader
@@ -114,13 +114,13 @@ export default function NewCasesTable() {
                   <div className="flex items-center gap-3">
                     <div>
                       <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {item.practitioner_name}
+                        {item.case}
                       </p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.date}
+                  {item.practitioner_name}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   {item.case}
