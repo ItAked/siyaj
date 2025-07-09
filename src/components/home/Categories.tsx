@@ -62,7 +62,19 @@ const Categories = () => {
               )}
             </div>
             <div className="p-6 bg-white border-t border-gray-100">
-              <button className='w-full py-3 px-4 rounded-lg font-medium bg-gray-100 hover:bg-gray-200 text-gray-800'>اختر الباقة</button>
+              { localStorage.getItem('token') != null || localStorage.getItem('token') != '' && (
+                <button className='btn'>شراء الباقة</button>
+              )}
+              <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>شراء الباقة</button>
+              <dialog id="my_modal_3" className="modal">
+                <div className="modal-box">
+                  <form method="dialog">
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                  </form>
+                  <h3 className="font-bold text-lg text-center">لشراء الباقة يجب عليك تسجيل الدخول أولًا</h3>
+                  <a href='/practitioner/auth/signin' className="py-4 link">تسجيل الدخول</a>
+                </div>
+              </dialog>
             </div>
           </div>
         ))}

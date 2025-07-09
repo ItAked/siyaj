@@ -10,6 +10,7 @@ import {
   GridIcon,
   UserCircleIcon,
 } from "../icons/index";
+import { File } from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -28,6 +29,11 @@ const navItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "جدولة القضايا",
     path: "/practitioner/calendar",
+  },
+  {
+    icon: <File />,
+    name: "الاشتراكات",
+    path: "/practitioner/subscription",
   },
   {
     icon: <UserCircleIcon />,
