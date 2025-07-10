@@ -70,12 +70,12 @@ export default function AllCasesLawyer() {
             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها"
-              name="status" />القضايا المغلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="معلقة"
-              name="status" />القضايا المعلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل"
-              name="status" />القضايا الحالية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة للشؤون الصحية"
+              name="status" />منظورة للشؤون الصحية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لدى الدائرة القضائية"
+              name="status" />منظورة لمنصة تراضي</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لمنصة تراضي"
+              name="status" />منظورة لدى الدائرة القضائية</label></li>
             </ul>
           </details>
         </div>
@@ -135,9 +135,9 @@ export default function AllCasesLawyer() {
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                     <select defaultValue={item.status} className="select" name="status" onChange={(e) => updateCase(item.id, e.target.value)}>
                         <option disabled={true}>{item.status}</option>
-                        <option value="جاري العمل">جاري العمل</option>
-                        <option value="تم حلها">تم حلها</option>
-                        <option value="معلقة">معلقة</option>
+                        <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
+                        <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>
+                        <option value="منظورة للشؤون الصحية">منظورة للشؤون الصحية</option>
                     </select>
                 </TableCell>
               </TableRow>

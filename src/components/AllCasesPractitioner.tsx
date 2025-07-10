@@ -63,12 +63,12 @@ export default function AllCasesPractitioner() {
             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها"
-              name="status" />القضايا المغلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="معلقة"
-              name="status" />القضايا المعلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل"
-              name="status" />القضايا الحالية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة للشؤون الصحية"
+              name="status" />منظورة للشؤون الصحية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لدى الدائرة القضائية"
+              name="status" />منظورة لمنصة تراضي</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لمنصة تراضي"
+              name="status" />منظورة لدى الدائرة القضائية</label></li>
             </ul>
           </details>
         </div>
@@ -123,9 +123,9 @@ export default function AllCasesPractitioner() {
                   <Badge
                     size="sm"
                     color={
-                      item.status === "تم حلها"
+                      item.status === "منظورة للشؤون الصحية"
                         ? "success"
-                        : item.status === "جاري العمل"
+                        : item.status === "منظورة لمنصة تراضي"
                         ? "warning"
                         : "error"
                     }
