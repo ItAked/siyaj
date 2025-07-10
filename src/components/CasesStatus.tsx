@@ -26,7 +26,7 @@ export const CasesStatus = () => {
         <div className="flex items-end justify-between mt-5">
           <div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              القضايا المعلقة
+              منظورة لمنصة تراضي
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
               {casesStatus[2]}
@@ -44,7 +44,7 @@ export const CasesStatus = () => {
         <div className="flex items-end justify-between mt-5">
           <div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              القضايا الحالية
+              منظورة لدى الدائرة القضائية
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
               {casesStatus[1]}
@@ -63,7 +63,7 @@ export const CasesStatus = () => {
         <div className="flex items-end justify-between mt-5">
           <div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              القضايا المغلقة
+              منظورة للشؤون الصحية
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
               {casesStatus[0]}

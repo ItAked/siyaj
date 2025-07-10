@@ -64,12 +64,12 @@ export default function AllCases() {
             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="تم حلها"
-              name="status" />القضايا المغلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="معلقة"
-              name="status" />القضايا المعلقة</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="جاري العمل"
-              name="status" />القضايا الحالية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لمنصة تراضي"
+              name="status" />منظورة لمنصة تراضي</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value='منظورة لدى الدائرة القضائية'
+              name="status" />منظورة لدى الدائرة القضائية</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value='منظورة للشؤون الصحية'
+              name="status" />منظورة لدى الشؤون الصحية</label></li>
             </ul>
           </details>
         </div>
@@ -127,7 +127,7 @@ export default function AllCases() {
                   {item.case}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  <Badge size="sm" color={ item.status === "تم حلها" ? "success" : item.status === "جاري العمل" ? "warning" : "error"}>
+                  <Badge size="sm" color={ item.status === "منظورة لمنصة تراضي" ? "success" : item.status === "منظورة لدى الدائرة القضائية" ? "warning" : "error"}>
                     {item.status}
                   </Badge>
                 </TableCell>
