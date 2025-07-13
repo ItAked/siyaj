@@ -62,10 +62,9 @@ const Categories = () => {
               )}
             </div>
             <div className="p-6 bg-white border-t border-gray-100">
-              { localStorage.getItem('token') != null || localStorage.getItem('token') != '' && (
-                <button className='btn'>شراء الباقة</button>
-              )}
-              <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>شراء الباقة</button>
+              { localStorage.getItem('token') ? (
+                <a href={`http://127.0.0.1:8000/payment/${category.price}/${category.name}`} className='btn'>شراء الباقة</a>
+              ) : <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>شراء الباقة</button>}
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                   <form method="dialog">
