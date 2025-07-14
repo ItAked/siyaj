@@ -4,27 +4,25 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { CheckIcon } from "lucide-react"
 import type { JSX } from "react/jsx-runtime"
+import { assignSubscription } from "../../server/SubscriptionsServer/assignSubscription"
 
 interface PaymentSuccessProps {
   transactionId?: string
   amount?: string
-  paymentMethod?: string
-  status?: string
-  message?: string
+  name?: string
 }
 
 export default function SuccessPayment({
   transactionId: defaultTransactionId = "TXN-2024-001234",
   amount: defaultAmount = "$99.99",
-  paymentMethod: defaultPaymentMethod = "•••• •••• •••• 1234",
+  name: defaultName = "test"
 }: PaymentSuccessProps) {
   const searchParams = useSearchParams()
   
   // Get values from URL params or use defaults
   const transactionId = searchParams.get('id') || defaultTransactionId
   const amount = searchParams.get('amount') ? `${searchParams.get('amount')}` : defaultAmount
-  const status = searchParams.get('status') || ''
-  const message = searchParams.get('message') || ''
+  const name = searchParams.get('name') || defaultName
   
   const [paymentDate, setPaymentDate] = useState("")
   const [downloadStatus, setDownloadStatus] = useState("")
@@ -80,7 +78,7 @@ export default function SuccessPayment({
   }
 
   const downloadReceipt = () => {
-    const receiptContent = `Payment Receipt\n\nTransaction ID: ${transactionId}\nAmount: ${amount}\nDate: ${paymentDate}`
+    const receiptContent = `Payment Receipt\n\nTransaction ID: ${transactionId}\nAmount: ${amount}\nDate: ${paymentDate}\nالتصنيف: ${name}`
     const link = document.createElement("a")
     link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(receiptContent)
     link.download = "payment-receipt.txt"
@@ -92,8 +90,11 @@ export default function SuccessPayment({
     }, 2000)
   }
 
-  const goHome = () => {
-    router.push('/')
+  const goHome = async () => {
+    const form = new FormData()
+    form.append('name', name)
+    await assignSubscription(form)
+    router.push('/practitioner/subscription')
   }
 
   return (
@@ -218,10 +219,6 @@ export default function SuccessPayment({
             <div className="flex justify-between items-center py-3 border-b border-gray-200">
               <span className="text-gray-600 font-medium">Transaction ID</span>
               <span className="text-gray-800 font-semibold">{transactionId}</span>
-            </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-200">
-              <span className="text-gray-600 font-medium">Payment Method</span>
-              <span className="text-gray-800 font-semibold">{defaultPaymentMethod}</span>
             </div>
             <div className="flex justify-between items-center py-3 border-b border-gray-200">
               <span className="text-gray-600 font-medium">Date & Time</span>
