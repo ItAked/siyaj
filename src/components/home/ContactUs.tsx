@@ -61,7 +61,7 @@ export default function ContactUs(){
                         </div>
                     </div>
                     <div className="mt-6 space-y-3">
-                        <button className="btn w-full bg-linear-to-t from-yellow-600 to-yellow-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm
+                        <button className="btn w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm
                         hover:bg-[length:100%_150%]">
                             إرسال
                         </button>

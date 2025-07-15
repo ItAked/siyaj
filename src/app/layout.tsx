@@ -29,7 +29,7 @@ export default function RootLayout({
   
   return (
     <html lang="en">
-      <body className={`${tajawal.className} bg-white dark:bg-gray-900`}>
+      <body className={`${tajawal.className} bg-white dark:bg-gray-900`} dir='rtl'>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>
         </ThemeProvider>

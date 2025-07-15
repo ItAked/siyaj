@@ -35,36 +35,20 @@ const Categories = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14" data-aos="zoom-in">
         {categories.map((category) => (
-          <div key={category.id} className='rounded-2xl overflow-hidden border border-gray-200 relative flex flex-col h-full'> 
-            <div className='px-6 pt-8 pb-6'>
+          <div key={category.id} className='rounded-2xl overflow-hidden border border-blue-200 relative flex flex-col h-full'> 
+            <div className='px-6 pt-8 pb-6 bg-blue-100'>
               <h3 className="text-2xl font-bold mb-1">{category.name}</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-4xl font-bold">{`${category.price} ريال`}</span>
                 <span className="text-gray-600 ml-2">
-                  / شهريًا
+                  / سنويًا
                 </span>
               </div>
             </div>
-            
-            <div className="p-6 bg-white flex-grow">
-              {category.assigned_features.length != 0 && (
-                <div className="mb-6">
-                  <h4 className="font-semibold mb-3">درجات الممارس الصحي</h4>
-                  <ul className="space-y-3">
-                    {category.assigned_features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                        <span>{feature.title}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            <div className="p-6 bg-white border-t border-gray-100">
+            <div className="p-6 bg-white border-t border-gray-100 mx-auto">
               { localStorage.getItem('token') ? (
-                <a href={`http://127.0.0.1:8000/payment/${category.price}/${category.name}`} className='btn'>شراء الباقة</a>
-              ) : <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>شراء الباقة</button>}
+                <a href={`http://127.0.0.1:8000/payment/${category.price}/${category.name}`} className='btn btn-wide bg-blue-300 border-none text-white'>شراء الباقة</a>
+              ) : <button className="btn btn-wide bg-blue-300 border-none text-white" onClick={()=>document.getElementById('my_modal_3').showModal()}>شراء الباقة</button>}
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                   <form method="dialog">

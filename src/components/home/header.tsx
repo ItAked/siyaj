@@ -9,9 +9,9 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "/", label: "الرئيسية" },
-    { href: "#aboutAs", label: "نبذة عنا" },
-    { href: "#packages", label: "الأسعار" },
+    { href: "#aboutUs", label: "نبذة عنا" },
+    { href: "#services", label: "خدماتنا" },
+    { href: "#packages", label: "الإشتراكات" },
     { href: "#contactUs", label: "تواصل معنا" },
   ];
 

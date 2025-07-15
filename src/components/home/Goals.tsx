@@ -9,10 +9,10 @@ import { Clock, LaptopMinimal, Shield, Tag } from "lucide-react";
 
 export default function OurGoals() {
     const icons = [
-        <Clock className="text-yellow-600 w-[70px] h-[70px]" />,
-        <Shield className="text-yellow-600 w-[70px] h-[70px]" />,
-        <Tag className="text-yellow-600 w-[70px] h-[70px]" />,
-        <LaptopMinimal className="text-yellow-600 w-[70px] h-[70px]" />
+        <Clock className="text-blue-300 w-[70px] h-[70px]" />,
+        <Shield className="text-blue-300 w-[70px] h-[70px]" />,
+        <Tag className="text-blue-300 w-[70px] h-[70px]" />,
+        <LaptopMinimal className="text-blue-300 w-[70px] h-[70px]" />
     ];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
