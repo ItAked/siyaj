@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  CalenderIcon,
+  // CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   UserCircleIcon,
@@ -25,15 +25,16 @@ const navItems: NavItem[] = [
     name: "الرئيسية",
     path: "/practitioner"
   },
-  {
-    icon: <CalenderIcon />,
-    name: "جدولة القضايا",
-    path: "/practitioner/calendar",
-  },
+  // {
+  //   icon: <CalenderIcon />,
+  //   name: "جدولة القضايا",
+  //   path: "/practitioner/calendar",
+  // },
   {
     icon: <File />,
-    name: "الاشتراكات",
-    path: "/practitioner/subscription",
+    name: "التصنيفات المشترك فيها",
+    subItems: [{ name: 'عرض جميع التصنيفات المشترك فيها', path: '/practitioner/subscription', pro: false},
+      { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
   },
   {
     icon: <UserCircleIcon />,
