@@ -47,15 +47,17 @@ export default function Practitioners() {
                     <path d="m21 21-4.3-4.3"></path>
                 </g>
             </svg>
-            <input name="search" onChange={() => readPractitioner("", 1)} type="search" className="w-full" placeholder="ابحث بإسم الممارس الصحي" />
+            <input name="search" onChange={(e) => readPractitioner(e.target.value)} type="search" className="w-full" placeholder="ابحث بإسم الممارس الصحي" />
         </label>
         <div className="max-w-full overflow-x-auto">
             <Table>
                 <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
                     <TableRow>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">اسم الممارس الصحي</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">البريد الإلكتروني</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التخصص الطبي</TableCell>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">جهة العمل</TableCell>
-                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التخصص</TableCell>
+                        {/* <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"></TableCell> */}
                     </TableRow>
                 </TableHeader>
 
@@ -69,8 +71,10 @@ export default function Practitioners() {
                                     </div>
                                 </div>
                             </TableCell>
-                            <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.employer}</TableCell>
+                            <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.email}</TableCell>
                             <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.medical}</TableCell>
+                            <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.employer}</TableCell>
+                            <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400"><a type="file" /></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
