@@ -14,7 +14,7 @@ import { getAppointments } from "../../../server/AppointmentsServer/appointments
 
 interface Appointment {
   id: string;
-  case_name: string;
+  title: string;
   practitioner_name: string;
   lawyer_name: string;
   date: string;
@@ -45,6 +45,8 @@ const Calendar: React.FC = () => {
       setLoading(true);
 
       const response = await getAppointments();
+      console.log(response.data);
+      
       setAppointments(response.data);
 
     } catch (err) {
@@ -68,7 +70,7 @@ const Calendar: React.FC = () => {
     const appointment = appointments.find(a => a.id.toString() === event.id);
     if (appointment) {
       setSelectedAppointment(appointment);
-      setAppointmentName(appointment.case_name)
+      setAppointmentName(appointment.title)
       setAppointmentLawyer(appointment.lawyer_name)
       setAppointmentPractitioner(appointment.practitioner_name)
       setAppointmentDate(appointment.date);
