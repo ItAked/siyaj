@@ -11,6 +11,7 @@ import {
   EventContentArg,
 } from "@fullcalendar/core";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
+import Badge from "../ui/badge/Badge";
 
 interface Appointment {
   id: string;
@@ -150,22 +151,7 @@ const Calendar: React.FC = () => {
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة القضية</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-                {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
-                  <div key={`status-${statusKey}`} className="n-chk">
-                    <div className={`form-check form-check-${statusValue} form-check-inline`}>
-                      <label className="flex items-center text-sm text-gray-700 form-check-label dark:text-gray-400" htmlFor={`modal-${statusKey}`}>
-                        <span className="relative">
-                          <input className="sr-only form-check-input" type="radio" name="appointment-status" value={statusKey} id={`modal-${statusKey}`}
-                          checked={appointmentStatus === statusKey} readOnly />
-                          <span className="flex items-center justify-center w-5 h-5 mr-2 border border-gray-300 rounded-full box dark:border-gray-700">
-                            <span className={`h-2 w-2 rounded-full bg-white ${appointmentStatus === statusKey ? "block" : "hidden"}`}></span>
-                          </span>
-                        </span>
-                        {statusKey}
-                      </label>
-                    </div>
-                  </div>
-                ))}
+                <Badge color='success'>{appointmentStatus}</Badge>
               </div>
             </div>
 

@@ -20,7 +20,7 @@ export const CasesStatus = () => {
     <div className="grid grid-cols-1 mx-auto gap-4 sm:grid-cols-3 md:gap-6 my-16">
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-        <div className="flex items-center justify-center w-10 h-10 bg-yellow-600 rounded-full dark:bg-gray-800">
+        <div className="flex items-center justify-center w-10 h-10 bg-sky-300 rounded-full dark:bg-gray-800">
           <DownloadIcon className="text-white" />
         </div>
         <div className="flex items-end justify-between mt-5">
@@ -38,7 +38,7 @@ export const CasesStatus = () => {
 
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-        <div className="flex items-center justify-center w-10 h-10 bg-yellow-600 rounded-full dark:bg-gray-800">
+        <div className="flex items-center justify-center w-10 h-10 bg-sky-300 rounded-full dark:bg-gray-800">
           <BoxIconLine className="text-white" />
         </div>
         <div className="flex items-end justify-between mt-5">
@@ -56,7 +56,7 @@ export const CasesStatus = () => {
 
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-        <div className="flex items-center justify-center w-10 h-10 bg-yellow-600 rounded-full dark:bg-gray-800">
+        <div className="flex items-center justify-center w-10 h-10 bg-sky-300 rounded-full dark:bg-gray-800">
           <LockIcon className="text-white" />
         </div>
 
