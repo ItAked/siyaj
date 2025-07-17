@@ -90,7 +90,7 @@ export default function Subscriptions() {
                                 const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                                 if (modal) modal.showModal();
                             }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                        py-2.5 text-base font-medium text-white hover:bg-yellow-600 sm:w-auto">+ إضافة تصنيف جديد</button>
+                                        py-2.5 text-base font-medium text-white hover:bg-sky-300 sm:w-auto">+ إضافة تصنيف جديد</button>
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@ export default function Subscriptions() {
                             </div>
                             <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto" onClick={handleAddSubscription}>إضافة تصنيف جديد</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto" onClick={handleAddSubscription}>إضافة تصنيف جديد</button>
                                 <form method="dialog">
                                     <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
                                 </form>
@@ -171,7 +171,7 @@ export default function Subscriptions() {
                             </div>
                             <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
                                 <form method="dialog">
                                     <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
                                 </form>
