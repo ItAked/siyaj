@@ -43,7 +43,7 @@ export default function NewCasesTable() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
-      <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2 mb-4">
         <div>
           <h3 className="text-base font-medium text-gray-800 dark:text-white/90">جميع القضايا</h3>
         </div>
@@ -56,7 +56,7 @@ export default function NewCasesTable() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان القضية" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان القضية أو بإسم الممارس الصحي" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
@@ -65,9 +65,9 @@ export default function NewCasesTable() {
               name="status" />الكل</label></li>
               <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة للشؤون الصحية"
               name="status" />منظورة للشؤون الصحية</label></li>
-              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لدى الدائرة القضائية"
-              name="status" />منظورة لمنصة تراضي</label></li>
               <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لمنصة تراضي"
+              name="status" />منظورة لمنصة تراضي</label></li>
+              <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة لدى الدائرة القضائية"
               name="status" />منظورة لدى الدائرة القضائية</label></li>
             </ul>
           </details>
@@ -78,6 +78,7 @@ export default function NewCasesTable() {
           {/* Table Header */}
           <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
             <TableRow>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">#</TableCell>
               <TableCell
                 isHeader
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -108,8 +109,17 @@ export default function NewCasesTable() {
           {/* Table Body */}
 
           <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {cases.map((item) => (
+            {cases.map((item, index) => (
               <TableRow key={item.id} className="">
+                <TableCell className="py-3">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                        {index+1}
+                      </p>
+                    </div>
+                  </div>
+                </TableCell>
                 <TableCell className="py-3">
                   <div className="flex items-center gap-3">
                     <div>
