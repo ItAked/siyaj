@@ -22,14 +22,12 @@ interface Appointment {
   date: string;
   time: string;
   status: string;
-  description: string;
   title: string;
 }
 
 const CalendarLawyer: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [appointmentTitle, setAppointmentTitle] = useState("");
-  const [appointmentDescription, setAppointmentDescription] = useState("");
   const [appointmentPractitioner, setAppointmentPractitioner] = useState(0);
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
@@ -47,9 +45,6 @@ const CalendarLawyer: React.FC = () => {
 
   const handleTitleChange = (value: string) => {    
     setAppointmentTitle(value);
-  };
-  const handleDescriptionChange = (value: string) => {
-    setAppointmentDescription(value);
   };
   const handlePractitionerChange = (value: number) => {
     setAppointmentPractitioner(value);
@@ -113,7 +108,6 @@ const CalendarLawyer: React.FC = () => {
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
-      setAppointmentDescription(appointment.description)
     }
   };
 
@@ -129,7 +123,6 @@ const CalendarLawyer: React.FC = () => {
                   time: appointmentTime + ":00",
                   status: appointmentStatus,
                   practitioner_id: Number(appointmentPractitioner),
-                  description: appointmentDescription,
                   title: appointmentTitle
                 }
               : appointment
@@ -141,7 +134,6 @@ const CalendarLawyer: React.FC = () => {
           time: appointmentTime + ":00",
           status: appointmentStatus,
           practitioner_id: Number(appointmentPractitioner),
-          description: appointmentDescription,
           title: appointmentTitle
         };
         
@@ -153,7 +145,6 @@ const CalendarLawyer: React.FC = () => {
           time: appointmentTime + ":00", // Add seconds for API format
           status: appointmentStatus,
           practitioner_id: Number(appointmentPractitioner),
-          description: appointmentDescription,
           title: appointmentTitle
         };
         
@@ -173,7 +164,6 @@ const CalendarLawyer: React.FC = () => {
     setAppointmentDate("");
     setAppointmentTime("");
     setAppointmentStatus("");
-    setAppointmentDescription("");
     setSelectedAppointment(null);
   };
 
@@ -233,18 +223,9 @@ const CalendarLawyer: React.FC = () => {
             <div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  عنوان القضية
+                  عنوان الدعوة
                 </label>
                 <input type="text" name="title" className="input w-full" value={appointmentTitle || ''} onChange={(e) => handleTitleChange(e.target.value)} />
-              </div>
-            </div>
-            <div className="my-8">
-              <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  عن القضية
-                </label>
-                <textarea name="description" value={appointmentDescription || ''} className="textarea w-full" onChange={(e) => handleDescriptionChange(e.target.value)}
-                placeholder="شرح للقضية.."></textarea>
               </div>
             </div>
             <div className="my-8">
@@ -267,7 +248,7 @@ const CalendarLawyer: React.FC = () => {
             </div>
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-                حالة القضية
+                حالة الدعوة
               </label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {Object.entries(statusOptions).map(([statusKey, statusValue]) => (

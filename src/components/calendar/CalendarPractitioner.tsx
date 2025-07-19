@@ -233,7 +233,7 @@ const CalendarPractitioner: React.FC = () => {
             <div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  عنوان القضية
+                  عنوان الدعوة
                 </label>
                 <input type="text" name="title" className="input w-full" value={appointmentTitle || ''} onChange={(e) => handleTitleChange(e.target.value)} />
               </div>
@@ -241,7 +241,7 @@ const CalendarPractitioner: React.FC = () => {
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  عن القضية
+                  عن الدعوة
                 </label>
                 <textarea name="description" value={appointmentDescription || ''} className="textarea w-full" onChange={(e) => handleDescriptionChange(e.target.value)}
                 placeholder="شرح للقضية.."></textarea>
@@ -267,7 +267,7 @@ const CalendarPractitioner: React.FC = () => {
             </div>
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-                حالة القضية
+                حالة الدعوة
               </label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
