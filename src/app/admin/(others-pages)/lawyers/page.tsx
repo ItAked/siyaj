@@ -1,12 +1,12 @@
 'use client'
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { get } from "../../../../../../server/LawyersServer/lawyers";
-import { createLawyer } from "../../../../../../server/LawyersServer/create_lawyer";
-import { assignCases } from "../../../../../../server/CasesServer/assign_cases";
-import Pagination from "../../../../../components/tables/Pagination";
-import Alert from "../../../../../components/ui/alert/Alert";
-import { ArrowDownIcon } from "../../../../../icons";
+import { get } from "../../../../../server/LawyersServer/lawyers";
+import { createLawyer } from "../../../../../server/LawyersServer/create_lawyer";
+import { assignCases } from "../../../../../server/CasesServer/assign_cases";
+import Pagination from "../../../../components/tables/Pagination";
+import Alert from "../../../../components/ui/alert/Alert";
+import { ArrowDownIcon } from "../../../../icons";
 
 interface CaseItem {
     id: number;
