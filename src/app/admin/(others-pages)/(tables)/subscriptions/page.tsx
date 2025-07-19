@@ -23,7 +23,7 @@ type Meta = {
 
 export default function Subscriptions() {
     const [titleFeature, setTitleFeature] = useState("");
-    const [featurePrice, setFeaturePrice] = useState("");
+    const [featurePrice, setFeaturePrice] = useState(0);
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [subscreptionId, setSubscriptionId] = useState(0)
@@ -65,6 +65,8 @@ export default function Subscriptions() {
             setIsError(false)
             setErrorMsg(response.message)
             getSubscriptions();
+            setTitleFeature('')
+            setFeaturePrice(0)
         } catch (error) {
             setIsError(true)
             setErrorMsg(error.response.data.message)
@@ -107,7 +109,8 @@ export default function Subscriptions() {
                             <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">التصنيف</label>
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">التصنيف 
+                                            <span className="text-error">*</span></label>
                                         <input name="name" type="text" value={titleFeature} onChange={(e) => setTitleFeature(e.target.value)}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
@@ -118,8 +121,9 @@ export default function Subscriptions() {
                             <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر التصنيف</label>
-                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(e.target.value)}
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر التصنيف 
+                                            <span className="text-error">*</span></label>
+                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(Number(e.target.value))}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
                                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
@@ -162,7 +166,7 @@ export default function Subscriptions() {
                                 <div>
                                     <div>
                                         <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر التصنيف</label>
-                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(e.target.value)}
+                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(Number(e.target.value))}
                                         className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
                                         shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
                                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
@@ -212,7 +216,7 @@ export default function Subscriptions() {
                                                     const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
                                                     if (modal) modal.showModal();
                                                     setTitleFeature(subscription.name)
-                                                    setFeaturePrice(subscription.price.toString())
+                                                    setFeaturePrice(subscription.price)
                                                     setSubscriptionId(subscription.id)
                                                 }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg btn-ghost px-4
                                                 py-2.5 text-sm font-medium hover:bg-transparent text-gray-900 sm:w-auto">تعديل</button>
