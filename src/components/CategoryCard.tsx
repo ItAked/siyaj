@@ -12,8 +12,6 @@ const CategoryCard = () => {
     const [lastCategory, setLastCategoy] = useState<LastCategory>({})
     async function showLastCategory() {
         const response = await readLastSubscribe()
-        console.log(response.data);
-        
         
         setLastCategoy(response.data)   
     }
@@ -25,6 +23,8 @@ const CategoryCard = () => {
     return(
         <>
             <div className="card lg:card-side bg-base-100 shadow-sm dark:bg-gray-900/[0.12] dark:border-2">
+            {lastCategory ? (
+
                 <div className="card-body dark:text-white">
                     <h2 className="card-title text-2xl font-medium">التصنيف الحالي</h2>
                     <p className="text-2xl font-base">{lastCategory.name}</p>
@@ -36,6 +36,11 @@ const CategoryCard = () => {
                         </div>
                     )}
                 </div>
+            ) : (
+                <div className="card-body dark:text-white">
+                    <h2 className="card-title text-2xl font-medium">لا يوجد اشتراكات</h2>
+                </div>
+            )}
             </div>
         </>
     )

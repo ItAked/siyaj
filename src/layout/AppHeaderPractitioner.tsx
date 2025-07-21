@@ -1,6 +1,6 @@
+
 "use client";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
-import UserDropdown from "../components/header/UserDropdown";
 import { useSidebar } from "../context/SidebarContext";
 import React, { useState ,useEffect,useRef} from "react";
 
@@ -112,9 +112,6 @@ const AppHeaderPractitioner: React.FC = () => {
             {/* <!-- Dark Mode Toggler --> */}
 
           </div>
-          {/* <!-- User Area --> */}
-          <UserDropdown /> 
-    
         </div>
       </div>
     </header>
