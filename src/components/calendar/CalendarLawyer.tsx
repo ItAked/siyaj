@@ -39,8 +39,9 @@ const CalendarLawyer: React.FC = () => {
   const[practitioner, setPractitioner] = useState([])
 
   const statusOptions = {
-    "ملغي الحجز": "danger",
-    "محجوز": "success"
+    "منظورة للشؤون الصحية": "primary",
+    "منظورة لدى الدائرة القضائية": "primary",
+    "منظورة لمنصة تراضي": "primary"
   };
 
   const handleTitleChange = (value: string) => {    
@@ -336,11 +337,8 @@ const CalendarLawyer: React.FC = () => {
 };
 
 const renderEventContent = (eventInfo: EventContentArg) => {
-  const status = eventInfo.event.extendedProps.status;
-  const colorClass = status === "ملغي الحجز" ? "fc-bg-danger" : "fc-bg-success"
-  
   return (
-    <div className={`event-fc-color flex fc-event-main ${colorClass}`}>
+    <div className={`event-fc-color flex fc-event-main fc-bg-primary`}>
       <div className="fc-daygrid-event-dot"></div>
       <div className="fc-event-time">{eventInfo.timeText}</div>
       <div className="fc-event-title">{eventInfo.event.title}</div>
