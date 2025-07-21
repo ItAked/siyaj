@@ -21,11 +21,13 @@ interface Appointment {
   date: string;
   time: string;
   status: string;
+  attachments: string;
 }
 
 const Calendar: React.FC = () => {
   const [, setSelectedAppointment] = useState<Appointment | null>(null);
   const [appointmentName, setAppointmentName] = useState("")
+  const [appointmentAttachment, setAppointmentAttachment] = useState("")
   const [appointmentLawyer, setAppointmentLawyer] = useState("")
   const [appointmentPractitioner, setAppointmentPractitioner] = useState("")
   const [appointmentDate, setAppointmentDate] = useState("");
@@ -72,6 +74,7 @@ const Calendar: React.FC = () => {
     if (appointment) {
       setSelectedAppointment(appointment);
       setAppointmentName(appointment.title)
+      setAppointmentAttachment(appointment.attachments);
       setAppointmentLawyer(appointment.lawyer_name)
       setAppointmentPractitioner(appointment.practitioner_name)
       setAppointmentDate(appointment.date);
@@ -85,7 +88,6 @@ const Calendar: React.FC = () => {
     start: `${appointment.date}T${appointment.time}`,
     extendedProps: { 
       calendar: statusOptions[appointment.status as keyof typeof statusOptions] || "primary",
-      status: appointment.status
     }
   }));
 
@@ -133,25 +135,25 @@ const Calendar: React.FC = () => {
             <div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان القضية</label>
-                <p>{appointmentName}</p>
+                <input type="text" className="input" value={appointmentName} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">المحامي</label>
-                <p>{appointmentLawyer}</p>
+                <input type="text" className="input" value={appointmentLawyer} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">الممارس الصحي</label>
-                <p>{appointmentPractitioner}</p>
+                <input type="text" className="input" value={appointmentPractitioner} readOnly />
               </div>
             </div>
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة القضية</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-                <Badge color='success'>{appointmentStatus}</Badge>
+                <Badge color='primary'>{appointmentStatus}</Badge>
               </div>
             </div>
 
@@ -175,6 +177,13 @@ const Calendar: React.FC = () => {
                 />
               </div>
             </div>
+
+            <div className="mt-6">
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات القضية</label>
+              <div className="relative">
+                <a href={appointmentAttachment} className="btn btn-link" download={true}>تحميل ملف القضية</a>
+              </div>
+            </div>
           </div>
           <div className="modal-action">
             <form method="dialog">
@@ -188,11 +197,8 @@ const Calendar: React.FC = () => {
 };
 
 const renderEventContent = (eventInfo: EventContentArg) => {
-  const status = eventInfo.event.extendedProps.status;
-  const colorClass = status === "ملغي الحجز" ? "fc-bg-danger" : "fc-bg-success"
-  
   return (
-    <div className={`event-fc-color flex fc-event-main ${colorClass}`}>
+    <div className={`event-fc-color flex fc-event-main fc-bg-primary`}>
       <div className="fc-daygrid-event-dot"></div>
       <div className="fc-event-time">{eventInfo.timeText}</div>
       <div className="fc-event-title">{eventInfo.event.title}</div>

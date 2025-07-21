@@ -629,6 +629,13 @@ span.flatpickr-weekday,
   -webkit-appearance: none;
 }
 
+.input {
+  &:has(> input[disabled]), &:is(:disabled, [disabled]) {
+    background-color: white;
+    color: black;
+  }
+}
+
 .stocks-slider-outer .swiper-button-next:after,
 .stocks-slider-outer .swiper-button-prev:after {
   @apply hidden;
