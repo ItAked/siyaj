@@ -213,7 +213,7 @@ export default function Lawyers() {
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
                                             <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
-                                            rounded-lg">القضايا المسندة له</summary>
+                                            rounded-lg">الدعوات المسندة له</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
                                                 {lawyer.assigned_cases.map((caseItem) => (
                                                     <i key={caseItem.id} className="my-2">
@@ -237,7 +237,7 @@ export default function Lawyers() {
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
                                             <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
-                                            rounded-lg">القضايا غير المسندة له</summary>
+                                            rounded-lg">الدعوات غير المسندة له</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
                                                 {lawyer.unassigned_cases.map((caseItem) => (
                                                     <i key={caseItem.id} className="my-2">

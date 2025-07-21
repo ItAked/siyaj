@@ -244,7 +244,7 @@ const CalendarPractitioner: React.FC = () => {
                   عن الدعوة
                 </label>
                 <textarea name="description" value={appointmentDescription || ''} className="textarea w-full" onChange={(e) => handleDescriptionChange(e.target.value)}
-                placeholder="شرح للقضية.."></textarea>
+                placeholder="شرح للدعوة.."></textarea>
               </div>
             </div>
             <div className="my-8">

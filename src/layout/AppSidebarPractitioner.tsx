@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
   },
   // {
   //   icon: <CalenderIcon />,
-  //   name: "جدولة القضايا",
+  //   name: "جدولة الدعوات",
   //   path: "/practitioner/calendar",
   // },
   {

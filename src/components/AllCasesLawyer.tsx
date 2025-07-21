@@ -51,7 +51,7 @@ export default function AllCasesLawyer() {
       <div className="flex flex-col gap-2 mb-4">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            جميع القضايا
+            جميع الدعوات
           </h3>
         </div>
 

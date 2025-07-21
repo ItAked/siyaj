@@ -131,7 +131,7 @@ export default function NewCase() {
                         <option disabled={true}>اختر مرحلة الدعوة</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
-                        <option value="أحيلت لدائرة القضايا">أحيلت لدائرة القضايا</option>
+                        <option value="أحيلت لدائرة الدعوات">أحيلت لدائرة الدعوات</option>
                     </select>
                 </fieldset>
             </div>
