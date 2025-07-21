@@ -208,7 +208,7 @@ export default function Lawyers() {
                                 <div className="collapse border">
                                     <input type="checkbox" className="peer" />
                                     <div className="collapse-title flex items-center justify-between">
-                                        <p>القضايا المسندة</p>
+                                        <p>الدعوات المسندة</p>
                                         <ArrowDownIcon />
                                     </div>
                                     <div className="collapse-content">

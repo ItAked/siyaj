@@ -4,13 +4,13 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "جدولة القضايا",
-  description: "صفحة جدولة القضايا"
+  title: "جدولة الدعوات",
+  description: "صفحة جدولة الدعوات"
 };
 export default function page() {
   return (
     <div>
-      <PageBreadcrumb pageTitle="جدولة القضايا" />
+      <PageBreadcrumb pageTitle="جدولة الدعوات" />
       <Calendar />
     </div>
   );

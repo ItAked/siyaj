@@ -44,7 +44,7 @@ export default function AllCases() {
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-4 mb-4">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          جميع القضايا
+          جميع الدعوات
         </h3>
         <div className="flex items-center gap-3">
           <label className="input">
@@ -54,7 +54,7 @@ export default function AllCases() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="أدخل إسم الممارس الصحي أو بالقضية" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="أدخل إسم الممارس الصحي أو بالدعوة" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
@@ -92,7 +92,7 @@ export default function AllCases() {
                 isHeader
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                القضية
+                الدعوة
               </TableCell>
               <TableCell
                 isHeader

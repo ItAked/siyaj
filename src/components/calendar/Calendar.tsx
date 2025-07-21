@@ -134,7 +134,7 @@ const Calendar: React.FC = () => {
           <div className="mt-8">
             <div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان القضية</label>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان الدعوة</label>
                 <input type="text" className="input" value={appointmentName} readOnly />
               </div>
             </div>
@@ -151,7 +151,7 @@ const Calendar: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة القضية</label>
+              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوة</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 <Badge color='primary'>{appointmentStatus}</Badge>
               </div>
@@ -179,9 +179,9 @@ const Calendar: React.FC = () => {
             </div>
 
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات القضية</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات الدعوة</label>
               <div className="relative">
-                <a href={appointmentAttachment} className="btn btn-link" download={true}>تحميل ملف القضية</a>
+                <a href={appointmentAttachment} className="btn btn-link" download={true}>تحميل ملف الدعوة</a>
               </div>
             </div>
           </div>
