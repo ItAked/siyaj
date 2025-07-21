@@ -16,21 +16,22 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed z-30 w-full bg-white">
+    <header className="fixed z-30 w-full bg-white shadow">
       <div className="w-full">
         <div className="relative flex items-center justify-between gap-3 py-8 px-4 md:px-14">
-          <div className="flex flex-1 items-center">
-            <Image alt="logo" loading="lazy" width={175} height={55} src={Logo} />
-          </div>
-
           {/* Desktop Nav */}
-          <ul className="hidden md:flex items-center text-2xl justify-center gap-x-10" dir="rtl">
+          <ul className="hidden mx-auto md:flex items-center text-2xl justify-center gap-x-10" dir="rtl">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{link.label}</Link>
               </li>
             ))}
           </ul>
+
+          <div>
+            <Image alt="logo" loading="lazy" width={175} height={55} src={Logo} />
+          </div>
+
 
           {/* Hamburger Icon */}
           <button className="md:hidden flex items-center text-3xl" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open menu">

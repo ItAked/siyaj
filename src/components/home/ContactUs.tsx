@@ -46,23 +46,22 @@ export default function ContactUs(){
                     <div className="space-y-4">
                         <div>
                             <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="name">الإسم الثلاثي</label>
-                            <input id="name" name="name" value={contactData.name} onChange={handleContactChange} className="form-input w-full py-2" type="text"
+                            <input id="name" name="name" value={contactData.name} onChange={handleContactChange} className="input form-input w-full py-2" type="text"
                             placeholder="لجين صلاح" required />
                         </div>
                         <div>
                             <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="email">البريد الإلكتروني</label>
-                            <input id="email" name="email" value={contactData.email} onChange={handleContactChange} className="form-input w-full py-2" type="email"
+                            <input id="email" name="email" value={contactData.email} onChange={handleContactChange} className="input form-input w-full py-2" type="email"
                             placeholder="lujain@akedco.com" required />
                         </div>
                         <div>
                             <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="message">الرسالة</label>
-                            <textarea id="message" name="message" value={contactData.message} onChange={handleContactChange} className="form-input w-full py-2"
+                            <textarea id="message" name="message" value={contactData.message} onChange={handleContactChange} className="input form-input w-full py-2"
                             autoComplete="on" placeholder="الرسالة" required></textarea>
                         </div>
                     </div>
                     <div className="mt-6 space-y-3">
-                        <button className="btn w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm
-                        hover:bg-[length:100%_150%]">
+                        <button className="btn w-full bg-linear-to-t bg-blue-300 text-white border-none">
                             إرسال
                         </button>
                         { msg != '' && (
@@ -80,11 +79,11 @@ export default function ContactUs(){
                     </article>
                     <div>
                         <div className="flex items-center gap-x-2">
-                            <Phone className="h-5 w-5 text-gray-900 flex-shrink-0 mb-1" />
+                            <Phone className="text-white p-1 mb-1 rounded-full bg-sky-950" />
                             <span>0555643324</span>
                         </div>
                         <div className="flex items-center gap-x-2">
-                            <Mail className="h-5 w-5 text-gray-900 flex-shrink-0 mb-1" />
+                            <Mail className="text-white p-1 mb-1 rounded-full bg-sky-950" />
                             <span className="text-gray-900">lujain@akedco.com</span>
                         </div>
                     </div>
