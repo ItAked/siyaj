@@ -42,13 +42,10 @@ export default function AllCases() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
-      <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            جميع القضايا
-          </h3>
-        </div>
-
+      <div className="flex flex-col gap-4 mb-4">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
+          جميع القضايا
+        </h3>
         <div className="flex items-center gap-3">
           <label className="input">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -57,7 +54,7 @@ export default function AllCases() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="أدخل إسم الممارس الصحي" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="أدخل إسم الممارس الصحي أو بالقضية" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
@@ -127,7 +124,7 @@ export default function AllCases() {
                   {item.case}
                 </TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  <Badge size="sm" color={ item.status === "منظورة لمنصة تراضي" ? "success" : item.status === "منظورة لدى الدائرة القضائية" ? "warning" : "error"}>
+                  <Badge size="sm" color={ item.status === "منظورة لمنصة تراضي" ? "success" : item.status === "منظورة لدى الدائرة القضائية" ? "info" : "warning"}>
                     {item.status}
                   </Badge>
                 </TableCell>

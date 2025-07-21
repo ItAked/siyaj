@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
-import NewCasesTable from "../../components/NewCasesTable";
 import { CasesStatus } from "../../components/CasesStatus";
+import AllCases from "../../components/AllCases";
 
 export const metadata: Metadata = {
   title: "الصفحة الرئيسية",
@@ -16,7 +16,7 @@ export default function AdminPanel() {
       </div>
 
       <div className="col-span-12">
-        <NewCasesTable />
+        <AllCases />
       </div>
     </div>
   );

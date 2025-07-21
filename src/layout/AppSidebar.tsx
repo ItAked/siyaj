@@ -22,7 +22,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "نظرة عامة",
+    name: "الرئيسية",
     path: "/admin"
   },
   {
