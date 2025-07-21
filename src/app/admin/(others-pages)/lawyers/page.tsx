@@ -165,7 +165,7 @@ export default function Lawyers() {
                             </div>
                             <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
                                 <button onClick={handleAddLawyer} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto">إضافة محامي</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto">إضافة محامي</button>
                                 <form method="dialog">
                                     <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
                                 </form>
@@ -178,7 +178,7 @@ export default function Lawyers() {
                 <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="input w-1/2 max-sm:w-full" placeholder="ابحث بإسم المحامي" />
                 <button onClick={() => {const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                     if (modal) modal.showModal();}} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                    py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto">إضافة محامي</button>
+                    py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto">إضافة محامي</button>
             </div>
             {isLoading ? (<p className="text-center py-4">جار التحميل...</p>) : lawyers.map((lawyer, index) => (
                         <div key={index} className="card bg-base-100 w-full shadow-sm my-11">
@@ -189,8 +189,8 @@ export default function Lawyers() {
                                 <div className="card-actions justify-end">
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
-                                            <summary className="btn m-1 text-base font-normal bg-sky-300 border-none
-                                            text-white rounded-lg">القضايا غير المسندة له</summary>
+                                            <summary className="btn m-1 text-base font-normal bg-blue-300 border-none
+                                            text-white rounded-lg">إسناد قضايا</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
                                                 {lawyer.unassigned_cases.map((caseItem) => (
                                                     <i key={caseItem.id} className="my-2">

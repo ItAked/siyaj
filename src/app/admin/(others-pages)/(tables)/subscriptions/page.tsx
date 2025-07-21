@@ -134,7 +134,10 @@ export default function Subscriptions() {
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                                 py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto" onClick={handleAddSubscription}>إضافة تصنيف جديد</button>
                                 <form method="dialog">
-                                    <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
+                                    <button className="btn" onClick={() => {
+                                        setFeaturePrice(0)
+                                        setTitleFeature('')
+                                        setErrorMsg('')}}>إغلاق</button>
                                 </form>
                             </div>
                         </div>
@@ -177,7 +180,10 @@ export default function Subscriptions() {
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                                 py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
                                 <form method="dialog">
-                                    <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
+                                    <button className="btn" onClick={() => {
+                                        setFeaturePrice(0)
+                                        setTitleFeature('')
+                                        setErrorMsg('')}}>إغلاق</button>
                                 </form>
                             </div>
                         </div>
