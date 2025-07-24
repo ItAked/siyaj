@@ -7,7 +7,7 @@ import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "../../../server/AuthServer/login";
+import { login } from "../../../services/auth";
 
 
 export default function SignInForm() {
@@ -35,12 +35,10 @@ export default function SignInForm() {
     formData.append('email', user.email)
     formData.append('password', user.password)
 
-    const response = await login(formData)
+    await login(formData)
     
     alert('مرحبًا من جديد')
-    if (response === 'admin') {
-      router.push('/admin')
-    }
+    router.push('/admin')
   }
 
   return (

@@ -1,14 +1,20 @@
-import type { Metadata } from "next";
-import React from "react";
+'use client'
+
+import React, { useEffect } from "react";
 import { CasesStatus } from "../../components/CasesStatus";
 import AllCases from "../../components/AllCases";
+import { getToken } from "../../../utils/auth";
+import { useRouter } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "الصفحة الرئيسية",
-  description: "الصفحة الرئيسية للآدمن",
-};
 
 export default function AdminPanel() {
+  const router = useRouter();
+  useEffect(() => {
+    if (!getToken()) {
+      router.push('/login');
+    }
+  }, []);
+  
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
       <div className="col-span-12 space-y-6">
