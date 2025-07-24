@@ -10,8 +10,8 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { getAppointments } from "../../../server/AppointmentsServer/appointments";
 import Badge from "../ui/badge/Badge";
+import { getAppointments } from "../../../services/appointments";
 
 interface Appointment {
   id: string;
@@ -92,7 +92,7 @@ const Calendar: React.FC = () => {
   }));
 
   if (loading) {
-    return <div className="text-center py-8">Loading appointments...</div>;
+    return <div className="text-center py-8">جاري تحميل المواعيد....</div>;
   }
 
   if (error) {
