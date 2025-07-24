@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { getPractitioners } from "../../../../../server/PractitionersServer/practitioners";
 import Pagination from "../../../../components/tables/Pagination";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../components/ui/table";
 import Link from "next/link";
+import { getPractitioners } from "../../../../../services/practitioners";
 
 interface Practitioner {
     id: number,

@@ -2,10 +2,10 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { readPractitionerId } from "../../server/PractitionersServer/read_practitioner_id";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
 import Badge from "./ui/badge/Badge";
+import { readPractitionerId } from "../../services/practitioners";
 
 interface Cases {
     case: string;
