@@ -2,13 +2,10 @@
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
 import { useEffect, useState } from "react";
-import { readSubscriptions } from "../../../../../../server/SubscriptionsServer/read_subscriptions";
-import { createSubscriptions } from "../../../../../../server/SubscriptionsServer/create_subscription";
-import { updateSubscription } from "../../../../../../server/SubscriptionsServer/update_subscription";
-import { deleteSubscriptions } from "../../../../../../server/SubscriptionsServer/delete_subscription";
 import { HorizontaLDots } from "../../../../../icons";
 import Pagination from "../../../../../components/tables/Pagination";
 import Alert from "../../../../../components/ui/alert/Alert";
+import { createSubscriptions, deleteSubscriptions, readSubscriptions, updateSubscription } from "../../../../../../services/subscriptions";
 
 interface Subscription {
     id: number;
