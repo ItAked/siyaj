@@ -1,12 +1,11 @@
 'use client'
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { get } from "../../../../../server/LawyersServer/lawyers";
-import { createLawyer } from "../../../../../server/LawyersServer/create_lawyer";
-import { assignCases } from "../../../../../server/CasesServer/assign_cases";
 import Pagination from "../../../../components/tables/Pagination";
 import Alert from "../../../../components/ui/alert/Alert";
 import { ArrowDownIcon } from "../../../../icons";
+import { assignCases } from "../../../../../services/cases";
+import { createLawyer, readLawyers } from "../../../../../services/lawyers";
 
 interface CaseItem {
     id: number;
@@ -45,7 +44,7 @@ export default function Lawyers() {
     async function getLawyers(search?: string, page: number = 1) {
         setIsLoading(true);
         try {
-            const response = await get(search, page);
+            const response = await readLawyers(search, page);
             setLawyers(response.data.data);
             setPagination(response.data.meta)            
             

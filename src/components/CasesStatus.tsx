@@ -1,15 +1,16 @@
 "use client";
+
+import { readCasesStatus } from "../../services/cases";
 import {BoxIconLine, DownloadIcon, LockIcon } from "../icons";
 import { useEffect, useState } from "react";
-import { get } from "../../server/CasesServer/cases_status";
 
 export const CasesStatus = () => {
   const [casesStatus, setCasesStatus] = useState([])
 
   async function getCasesStatus() {
-    const response = await get()
+    const response = await readCasesStatus()
 
-    setCasesStatus(Object.values(response.data))
+    setCasesStatus(Object.values(response))
   }
 
   useEffect(() => {

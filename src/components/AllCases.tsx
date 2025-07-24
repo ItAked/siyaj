@@ -9,9 +9,9 @@ import {
 } from "./ui/table";
 import Badge from "./ui/badge/Badge";
 import React, { useEffect, useState } from "react";
-import { getCases } from "../../server/CasesServer/cases";
 import Pagination from "./tables/Pagination";
 import { HorizontaLDots } from "../icons";
+import { getCases } from "../../services/cases";
 
 interface Case {
   id: number;
