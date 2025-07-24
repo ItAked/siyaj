@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { getPractitioners } from "../../../../../server/PractitionersServer/practitioners";
 import Pagination from "../../../../components/tables/Pagination";
-import { DownloadIcon } from "../../../../icons";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../components/ui/table";
+import Link from "next/link";
 
 interface Practitioner {
     id: number,
@@ -57,22 +58,38 @@ export default function Practitioners() {
             </svg>
             <input name="search" onChange={(e) => readPractitioner(e.target.value)} type="search" className="w-full" placeholder="ابحث بإسم الممارس الصحي" />
         </label>
-        
-        { isLoading ? (
-            (<p className="text-center py-4">جار التحميل...</p>)) : practitioners.map((practitioner, index) => (
-                <div key={index} className="card card-border bg-base-100 w-full">
-                    <div className="card-body font-normal">
-                        <h2 className="card-title text-2xl">{practitioner.name}</h2>
-                        <p className="text-xl">{practitioner.email}</p>
-                        <p className="text-sm">{`${practitioner.medical} - ${practitioner.employer}`}</p>
-                        <div className="card-actions justify-end">
-                            <a className="btn bg-brand-500 text-white" href={practitioner.license_file} download={true}><DownloadIcon /> تحميل الترخيص المهني</a>
-                        </div>
-                    </div>
-                </div>
-            ))
-        }
-        <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number): void => {readPractitioner("", page);}} />
+
+        <div className="max-w-full overflow-x-auto">
+            <Table>
+                <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
+                    <TableRow>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">إسم الممارس</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">البريد الإلكتروني</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التخصص</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">جهة العمل</TableCell>
+                    </TableRow>
+                </TableHeader>
+                
+                <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
+                    {isLoading ? (
+                        <TableRow>
+                            <TableCell className="text-center py-4">جار التحميل...</TableCell>
+                        </TableRow>
+                        ) : practitioners.map((practitioner, index) => (
+                            <TableRow key={index}>
+                                <TableCell className="py-3">
+                                    <Link href={`/admin/practitioners/${practitioner.id}`} className="btn btn-link">{practitioner.name}</Link>
+                                </TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.email}</TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.medical}</TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.medical}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number):
+                    void => {readPractitioner("", page);}} />
+        </div>
     </div>
   );
 }

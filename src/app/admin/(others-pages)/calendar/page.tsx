@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "جدولة الدعوات",
   description: "صفحة جدولة الدعوات"
 };
+
 export default function page() {
   return (
     <div>
