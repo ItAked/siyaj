@@ -5,8 +5,8 @@ import ComponentCard from "../common/ComponentCard";
 import Label from "./Label";
 import Input from "./input/InputField";
 import { get } from "../../../server/LawyersServer/lawyers";
-import { createCase } from "../../../server/CasesServer/create_case";
 import Alert from "../ui/alert/Alert";
+import { createCase } from "../../../services/cases";
 
 interface Lawyers {
   id: number;

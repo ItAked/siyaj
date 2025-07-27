@@ -12,9 +12,9 @@ import {
 } from "@fullcalendar/core";
 import { getAppointments } from "../../../server/AppointmentsServer/appointments";
 import { post } from "../../../server/AppointmentsServer/create_appointment";
-import { getCases } from "../../../server/CasesServer/cases";
 import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
 import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
+import { getCases } from "../../../services/cases";
 
 interface Appointment {
   id: string;
