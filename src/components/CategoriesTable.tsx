@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
 import Pagination from "./tables/Pagination";
 import Badge from "./ui/badge/Badge";
-import { getPayments } from "../../server/PaymentServer";
+import { getPayments } from "../../services/payments";
 
 type Meta = {
   current_page?: number;
@@ -13,8 +13,9 @@ type Meta = {
 
 interface Payments {
     id: string;
-    description: string;
+    name: string;
     status: string;
+    price: number;
 }
 
 export default function CategoriesTable() {
@@ -24,7 +25,7 @@ export default function CategoriesTable() {
     async function readInvoice(page: number) {
         const response = await getPayments(page)
 
-        setPayments(response.payments)
+        setPayments(response.data)
         setPagination(response.meta)
     }
 
@@ -38,26 +39,6 @@ export default function CategoriesTable() {
             <div>
                 <h3 className="text-base font-medium text-gray-800 dark:text-white/90">الاشتراكات السابقة</h3>
             </div>
-
-            <div className="flex items-center gap-3">
-                <label className="input">
-                    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </g>
-                    </svg>
-                    <input type="search" name="search" className="w-full" placeholder="إبحث بنوع التصنيف" />
-                </label>
-                {/* <details className="dropdown">
-                    <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
-                        <li><label className="label"><input type="radio" defaultChecked className="radio" />الكل</label></li>
-                        <li><label className="label"><input type="radio" className="radio" />نشط</label></li>
-                        <li><label className="label"><input type="radio" className="radio" />منتهي</label></li>
-                    </ul>
-                </details> */}
-            </div>
         </div>
         <div className="max-w-full overflow-x-auto">
             <Table>
@@ -65,6 +46,9 @@ export default function CategoriesTable() {
                     <TableRow>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
                             نوع التصنيف
+                        </TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                            السعر
                         </TableCell>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
                             الحالة
@@ -78,12 +62,19 @@ export default function CategoriesTable() {
                             <TableCell className="py-3">
                                 <div className="flex categorys-center gap-3">
                                     <div>
-                                        <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{category.description}</p>
+                                        <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{category.name}</p>
+                                    </div>
+                                </div>
+                            </TableCell>
+                            <TableCell className="py-3">
+                                <div className="flex categorys-center gap-3">
+                                    <div>
+                                        <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{category.price}</p>
                                     </div>
                                 </div>
                             </TableCell>
                             <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                <Badge size="sm" color={category.status === "paid" ? "success" : "error"}>{category.status}</Badge>
+                                <Badge size="sm" color={category.status === "مفعل" ? "success" : "error"}>{category.status}</Badge>
                             </TableCell>
                         </TableRow>
                     ))}

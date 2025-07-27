@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Check } from 'lucide-react';
-import { readSubscriptions } from '../../../server/SubscriptionsServer/read_subscriptions';
+import { getToken } from '../../utils/auth';
+import { readSubscriptions } from '../../../services/subscriptions';
 
 interface Faetures {
   id: number;
@@ -46,7 +46,7 @@ const Categories = () => {
               </div>
             </div>
             <div className="p-6 bg-white border-t border-gray-100 mx-auto">
-              { localStorage.getItem('token') ? (
+              { getToken() ? (
                 <a href={`http://127.0.0.1:8000/payment/${category.price}/${category.name}`} className='btn btn-wide bg-blue-300 border-none text-white'>إختر</a>
               ) : <button className="btn btn-wide bg-blue-300 border-none text-white" onClick={()=>document.getElementById('my_modal_3').showModal()}>إختر</button>}
               <dialog id="my_modal_3" className="modal">
@@ -54,7 +54,7 @@ const Categories = () => {
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
-                  <h3 className="font-bold text-lg text-center">لإختر يجب عليك تسجيل الدخول أولًا</h3>
+                  <h3 className="font-bold text-lg text-center">للإختيار يجب عليك تسجيل الدخول أولًا</h3>
                   <a href='/practitioner/auth/signin' className="py-4 link">تسجيل الدخول</a>
                 </div>
               </dialog>

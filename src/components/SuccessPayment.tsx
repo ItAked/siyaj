@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { CheckIcon } from "lucide-react"
 import type { JSX } from "react/jsx-runtime"
-import { assignSubscription } from "../../server/SubscriptionsServer/assignSubscription"
+import { assignSubscription } from "../../services/subscriptions"
 
 interface PaymentSuccessProps {
   transactionId?: string
