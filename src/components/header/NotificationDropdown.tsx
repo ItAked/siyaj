@@ -3,8 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { readNotifications } from "../../../server/notificationsServer/notifications";
-import { updateNotification } from "../../../server/notificationsServer/notification_read";
+import { readNotifications, updateNotification } from "../../../services/notification";
 
 export default function NotificationDropdown() {
   interface Notification {
@@ -28,7 +27,7 @@ export default function NotificationDropdown() {
   async function getNotifications() {
     const response = await readNotifications()
     
-    setNotifications(response.data.data)
+    setNotifications(response.data)
     setNotifying(true);
   }
 
