@@ -1,6 +1,5 @@
 'use client'
 
-import { signup } from "../../../server/AuthServer/signup";
 import { EyeClosed, EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -9,6 +8,7 @@ import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
 import Alert from "../ui/alert/Alert";
 import { useRouter } from "next/navigation";
+import { signup } from "../../../services/auth";
 
 export default function SignUp() {
   const [user, setUser] = useState({
@@ -71,7 +71,7 @@ return (
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-yellow-600 text-title-sm dark:text-white/90 sm:text-title-md text-right">إنشاء الحساب للممارسين الصحيين</h1>
+            <h1 className="mb-2 font-semibold text-sky-600 text-title-sm dark:text-white/90 sm:text-title-md text-right">إنشاء الحساب للممارسين الصحيين</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 text-right">
               الرجاء إدخال البيانات المطلوبة
             </p>
@@ -181,7 +181,7 @@ return (
                 </div>
                 { errorMsg != '' && (<Alert variant={"error"} title='حدث خطأ!' message={errorMsg} />)}
                 <div className="pb-40">
-                  <Button className="w-full bg-yellow-600" size="sm">
+                  <Button className="w-full bg-sky-600" size="sm">
                      إنشاء الحساب
                   </Button>
                 </div>

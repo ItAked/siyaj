@@ -3,7 +3,7 @@
 import { Mail, Phone } from "lucide-react";
 import Map from "./MapComponent/index";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { contactUs } from "../../../server/contact_us";
+import { contactUs } from "../../../services/contact_us";
 import Alert from "../ui/alert/Alert";
 
 export default function ContactUs(){

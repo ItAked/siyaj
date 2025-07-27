@@ -162,7 +162,7 @@ export default function Lawyers() {
                             </div>
                             <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
                                 <button onClick={handleAddLawyer} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-sky-600 sm:w-auto">إضافة محامي</button>
                                 <form method="dialog">
                                     <button className="btn">إغلاق</button>
                                 </form>
@@ -186,7 +186,7 @@ export default function Lawyers() {
                         const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                         if (modal) modal.showModal();
                         }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                        py-2.5 text-sm font-medium text-white hover:bg-yellow-600 sm:w-auto">إضافة محامي</button>
+                        py-2.5 text-sm font-medium text-white hover:bg-sky-600 sm:w-auto">إضافة محامي</button>
                 </div>
             </div>
 
@@ -212,7 +212,7 @@ export default function Lawyers() {
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
-                                            <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
+                                            <summary className="btn m-1 text-base font-normal bg-sky-600 border-none text-white
                                             rounded-lg">الدعوات المسندة له</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
                                                 {lawyer.assigned_cases.map((caseItem) => (
@@ -236,7 +236,7 @@ export default function Lawyers() {
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
-                                            <summary className="btn m-1 text-base font-normal bg-yellow-600 border-none text-white
+                                            <summary className="btn m-1 text-base font-normal bg-sky-600 border-none text-white
                                             rounded-lg">الدعوات غير المسندة له</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
                                                 {lawyer.unassigned_cases.map((caseItem) => (

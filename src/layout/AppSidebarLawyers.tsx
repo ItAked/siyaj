@@ -12,7 +12,7 @@ import {
   GridIcon,
   UserCircleIcon,
 } from "../icons/index";
-import { logout } from "../../server/AuthServer/logout";
+import { logout } from "../../services/auth";
 
 type NavItem = {
   name: string;

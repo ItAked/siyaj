@@ -324,7 +324,7 @@ const CalendarLawyer: React.FC = () => {
             <button
               onClick={handleAddOrUpdateAppointment}
               type="button"
-              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600
+              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-sky-600
               sm:w-auto"
             >
               {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}

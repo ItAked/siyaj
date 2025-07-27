@@ -46,7 +46,7 @@ export default function SuccessPayment({
   }, [])
 
   const createConfetti = () => {
-    const colors = ["bg-green-500", "bg-red-400", "bg-teal-400", "bg-blue-400", "bg-yellow-400"]
+    const colors = ["bg-green-500", "bg-red-400", "bg-teal-400", "bg-blue-400", "bg-sky-400"]
     const confettiArray: JSX.Element[] = []
 
     for (let i = 0; i < 50; i++) {
