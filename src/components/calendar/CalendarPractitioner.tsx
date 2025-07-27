@@ -10,11 +10,9 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { getAppointments } from "../../../server/AppointmentsServer/appointments";
-import { post } from "../../../server/AppointmentsServer/create_appointment";
-import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
 import { get } from "../../../server/LawyersServer/lawyers";
 import { getCases } from "../../../services/cases";
+import { createAppointment, getAppointments, updateAppointment } from "../../../services/appointmnets";
 
 interface Appointment {
   id: string;
@@ -157,7 +155,7 @@ const CalendarPractitioner: React.FC = () => {
           title: appointmentTitle
         };
         
-        const response = await post(newAppointment);
+        const response = await createAppointment(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
       readAppointments();

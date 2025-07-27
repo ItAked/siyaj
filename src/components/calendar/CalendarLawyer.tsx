@@ -10,11 +10,9 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { getAppointments } from "../../../server/AppointmentsServer/appointments";
-import { post } from "../../../server/AppointmentsServer/create_appointment";
-import { getPractitioners } from "../../../server/PractitionersServer/practitioners";
-import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
+import { getPractitioners } from "../../../services/practitioners";
 import { getCases } from "../../../services/cases";
+import { createAppointment, getAppointments, updateAppointment } from "../../../services/appointmnets";
 
 interface Appointment {
   id: string;
@@ -68,7 +66,7 @@ const CalendarLawyer: React.FC = () => {
       setLoading(true);
 
       const response = await getAppointments();
-      setAppointments(response.data);
+      setAppointments(response);
 
     } catch (err) {
       setError(String(err));
@@ -79,7 +77,7 @@ const CalendarLawyer: React.FC = () => {
 
   async function readPractitioners() {
     const response = await getPractitioners('')
-    const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
+    const p = response.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
         label: practitionerItem.name
     }));
@@ -149,7 +147,7 @@ const CalendarLawyer: React.FC = () => {
           title: appointmentTitle
         };
         
-        const response = await post(newAppointment);
+        const response = await createAppointment(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
       readAppointments();

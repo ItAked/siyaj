@@ -2,7 +2,7 @@
 
 import { Table, TableHeader, TableRow, TableCell, TableBody } from "../../../../../components/ui/table";
 import React, { useEffect, useState } from "react";
-import { getPractitioners } from "../../../../../../server/PractitionersServer/practitioners";
+import { getPractitioners } from "../../../../../../services/practitioners";
 import Pagination from "../../../../../components/tables/Pagination";
 
 interface Practitioner {
