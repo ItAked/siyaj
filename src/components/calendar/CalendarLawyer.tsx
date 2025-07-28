@@ -22,6 +22,10 @@ interface Appointment {
   status: string;
   title: string;
 }
+interface Practitioner {
+  value: number;
+  label: string;
+}
 
 const CalendarLawyer: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
@@ -34,7 +38,7 @@ const CalendarLawyer: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const[practitioner, setPractitioner] = useState([])
+  const[practitioner, setPractitioner] = useState<Practitioner[]>([])
 
   const statusOptions = {
     "منظورة للشؤون الصحية": "primary",
@@ -80,7 +84,7 @@ const CalendarLawyer: React.FC = () => {
     const p = response.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
         label: practitionerItem.name
-    }));
+    })) as Practitioner[];
 
     setPractitioner(p)
   }

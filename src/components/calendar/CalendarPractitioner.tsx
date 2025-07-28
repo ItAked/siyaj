@@ -10,9 +10,9 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { get } from "../../../server/LawyersServer/lawyers";
 import { getCases } from "../../../services/cases";
 import { createAppointment, getAppointments, updateAppointment } from "../../../services/appointmnets";
+import { readAllLawyers } from "../../../services/lawyers";
 
 interface Appointment {
   id: string;
@@ -22,6 +22,10 @@ interface Appointment {
   status: string;
   description: string;
   title: string;
+}
+interface Lawyers {
+  value: number;
+  label: string;
 }
 
 const CalendarPractitioner: React.FC = () => {
@@ -36,7 +40,7 @@ const CalendarPractitioner: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const[lawyer, setLawyers] = useState([])
+  const[lawyer, setLawyers] = useState<Lawyers[]>([])
 
   const statusOptions = {
     "ملغي الحجز": "danger",
@@ -80,11 +84,11 @@ const CalendarPractitioner: React.FC = () => {
   }
 
   async function readPractitioners() {
-    const response = await get('')
+    const response = await readAllLawyers('')
     const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
         label: practitionerItem.name
-    }));
+    })) as Lawyers[];
 
     setLawyers(p)
   }
