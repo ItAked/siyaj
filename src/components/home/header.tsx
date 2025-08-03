@@ -29,7 +29,9 @@ export default function Header() {
           </ul>
 
           <div>
-            <Image alt="logo" loading="lazy" width={55} height={55} src={Logo} />
+            <Link href='/'>
+              <Image alt="logo" loading="lazy" width={55} height={55} src={Logo} />
+            </Link>
           </div>
 
 

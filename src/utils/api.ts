@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './auth';
 
 const api = axios.create({
-  baseURL: 'https://api.siyaj.sa/api'
+  baseURL: 'https://dev.siyaj.sa/api'
 });
 
 // Add token to every request
