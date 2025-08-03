@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import Logo from "../../../public/images/Logo.png";
+import Logo from "../../../public/images/logo/Logo.png";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -29,7 +29,9 @@ export default function Header() {
           </ul>
 
           <div>
-            <Image alt="logo" loading="lazy" width={175} height={55} src={Logo} />
+            <Link href='/'>
+              <Image alt="logo" loading="lazy" width={55} height={55} src={Logo} />
+            </Link>
           </div>
 
 

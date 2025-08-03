@@ -1,4 +1,4 @@
-import { LampWallDown, Scroll } from "lucide-react";
+import { Scroll } from "lucide-react";
 import services from "../../../public/data/services";
 
 export default function OurServices() {

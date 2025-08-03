@@ -10,11 +10,9 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { getAppointments } from "../../../server/AppointmentsServer/appointments";
-import { post } from "../../../server/AppointmentsServer/create_appointment";
-import { getCases } from "../../../server/CasesServer/cases";
-import { updateAppointment } from "../../../server/AppointmentsServer/update_appointment";
-import { get } from "../../../server/LawyersServer/lawyers";
+import { getCases } from "../../../services/cases";
+import { createAppointment, getAppointments, updateAppointment } from "../../../services/appointmnets";
+import { readAllLawyers } from "../../../services/lawyers";
 
 interface Appointment {
   id: string;
@@ -24,6 +22,10 @@ interface Appointment {
   status: string;
   description: string;
   title: string;
+}
+interface Lawyers {
+  value: number;
+  label: string;
 }
 
 const CalendarPractitioner: React.FC = () => {
@@ -38,7 +40,7 @@ const CalendarPractitioner: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const[lawyer, setLawyers] = useState([])
+  const[lawyer, setLawyers] = useState<Lawyers[]>([])
 
   const statusOptions = {
     "ملغي الحجز": "danger",
@@ -82,11 +84,11 @@ const CalendarPractitioner: React.FC = () => {
   }
 
   async function readPractitioners() {
-    const response = await get('')
+    const response = await readAllLawyers('')
     const p = response.data.data.map((practitionerItem: { id: number; name: string; }) => ({
         value: practitionerItem.id,
         label: practitionerItem.name
-    }));
+    })) as Lawyers[];
 
     setLawyers(p)
   }
@@ -157,7 +159,7 @@ const CalendarPractitioner: React.FC = () => {
           title: appointmentTitle
         };
         
-        const response = await post(newAppointment);
+        const response = await createAppointment(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
       readAppointments();
@@ -342,7 +344,7 @@ const CalendarPractitioner: React.FC = () => {
             <button
               onClick={handleAddOrUpdateAppointment}
               type="button"
-              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-yellow-600
+              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-sky-600
               sm:w-auto"
             >
               {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}

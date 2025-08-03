@@ -3,7 +3,7 @@
 import { Mail, Phone } from "lucide-react";
 import Map from "./MapComponent/index";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { contactUs } from "../../../server/contact_us";
+import { contactUs } from "../../../services/contact_us";
 import Alert from "../ui/alert/Alert";
 
 export default function ContactUs(){
@@ -61,7 +61,7 @@ export default function ContactUs(){
                         </div>
                     </div>
                     <div className="mt-6 space-y-3">
-                        <button className="btn w-full bg-linear-to-t bg-blue-300 text-white border-none">
+                        <button className="btn w-full bg-linear-to-t bg-sky-950 text-white border-none">
                             إرسال
                         </button>
                         { msg != '' && (

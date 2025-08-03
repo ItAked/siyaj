@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { readLastSubscribe } from "../../server/SubscriptionsServer/read_last_subscribe"
+import { readLastSubscribe } from "../../services/subscriptions";
 
 type LastCategory = {
     name?: string;

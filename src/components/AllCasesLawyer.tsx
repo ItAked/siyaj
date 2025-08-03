@@ -8,10 +8,9 @@ import {
   TableRow,
 } from "./ui/table";
 import { useEffect, useState } from "react";
-import { getCases } from "../../server/CasesServer/cases";
-import { updateCaseStatus } from "../../server/CasesServer/update_case_status";
 import Pagination from "./tables/Pagination";
 import { HorizontaLDots } from "../icons";
+import { getCases, updateCaseStatus } from "../../services/cases";
 
 interface Case {
   id: number;

@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
-import { readSetting } from "../../../server/SettingServer/read_setting";
-import { updateSetting } from "../../../server/SettingServer/update_setting";
+import { readSetting, updateSetting } from "../../../services/setting";
 
 export default function UserInfoCard() {
   async function handleSave (){

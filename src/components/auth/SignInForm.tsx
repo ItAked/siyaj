@@ -6,9 +6,9 @@ import Button from "../../components/ui/button/Button";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { post } from "../../../server/AuthServer/login";
 import { useRouter } from "next/navigation";
 import Alert from "../ui/alert/Alert";
+import { login } from "../../../services/auth";
 
 
 export default function SignInForm() {
@@ -38,7 +38,7 @@ export default function SignInForm() {
     formData.append('email', user.email)
     formData.append('password', user.password)
 
-    const response = await post(formData)
+    const response = await login(formData)
 
     if (response.message.role === undefined) {
       setErrorMsg(response.message.message)

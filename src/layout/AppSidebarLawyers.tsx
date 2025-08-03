@@ -12,7 +12,7 @@ import {
   GridIcon,
   UserCircleIcon,
 } from "../icons/index";
-import { logout } from "../../server/AuthServer/logout";
+import { logout } from "../../services/auth";
 
 type NavItem = {
   name: string;
@@ -235,7 +235,7 @@ const AppSidebarLawyers: React.FC = () => {
             <>
               <Image
                 className="dark:hidden"
-                src="/images/logo/Logo.png"
+                src="/images/logo/logo-white.png"
                 alt="Logo"
                 width={51}
                 height={53}

@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import { Check } from 'lucide-react';
-import { readSubscriptions } from '../../../server/SubscriptionsServer/read_subscriptions';
+import React, { useEffect, useRef, useState } from 'react';
+import { getToken } from '../../utils/auth';
+import { readSubscriptions } from '../../../services/subscriptions';
 
 interface Faetures {
   id: number;
@@ -19,6 +19,7 @@ interface Categories {
 
 const Categories = () => {
   const [categories, setCategories] = useState<Categories[]>([])
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   async function getCategories() {
     const response = await readSubscriptions()
@@ -35,8 +36,8 @@ const Categories = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14" data-aos="zoom-in">
         {categories.map((category) => (
-          <div key={category.id} className='rounded-2xl overflow-hidden border border-blue-200 relative flex flex-col h-full'> 
-            <div className='px-6 pt-8 pb-6 bg-blue-light-50'>
+          <div key={category.id} className='rounded-2xl overflow-hidden border border-sky-950 relative flex flex-col h-full'> 
+            <div className='px-6 pt-8 pb-6'>
               <h3 className="text-2xl font-bold mb-1">{category.name}</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-4xl font-bold">{`${category.price} ريال`}</span>
@@ -45,16 +46,16 @@ const Categories = () => {
                 </span>
               </div>
             </div>
-            <div className="p-6 bg-white border-t border-gray-100 mx-auto">
-              { localStorage.getItem('token') ? (
-                <a href={`http://127.0.0.1:8000/payment/${category.price}/${category.name}`} className='btn btn-wide bg-blue-300 border-none text-white'>إختر</a>
-              ) : <button className="btn btn-wide bg-blue-300 border-none text-white" onClick={()=>document.getElementById('my_modal_3').showModal()}>إختر</button>}
-              <dialog id="my_modal_3" className="modal">
+            <div className="p-6 bg-white mx-auto">
+              { getToken() ? (
+                <a href={`https://dev.siyaj.sa/payment/${category.price}/${category.name}`} className='btn btn-wide bg-blue-300 border-none text-white'>إختيار</a>
+              ) : <button className="btn border-sky-950 text-sky-950" onClick={() => modalRef.current?.showModal()}>إختيار</button>}
+              <dialog id="my_modal_3" className="modal" ref={modalRef}>
                 <div className="modal-box">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
-                  <h3 className="font-bold text-lg text-center">لإختر يجب عليك تسجيل الدخول أولًا</h3>
+                  <h3 className="font-bold text-lg text-center">للإختيار يجب عليك تسجيل الدخول أولًا</h3>
                   <a href='/practitioner/auth/signin' className="py-4 link">تسجيل الدخول</a>
                 </div>
               </dialog>

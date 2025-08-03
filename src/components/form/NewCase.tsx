@@ -4,9 +4,9 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ComponentCard from "../common/ComponentCard";
 import Label from "./Label";
 import Input from "./input/InputField";
-import { get } from "../../../server/LawyersServer/lawyers";
-import { createCase } from "../../../server/CasesServer/create_case";
 import Alert from "../ui/alert/Alert";
+import { createCase } from "../../../services/cases";
+import { readAllLawyers } from "../../../services/lawyers";
 
 interface Lawyers {
   id: number;
@@ -41,8 +41,8 @@ export default function NewCase() {
   }
 
   async function getAllLawyers(){
-    const response = await get()
-    setLawyers(response.data.data);
+    const response = await readAllLawyers()
+    setLawyers(response.data);
   }
 
   const handleSave = async (event: FormEvent) => {

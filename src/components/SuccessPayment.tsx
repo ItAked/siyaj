@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { CheckIcon } from "lucide-react"
 import type { JSX } from "react/jsx-runtime"
-import { assignSubscription } from "../../server/SubscriptionsServer/assignSubscription"
+import { assignSubscription } from "../../services/subscriptions"
 
 interface PaymentSuccessProps {
   transactionId?: string
@@ -46,7 +46,7 @@ export default function SuccessPayment({
   }, [])
 
   const createConfetti = () => {
-    const colors = ["bg-green-500", "bg-red-400", "bg-teal-400", "bg-blue-400", "bg-yellow-400"]
+    const colors = ["bg-green-500", "bg-red-400", "bg-teal-400", "bg-blue-400", "bg-sky-400"]
     const confettiArray: JSX.Element[] = []
 
     for (let i = 0; i < 50; i++) {
