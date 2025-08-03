@@ -1,5 +1,3 @@
-import GridShape from "../../../components/common/GridShape";
-
 import { ThemeProvider } from "../../../context/ThemeContext";
 import Image from "next/image";
 import React from "react";
@@ -16,12 +14,11 @@ export default function AuthLayout({
           {children}
           <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden">
             <div className="relative items-center justify-center  flex z-1">
-              <GridShape />
               <div className="flex flex-col items-center max-w-xs">
                   <Image
-                    width={231}
-                    height={48}
-                    src="./images/logo/logo.svg"
+                    width={350}
+                    height={364}
+                    src="/images/logo/Logo.png"
                     alt="Logo"
                   />
               </div>

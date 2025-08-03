@@ -239,19 +239,18 @@ const AppSidebar: React.FC = () => {
       <div
         className={`py-8 flex justify-center`}
       >
-        <Link href="/">
-          {isExpanded || isMobileOpen ? (
+        {isExpanded || isMobileOpen ? (
             <>
               <Image
                 className="dark:hidden"
-                src="/images/logo/Logo.png"
+                src="/images/logo/Logo-white.png"
                 alt="Logo"
                 width={51}
                 height={53}
               />
               <Image
                 className="hidden dark:block"
-                src="/images/logo/Logo.png"
+                src="/images/logo/Logo-white.png"
                 alt="Logo"
                 width={51}
                 height={53}
@@ -265,7 +264,6 @@ const AppSidebar: React.FC = () => {
               height={53}
             />
           )}
-        </Link>
       </div>
       <div className="flex flex-col flex-grow overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6 flex-grow">

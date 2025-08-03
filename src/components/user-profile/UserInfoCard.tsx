@@ -1,18 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { readSetting, updateSetting } from "../../../services/setting";
+import Alert from "../ui/alert/Alert";
 
 export default function UserInfoCard() {
-  async function handleSave (){
-    await updateSetting({
-      name: profileName !== "" ? profileName : profile.name,
-      email: profileEmail !== "" ? profileEmail : profile.email,
-      phone: profilePhone !== "" ? profilePhone : profile.phone
-    })
-    getProfileData()
+  async function handleSave (event: FormEvent){
+    event.preventDefault()
+    const form = new FormData()
+    form.append('name', profileName !== "" ? profileName : profile.name)
+    form.append('email', profileEmail !== "" ? profileEmail : profile.email)
+    form.append('phone', profilePhone !== "" ? profilePhone : profile.phone)
+    try {
+      await updateSetting(form)
+      getProfileData()
+    } catch (error) {
+      setIsError(true)
+      setMsg(error.response.data.message)
+    }
   };
 
 
@@ -27,6 +34,8 @@ export default function UserInfoCard() {
     const [profileName, setProfileName] = useState("")
     const [profileEmail, setProfileEmail] = useState("")
     const [profilePhone, setProfilePhone] = useState("")
+    const [msg, setMsg] = useState('')
+    const [isError, setIsError] = useState(false)
   
     async function getProfileData() {
       const response = await readSetting()
@@ -83,12 +92,17 @@ export default function UserInfoCard() {
       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
     <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+      {msg && (
+        <div className="mb-8">
+          <Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ!" : ""} message={msg} />
+        </div>
+      )}
           <div className="px-2 pr-14">
             <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
               تعديل البيانات الشخصية
             </h4>
           </div>
-          <form className="flex flex-col">
+          <form onSubmit={handleSave} className="flex flex-col">
             <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
               <div className="mt-7">
                 <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
@@ -114,9 +128,7 @@ export default function UserInfoCard() {
               </div>
             </div>
             <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-              <Button size="sm" onClick={handleSave}>
-                تعديل
-              </Button>
+              <Button size="sm">تعديل</Button>
             </div>
           </form>
         </div>

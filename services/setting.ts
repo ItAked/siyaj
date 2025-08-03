@@ -9,11 +9,7 @@ export async function readSetting() {
     }
 }
 
-export async function updateSetting(data: { name: string|undefined; email: string|undefined; phone: string|undefined; }) {
-    try {
-        const response = await api.put(`/update-setting`, data);
-        return response
-    } catch (error) {
-        console.error('failed to update profile: ', error)
-    }
+export async function updateSetting(data: FormData) {
+    const response = await api.post(`/update-setting`, data);
+    return response.data
 }

@@ -11,7 +11,7 @@ export default function AdminPanel() {
   const router = useRouter();
   useEffect(() => {
     if (!getToken()) {
-      router.push('/login');
+      router.push('/signin');
     }
   }, []);
   
