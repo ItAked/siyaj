@@ -12,6 +12,11 @@ interface Cases {
     date: string;
     status: string;
 }
+interface Categories {
+    name: string;
+    expire_at: string;
+    payemnt_file: string;
+}
 
 type Practitioner = {
     id?: number;
@@ -27,11 +32,15 @@ type Practitioner = {
 const Practitioner = ({ id }) => {
     const [practitioner, setPractitioner] = useState<Practitioner>({})
     const [cases, setCases] = useState<Cases[]>([])
+    const [categories, setCategories] = useState<Categories[]>([])
 
     async function getPractitionerId(){
         const response = await readPractitionerId(id);
         setPractitioner(response.data)
         setCases(response.data.cases)
+        console.log(response.data.category);
+        
+        setCategories(response.data.category)
     }
 
     useEffect(() => {
@@ -119,13 +128,12 @@ const Practitioner = ({ id }) => {
                         
 
                         <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-                            { cases.map((c, index) => (
+                            { categories.map((c, index) => (
                                 <TableRow key={index}>
-                                    <TableCell className="py-3">{c.case}</TableCell>
-                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.date}</TableCell>
-                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                        <Badge color="primary">{c.status}</Badge>
-                                    </TableCell>
+                                    <TableCell className="py-3">{c.payemnt_file != null && (<Link href={c.name} download={true}
+                                    className="link text-sky-400">لتحميل الإيصال</Link>)}</TableCell>
+                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.expire_at}</TableCell>
+                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.name}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
