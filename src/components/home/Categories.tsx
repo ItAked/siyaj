@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { getToken } from '../../utils/auth';
-import { readSubscriptions } from '../../../services/subscriptions';
+import { assignSubscription, readSubscriptions } from '../../../services/subscriptions';
 
 interface Faetures {
   id: number;
@@ -41,11 +41,48 @@ const paymentDetails = [
 
 const Categories = () => {
   const [categories, setCategories] = useState<Categories[]>([])
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState<Categories | null>(null)
+  const [paymentFile, setPaymentFile] = useState<File | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   async function getCategories() {
     const response = await readSubscriptions()
     setCategories(response.data)
+  }
+
+  async function handleSubmitPayment(event: FormEvent) {
+    event.preventDefault()
+    setIsSubmitting(true)
+    setSubmitError('')
+    setSubmitSuccess(false)
+
+    if (!selectedCategory || !paymentFile) {
+      setSubmitError('Please select a category and upload a payment file')
+      setIsSubmitting(false)
+      return
+    }
+
+    try {
+      const formData = new FormData()
+      formData.append('name', selectedCategory.name)
+      formData.append('payment_file', paymentFile)
+      await assignSubscription(formData)
+      const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+      if (dialog) dialog.close()
+    } catch (error) {
+      console.error('Subscription error:', error)
+      setSubmitError(error.response?.data?.message || 'حدث خطأ أثناء الإرسال')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files && event.target.files.length > 0) {
+      setPaymentFile(event.target.files[0])
+    }
   }
 
   useEffect(() => {
@@ -67,11 +104,16 @@ const Categories = () => {
             </div>
             <div className="p-6 bg-white mx-auto">
               { getToken() ? (
-                <button className="btn" onClick={()=> {const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
-                  setSelectedCategory(category); if (dialog) dialog.showModal();}}>إختيار التصنيف</button>
+                <button className="btn" onClick={()=> {
+                  const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+                  setSelectedCategory(category); 
+                  if (dialog) dialog.showModal();
+                }}>إختيار التصنيف</button>
               ) : <button className="btn btn-wide bg-sky-950 border-none text-white" onClick={()=> {
-                const dialog = document.getElementById('my_modal_4')as HTMLDialogElement | null; if (dialog) dialog.showModal();}}>
-                إختيار التصنيف</button>}
+                const dialog = document.getElementById('my_modal_3')as HTMLDialogElement | null; 
+                if (dialog) dialog.showModal();
+              }}>إختيار التصنيف</button>}
+              
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box grid place-items-center">
                   <form method="dialog">
@@ -81,36 +123,61 @@ const Categories = () => {
                   <a href={'/practitioner/auth/signin'} className="my-8 link">لتسجيل الدخول</a>
                 </div>
               </dialog>
+              
               <dialog id="my_modal_4" className="modal">
                 <div className="modal-box">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
-                  <h3 className="font-bold text-lg text-center">معلومات الدفع</h3>
-                  <div className="grid mt-7 w-full mx-16">
-                    <label className='text-start'>التصنيف المختار</label>
-                    <label className="input">
-                      <input type="text" className="grow" readOnly value={selectedCategory ? selectedCategory.name : ''} />
-                    </label>
-                  </div>
-                  { paymentDetails.map((detail) => (
-                    <div className="grid mt-7 w-full mx-16" key={detail.id}>
-                      <label className='text-start'>{detail.label}</label>
+                  <form onSubmit={handleSubmitPayment}>
+                    <h3 className="font-bold text-lg text-center">معلومات الدفع</h3>
+                    <div className="grid mt-7 w-full mx-16">
+                      <label className='text-start'>التصنيف المختار</label>
                       <label className="input">
-                        <input type="text" className="grow" readOnly value={detail.placeholder} />
-                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                          <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-                          </g>
-                        </svg>
+                        <input type="text" className="grow" readOnly name='name' value={selectedCategory ? selectedCategory.name : ''} />
                       </label>
                     </div>
-                  ))}
-                  <fieldset className="fieldset mt-7 mx-16">
-                    <label className="text-start text-base">رفع الإيصال</label>
-                    <input type="file" className="file-input" />
-                  </fieldset>
+                    {paymentDetails.map((detail) => (
+                      <div className="grid mt-7 w-full mx-16" key={detail.id}>
+                        <label className='text-start'>{detail.label}</label>
+                        <label className="input">
+                          <input type="text" className="grow" readOnly value={detail.placeholder} />
+                          <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
+                              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                              <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                            </g>
+                          </svg>
+                        </label>
+                      </div>
+                    ))}
+                    <fieldset className="fieldset mt-7 mx-16">
+                      <label className="text-start text-base">رفع الإيصال</label>
+                      <input 
+                        type="file" 
+                        className="file-input" 
+                        onChange={handleFileChange}
+                        required
+                      />
+                    </fieldset>
+                    
+                    {submitError && (
+                      <div className="text-red-500 text-center mt-4">{submitError}</div>
+                    )}
+                    {submitSuccess && (
+                      <div className="text-green-500 text-center mt-4">
+                        تم تفعيل التصنيف بنجاح!
+                      </div>
+                    )}
+                    
+                    <button 
+                      type="submit" 
+                      className='btn btn-wide bg-sky-950 text-white font-normal mt-7 mx-24'
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'جاري الإرسال...' : 'إرسال'}
+                    </button>
+                  </form>
                 </div>
               </dialog>
             </div>
