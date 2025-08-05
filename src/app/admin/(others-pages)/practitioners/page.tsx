@@ -6,14 +6,21 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../
 import Link from "next/link";
 import { getPractitioners } from "../../../../../services/practitioners";
 
-interface Practitioner {
-    id: number,
-    name: string,
-    email: string,
-    medical: string,
-    employer: string,
-    license_file: string
+interface Categories {
+    name: string;
+    price: number;
+    status: string;
 }
+interface Practitioner {
+    id: number;
+    name: string;
+    email: string;
+    medical: string;
+    employer: string;
+    license_file: string;
+    category: Categories[];
+}
+
 type Meta = {
   current_page?: number;
   last_page?: number;
@@ -28,9 +35,8 @@ export default function Practitioners() {
     try {
         setIsLoading(true)
         const response = await getPractitioners(search, page)
-        
         setPractitioner(response.data.data)
-        setPagination(response.data.meta)
+        setPagination(response.data.meta)        
     } catch (error) {
         console.error("Failed to fetch lawyers:", error.response.data.message);
     } finally {
@@ -67,6 +73,7 @@ export default function Practitioners() {
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">البريد الإلكتروني</TableCell>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التخصص</TableCell>
                         <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">جهة العمل</TableCell>
+                        <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">نوع الاشتراك</TableCell>
                     </TableRow>
                 </TableHeader>
                 
@@ -82,13 +89,16 @@ export default function Practitioners() {
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.email}</TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.medical}</TableCell>
-                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.medical}</TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.employer}</TableCell>
+                                { practitioner.category.length > 0 ? (
+                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{practitioner.category[0].price}</TableCell>
+                                ) : <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">لا توجد اشتراكات</TableCell>}
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1} onPageChange={(page: number):
-                    void => {readPractitioner("", page);}} />
+                <Pagination currentPage={pagination.current_page || 1} totalPages={pagination.last_page || 1}
+                onPageChange={(page: number): void => {readPractitioner("", page)}} />
         </div>
     </div>
   );

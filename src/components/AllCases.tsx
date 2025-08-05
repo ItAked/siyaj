@@ -20,6 +20,7 @@ interface Case {
   case: string;
   status: string
 }
+
 type Meta = {
   current_page?: number;
   last_page?: number;
@@ -30,8 +31,7 @@ export default function AllCases() {
   const [pagination, setPagination] = useState<Meta>({})
 
   async function readCases(value: string, search?: string, page: number = 1) {
-    const response = await getCases(value, search, page)
-    
+    const response = await getCases(value, search, page)    
     setCases(response.data)
     setPagination(response.meta);
   }
@@ -43,9 +43,7 @@ export default function AllCases() {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-4 mb-4">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          جميع الدعوات
-        </h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">جميع الدعوات</h3>
         <div className="flex items-center gap-3">
           <label className="input">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -76,34 +74,12 @@ export default function AllCases() {
           {/* Table Header */}
           <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
             <TableRow>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                اسم الممارس الصحي
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                التاريخ
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                الدعوة
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                الحالة
-              </TableCell>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">اسم الممارس الصحي</TableCell>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الدعوة</TableCell>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الحالة</TableCell>
             </TableRow>
           </TableHeader>
-
-          {/* Table Body */}
 
           <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
             {cases.map((item) => (
@@ -111,18 +87,12 @@ export default function AllCases() {
                 <TableCell className="py-3">
                   <div className="flex items-center gap-3">
                     <div>
-                      <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {item.practitioner_name}
-                      </p>
+                      <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{item.practitioner_name}</p>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.date}
-                </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {item.case}
-                </TableCell>
+                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.date}</TableCell>
+                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.case}</TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   <Badge size="sm" color={ item.status === "منظورة لمنصة تراضي" ? "success" : item.status === "منظورة لدى الدائرة القضائية" ? "info" : "warning"}>
                     {item.status}

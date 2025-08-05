@@ -9,11 +9,11 @@ export default function Home() {
     
     useEffect(() => {
         if (!getToken()) {
-          router.push('/signin');
+            router.push('/signin');
+        } else {
+            router.push('/admin');
         }
-      }, []);
-    
-    router.push('/admin');
+    }, [router]);
 
     return null;
 }

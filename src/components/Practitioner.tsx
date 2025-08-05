@@ -29,8 +29,7 @@ const Practitioner = ({ id }) => {
     const [cases, setCases] = useState<Cases[]>([])
 
     async function getPractitionerId(){
-        const response = await readPractitionerId(id);   
-             
+        const response = await readPractitionerId(id);
         setPractitioner(response.data)
         setCases(response.data.cases)
     }
@@ -86,6 +85,35 @@ const Practitioner = ({ id }) => {
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">القضية</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الحالة</TableCell>
+                            </TableRow>
+                        </TableHeader>
+                        
+
+                        <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
+                            { cases.map((c, index) => (
+                                <TableRow key={index}>
+                                    <TableCell className="py-3">{c.case}</TableCell>
+                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.date}</TableCell>
+                                    <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                                        <Badge color="primary">{c.status}</Badge>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+
+            <div className="max-w-full overflow-x-auto card card-border bg-base-100 w-full my-7">
+                <div className="card-body">
+                    <h2 className="card-title text-2xl font-medium">الإيصالات الخاصة بالممارس الصحي</h2>
+
+                    <Table>
+                        <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
+                            <TableRow>
+                                <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الإيصال</TableCell>
+                                <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
+                                <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التصنيف</TableCell>
                             </TableRow>
                         </TableHeader>
                         

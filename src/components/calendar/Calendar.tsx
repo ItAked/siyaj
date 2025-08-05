@@ -16,12 +16,14 @@ import { getAppointments } from "../../../services/appointments";
 interface Appointment {
   id: string;
   title: string;
+  description: string;
   practitioner_name: string;
   lawyer_name: string;
   date: string;
   time: string;
   status: string;
   attachments: string;
+  case_number: number;
 }
 
 const Calendar: React.FC = () => {
@@ -37,6 +39,8 @@ const Calendar: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
+  const [caseNumber, setCaseNumber] = useState(0)
+  const [appointmentDescription, setDescription] = useState('')
 
   const statusOptions = {
     "ملغي الحجز": "danger",
@@ -47,9 +51,7 @@ const Calendar: React.FC = () => {
     try {
       setLoading(true);
 
-      const response = await getAppointments();
-      console.log(response.data);
-      
+      const response = await getAppointments();      
       setAppointments(response.data);
 
     } catch (err) {
@@ -80,6 +82,8 @@ const Calendar: React.FC = () => {
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
+      setCaseNumber(appointment.case_number)
+      setDescription(appointment.description)
     }
   };
 
@@ -140,6 +144,12 @@ const Calendar: React.FC = () => {
             </div>
             <div className="my-8">
               <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">رقم الدعوة</label>
+                <input type="text" className="input" value={caseNumber} readOnly />
+              </div>
+            </div>
+            <div className="my-8">
+              <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">المحامي</label>
                 <input type="text" className="input" value={appointmentLawyer} readOnly />
               </div>
@@ -156,28 +166,20 @@ const Calendar: React.FC = () => {
                 <Badge color='primary'>{appointmentStatus}</Badge>
               </div>
             </div>
-
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">تاريخ الموعد</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">موعد الدعوة</label>
               <div className="relative">
-                <input id="appointment-date" readOnly type="date" value={appointmentDate} className="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border
-                border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300
-                focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
-                dark:focus:border-brand-800" />
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">وقت الموعد</label>
-              <div className="relative">
-                <input id="appointment-time" type="time" value={appointmentTime} readOnly className="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border
-                border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300
-                focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
-                dark:focus:border-brand-800"
+                <input id="appointment-time" type="text" value={`الساعة ${appointmentTime} بتاريخ ${appointmentDate}`} readOnly className="dark:bg-dark-900 h-11 w-full
+                appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs
+                placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900
+                dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                 />
               </div>
             </div>
-
+            <div className="mt-6">
+              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">الوصف</label>
+              <textarea className="textarea" value={appointmentDescription} readOnly></textarea>
+            </div>
             <div className="mt-6">
               <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات الدعوة</label>
               <div className="relative">
@@ -187,7 +189,7 @@ const Calendar: React.FC = () => {
           </div>
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn">إغلاق</button>
+              <button className="btn btn-wide bg-sky-950 text-white">إغلاق</button>
             </form>
           </div>
         </div>
