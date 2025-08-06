@@ -8,7 +8,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {
   DateSelectArg,
   EventClickArg,
-  EventContentArg,
+  EventContentArg
 } from "@fullcalendar/core";
 import Badge from "../ui/badge/Badge";
 import { getAppointments } from "../../../services/appointments";
@@ -42,36 +42,26 @@ const Calendar: React.FC = () => {
   const [caseNumber, setCaseNumber] = useState(0)
   const [appointmentDescription, setDescription] = useState('')
 
-  const statusOptions = {
-    "ملغي الحجز": "danger",
-    "محجوز": "success"
-  };
+  useEffect(() => {
+    readAppointments();
+  }, []);
 
   async function readAppointments() {
     try {
       setLoading(true);
-
       const response = await getAppointments();      
-      setAppointments(response.data);
-
+      setAppointments(response);
     } catch (err) {
       setError(String(err));
     } finally {
       setLoading(false);
     }
   }
-
-  useEffect(() => {
-    readAppointments();
-  }, []);
-
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     setAppointmentDate(selectInfo.startStr.split("T")[0]);
   };
-
   const handleEventClick = (clickInfo: EventClickArg) => {
     const event = clickInfo.event;
-
     const appointment = appointments.find(a => a.id.toString() === event.id);
     if (appointment) {
       setSelectedAppointment(appointment);
@@ -89,16 +79,16 @@ const Calendar: React.FC = () => {
 
   const calendarEvents = appointments.map(appointment => ({
     id: appointment.id,
+    title: appointment.title,
     start: `${appointment.date}T${appointment.time}`,
     extendedProps: { 
-      calendar: statusOptions[appointment.status as keyof typeof statusOptions] || "primary",
+      calendar: appointment.status,
     }
   }));
 
   if (loading) {
     return <div className="text-center py-8">جاري تحميل المواعيد....</div>;
   }
-
   if (error) {
     return <div className="text-center py-8 text-red-500">{error}</div>;
   }
@@ -106,10 +96,7 @@ const Calendar: React.FC = () => {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
       <div className="custom-calendar">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
+        <FullCalendar ref={calendarRef} plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} initialView="dayGridMonth"
           headerToolbar={{
             left: "prev,next addEventButton",
             center: "title",
