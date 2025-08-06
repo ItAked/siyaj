@@ -33,25 +33,21 @@ export default function SignInPractitionerForm() {
   async function handleOnSubmit(event: FormEvent) {
     try {
       event.preventDefault()
-
     const formData = new FormData()
     formData.append('email', user.email)
     formData.append('password', user.password)
-
-    const response = await login(formData)
-
-    if (response.message.role === undefined) {
-      setErrorMsg(response.message.message)
+    const response = await login(formData)    
+    if (response.role === undefined) {
+      setErrorMsg(response)
     }
-    if(response.message.role === 'practitioner') {
+    if(response.role === 'practitioner') {
       setErrorMsg('')
       router.push('/practitioner')
     } else {
       setErrorMsg('الحساب لا يخص الممارسين الصحيين')
     }
-
     } catch (error) {
-      setErrorMsg(error.response.data.message);
+      setErrorMsg(error);
     }
   }
 
@@ -60,7 +56,7 @@ export default function SignInPractitionerForm() {
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto mt-60">
         <div>
           <div className="mb-5 sm:mb-8 grid gap-y-4">
-            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
+            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg.toString()} /> )}
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md text-right">
               تسجيل الدخول
             </h1>

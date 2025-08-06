@@ -3,6 +3,7 @@ import { getToken } from './auth';
 
 const api = axios.create({
   baseURL: 'https://dev.siyaj.sa/api'
+  // baseURL: 'http://127.0.0.1:8000/api'
 });
 
 // Add token to every request

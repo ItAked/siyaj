@@ -2,8 +2,7 @@ import api from "../src/utils/api";
 
 export async function assignSubscription(form: FormData) {
     try {
-        const data = Object.fromEntries(form.entries());
-        const response = await api.post('/subscribe', data);
+        const response = await api.post('/subscribe', form);
         return response.data
     } catch (error) {
         console.error('failed to subscribe: ', error)
