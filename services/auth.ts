@@ -41,3 +41,8 @@ export async function sendOtp(data: FormData){
   const response = await api.post('/confirm-email', data);
   return response.data
 }
+
+export async function verifyOtp(data: FormData){
+  const response = await api.post('/verify-otp', data)
+  return response.data
+}
