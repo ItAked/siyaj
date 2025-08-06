@@ -37,10 +37,10 @@ export default function SignInForm() {
       formData.append('email', user.email)
       formData.append('password', user.password)
       const response = await login(formData)
-      if (response.message.role === undefined) {
-        setErrorMsg(response.message.message)
+      if (response.role === undefined) {
+        setErrorMsg(response.message)
       }
-      if(response.message.role === 'lawyer') {
+      if(response.role === 'lawyer') {
         setErrorMsg('')
         router.push('/lawyer')
       } else {
@@ -48,7 +48,7 @@ export default function SignInForm() {
         return;
       }
     } catch (error) {
-      setErrorMsg(error.response.data.message);
+      setErrorMsg(error);
     }
   }
 
