@@ -36,3 +36,8 @@ export async function signup (newUser: FormData) {
     }
     return data.data
 }
+
+export async function sendOtp(data: FormData){
+  const response = await api.post('/confirm-email', data);
+  return response.data
+}

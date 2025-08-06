@@ -53,7 +53,7 @@ export default function ResetPasswordForm() {
                 <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
               </div>
               <div>
-                <Button className="w-full" size="sm">تسجيل الدخول</Button>
+                <Button className="w-full" size="sm">تأكيد</Button>
               </div>
             </div>
           </form>
