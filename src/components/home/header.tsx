@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Link from "next/link";
 import Logo from "../../../public/images/logo/Logo.png";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Header() {
@@ -30,7 +30,7 @@ export default function Header() {
 
           <div>
             <Link href='/'>
-              <Image alt="logo" loading="lazy" width={55} height={55} src={Logo} />
+              <img src={Logo.src} alt="logo" className="w-12 h-12" loading="lazy" />
             </Link>
           </div>
 

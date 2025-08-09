@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
 export default function Hero() {
@@ -15,7 +15,7 @@ export default function Hero() {
         </div>
       </article>
 
-      <Image className="mt-16" width={519} height={521} src="/images/background-dot.png" alt="" loading="lazy" />
+      <img src="/images/background-dot.png" alt="" loading="lazy" className="mt-16 w-[519px] h-[521px]" />
     </section>
   );
 }

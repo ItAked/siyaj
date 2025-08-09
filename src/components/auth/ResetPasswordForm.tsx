@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -7,7 +8,6 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { sendOtp } from "../../../services/auth";
 import Alert from "../ui/alert/Alert";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function ResetPasswordForm() {
   const [user, setUser] = useState({'email': ''})
@@ -57,7 +57,7 @@ export default function ResetPasswordForm() {
               </div>
             </div>
           </form>
-          <Image src="/images/logo/logo-blue.png" alt="logo" width={350} className="max-sm:hidden" height={364} />
+          <img src="/images/logo/logo-blue.png" alt="logo" className="w-80 max-sm:hidden h-80" loading="lazy" />
         </div>
       </section>
     </>

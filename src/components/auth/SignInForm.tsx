@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -8,7 +9,6 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Alert from "../ui/alert/Alert";
 import { login } from "../../../services/auth";
-import Image from "next/image";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 
 export default function SignInForm() {
@@ -82,7 +82,7 @@ export default function SignInForm() {
               </div>
             </div>
           </form>
-          <Image src="/images/logo/logo-blue.png" alt="logo" width={350} className="max-sm:hidden" height={364} />
+          <img src="/images/logo/logo-blue.png" alt="logo" className="w-80 max-sm:hidden h-80" loading="lazy" />
         </div>
       </section>
     </>
