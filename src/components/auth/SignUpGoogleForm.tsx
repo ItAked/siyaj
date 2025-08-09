@@ -14,7 +14,6 @@ export default function SignUpGoogle(){
     const params = useSearchParams()
     const userEmail = params.get('email')
     const userName = params.get('name');
-    // const googleId = params.get('google_id');
     const [user, setUser] = useState({
         phone: "",
         license: "",
