@@ -3,12 +3,12 @@
 import Input from "../../components/form/input/InputField";
 import Label from "../../components/form/Label";
 import Button from "../../components/ui/button/Button";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Alert from "../ui/alert/Alert";
 import { login } from "../../../services/auth";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 
 
 export default function SignInPractitionerForm() {
@@ -92,7 +92,7 @@ export default function SignInPractitionerForm() {
                       {showPassword ? (
                         <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
                       ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeClosedIcon className="fill-gray-500 dark:fill-gray-400" />
                       )}
                     </span>
                   </div>

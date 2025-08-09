@@ -4,12 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import {
-  ChevronDownIcon,
-  GridIcon,
-  UserCircleIcon,
-} from "../icons/index";
-import { File } from "lucide-react";
+import { ChevronDownIcon, File, Grid, User } from "lucide-react";
 import { logout } from "../../services/auth";
 
 type NavItem = {
@@ -21,7 +16,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <Grid />,
     name: "الرئيسية",
     path: "/practitioner"
   },
@@ -32,7 +27,7 @@ const navItems: NavItem[] = [
       { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
   },
   {
-    icon: <UserCircleIcon />,
+    icon: <User />,
     name: "الإعدادات",
     path: "/practitioner/profile"
   }
