@@ -27,7 +27,7 @@ export async function logout() {
 }
 
 export async function signup (newUser: FormData) {
-    const data  = await api.post(`/register`, newUser)
+    const data  = await api.post(`/register`, newUser)    
     const token = data.data.message.access_token;
     if (token) {
         const pipeIndex = token.indexOf('|');
@@ -45,4 +45,8 @@ export async function sendOtp(data: FormData){
 export async function verifyOtp(data: FormData){
   const response = await api.post('/verify-otp', data)
   return response.data
+}
+
+export async function loginGoogleAuth() {
+    window.location.href = window.location.href = 'http://127.0.0.1:8000/auth/google/redirect';
 }

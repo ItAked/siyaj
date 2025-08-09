@@ -1,81 +1,75 @@
 'use client'
 
-import { EyeClosed, EyeIcon } from "lucide-react";
-import Link from "next/link";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
+import Link from "next/link";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { EyeClosed, EyeIcon } from "lucide-react";
 import Alert from "../ui/alert/Alert";
-import { loginGoogleAuth, signup } from "../../../services/auth";
+import { signup } from "../../../services/auth";
 
-export default function SignUp() {
-  const router = useRouter();
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    license: "",
-    medical: "",
-    employer: "",
-    password: "",
-    password_confirmation: "",
-    license_file: "" as File | string,
-  });
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+export default function SignUpGoogle(){
+    const params = useSearchParams()
+    const userEmail = params.get('email')
+    const userName = params.get('name');
+    // const googleId = params.get('google_id');
+    const [user, setUser] = useState({
+        phone: "",
+        license: "",
+        medical: "",
+        employer: "",
+        password: "",
+        password_confirmation: "",
+        license_file: "" as File | string,
+    });
+    const [errorMsg, setErrorMsg] = useState('');
+    const [showPassword, setShowPassword] = useState(false)
+    const router = useRouter();
 
-  function handleUserChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    try {
-      if (event.target.type === 'file') {
-        const fileInput = event.target as HTMLInputElement;
-        setUser(prevUser => ({
-          ...prevUser,
-          [event.target.name]: fileInput.files?.[0] || ""
-        }));
-      } else {
-        setUser(prevUser => ({
-          ...prevUser,
-          [event.target.name]: event.target.value
-        }));
+    function handleUserChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        try {
+          if (event.target.type === 'file') {
+            const fileInput = event.target as HTMLInputElement;
+            setUser(prevUser => ({
+              ...prevUser,
+              [event.target.name]: fileInput.files?.[0] || ""
+            }));
+          } else {
+            setUser(prevUser => ({
+              ...prevUser,
+              [event.target.name]: event.target.value
+            }));
+          }
+        } catch (error) {
+          setErrorMsg(error instanceof Error ? error.message : String(error));
+        }
+    }
+    async function handleOnSubmit(event: FormEvent) {
+        try {
+          event.preventDefault();
+          const formData = new FormData();      
+          formData.append('name', userName ?? "");
+          formData.append('email', userEmail ?? "");
+          formData.append('phone', user.phone);
+          formData.append('license', user.license);
+          formData.append('medical', user.medical);
+          formData.append('employer', user.employer);
+          formData.append('password', user.password);
+          formData.append('password_confirmation', user.password_confirmation);
+          if (user.license_file instanceof File) {
+            formData.append('license_file', user.license_file);
+          }
+          await signup(formData)
+          setErrorMsg('')
+          router.push('/practitioner/auth/signin');
+        } catch (error) {            
+          setErrorMsg(error.response.data.message);
+        }
       }
-    } catch (error) {
-      setErrorMsg(error instanceof Error ? error.message : String(error));
-    }
-  }
-  async function handleGoogleSignIn() {
-    try {
-      await loginGoogleAuth();
-      setErrorMsg('');
-    } catch (error) {
-      setErrorMsg(error instanceof Error ? error.message : String(error));
-    }
-  }
-  async function handleOnSubmit(event: FormEvent) {
-    try {
-      event.preventDefault();
-      const formData = new FormData();      
-      formData.append('name', user.name);
-      formData.append('email', user.email);
-      formData.append('phone', user.phone);
-      formData.append('license', user.license);
-      formData.append('medical', user.medical);
-      formData.append('employer', user.employer);
-      formData.append('password', user.password);
-      formData.append('password_confirmation', user.password_confirmation);
-      if (user.license_file instanceof File) {
-        formData.append('license_file', user.license_file);
-      }
-      await signup(formData)
-      setErrorMsg('')
-      router.push('/practitioner/auth/signin');
-    } catch (error) {
-      setErrorMsg(error.response.data.message);
-    }
-  }
 
-  return (
+    return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full py-40 mx-auto">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
@@ -88,11 +82,11 @@ export default function SignUp() {
               <div className="space-y-6 text-right">
                 <div>
                   <Label>الإسم الثلاثي <span className="text-error-500">*</span></Label>
-                  <Input required={true} placeholder="الإسم الثلاثي" name="name" defaultValue={user.name} type="text" onChange={handleUserChange} />
+                  <Input required={true} placeholder="الإسم الثلاثي" name="name" defaultValue={userName ?? ""} type="text" onChange={handleUserChange} />
                 </div>
                 <div>
                   <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
-                  <Input required={true} placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email" onChange={handleUserChange} />
+                  <Input required={true} placeholder="info@gmail.com" name="email" defaultValue={userEmail ?? ""} type="email" onChange={handleUserChange} />
                 </div>
                 <div>
                   <Label>رقم الجوال <span className="text-error-500">*</span></Label>
@@ -113,29 +107,29 @@ export default function SignUp() {
                 <div>
                   <Label>كلمة المرور <span className="text-error-500">*</span></Label>
                   <div className="relative">
-                    <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
-                    defaultValue={user.password} required={true} />
-                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
+                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
                       {showPassword ? (
                         <EyeIcon className="fill-white dark:fill-gray-400" />
                       ) : (
                         <EyeClosed className="fill-white dark:fill-gray-400" />
                       )}
                     </span>
+                    <Input type={showPassword ? "text" : "password"} placeholder="أدخل كلمة المرور" onChange={handleUserChange} name="password"
+                    defaultValue={user.password} required={true} />
                   </div>
                 </div>
                 <div>
                   <Label> تأكيد كلمة المرور <span className="text-error-500">*</span></Label>
                   <div className="relative">
-                    <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password_confirmation"
-                    defaultValue={user.password_confirmation} required={true} />
-                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
+                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
                       {showPassword ? (
                         <EyeIcon className="fill-white dark:fill-gray-400" />
                       ) : (
                         <EyeClosed className="fill-white dark:fill-gray-400" />
                       )}
                     </span>
+                    <Input type={showPassword ? "text" : "password"} placeholder="أدخل كلمة المرور" onChange={handleUserChange} name="password_confirmation"
+                    defaultValue={user.password_confirmation} required={true} />
                   </div>
                 </div>
                 <div>
@@ -147,10 +141,6 @@ export default function SignUp() {
                 )}
                 <div>
                   <Button className="w-full bg-sky-600" size="sm">إنشاء الحساب</Button>
-                  <div className="my-4">
-                    <p className="text-gray-500 text-sm text-center mb-4">أو سجل دخولك باستخدام</p>
-                    <Button className="w-full bg-red-600 hover:bg-red-700" size="sm" onClick={handleGoogleSignIn}>Sign in with Google</Button>
-                  </div>
                 </div>
                 <Link href="/practitioner/auth/signin" className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">هل لديك حساب؟</Link>
               </div>

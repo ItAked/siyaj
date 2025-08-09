@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "export",
-    images: {
-      loader: 'akami'
-    }
+    output: "export"
 }
 
 module.exports = nextConfig
