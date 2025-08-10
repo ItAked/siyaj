@@ -20,7 +20,7 @@ export async function createAppointment(data: unknown) {
 
 export async function updateAppointment(data: unknown, id:number) {
     try {
-        const response = await api.put(`/update-appointment/${id}`, data)
+        const response = await api.post(`/update-appointment/${id}`, data)
         return response.data
     } catch (error) {
         console.error('failed to update appointment: ', error)

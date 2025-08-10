@@ -9,8 +9,8 @@ import {
 } from "./ui/table";
 import { useEffect, useState } from "react";
 import Pagination from "./tables/Pagination";
-import { HorizontaLDots } from "../icons";
 import { getCases, updateCaseStatus } from "../../services/cases";
+import { Ellipsis } from "lucide-react";
 
 interface Case {
   id: number;
@@ -65,7 +65,7 @@ export default function AllCasesLawyer() {
             <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث باسم الممارس الصحي" />
           </label>
           <details className="dropdown">
-            <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><HorizontaLDots /></summary>
+            <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis /></summary>
             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>

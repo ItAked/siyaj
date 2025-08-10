@@ -1,15 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useRef, useState,useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import {
-  ChevronDownIcon,
-  GridIcon,
-  UserCircleIcon,
-} from "../icons/index";
-import { File } from "lucide-react";
+import { ChevronDownIcon, File, Grid, User } from "lucide-react";
 import { logout } from "../../services/auth";
 
 type NavItem = {
@@ -21,7 +16,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <Grid />,
     name: "الرئيسية",
     path: "/practitioner"
   },
@@ -32,7 +27,7 @@ const navItems: NavItem[] = [
       { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
   },
   {
-    icon: <UserCircleIcon />,
+    icon: <User />,
     name: "الإعدادات",
     path: "/practitioner/profile"
   }
@@ -228,28 +223,11 @@ const AppSidebarPractitioner: React.FC = () => {
         <Link href="/">
           {isExpanded || isMobileOpen ? (
             <>
-              <Image
-                className="dark:hidden"
-                src="/images/logo/logo-blue.png"
-                alt="Logo"
-                width={51}
-                height={53}
-              />
-              <Image
-                className="hidden dark:block"
-                src="/images/logo/Logo.png"
-                alt="Logo"
-                width={51}
-                height={53}
-              />
+              <img src="/images/logo/logo-white.png" alt="Logo" className="w-12 h-12 dark:hidden" loading="lazy" />
+              <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12 hidden dark:block" loading="lazy" />
             </>
           ) : (
-            <Image
-              src="/images/logo/Logo.png"
-              alt="Logo"
-              width={51}
-              height={53}
-            />
+            <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12" loading="lazy" />
           )}
         </Link>
       </div>

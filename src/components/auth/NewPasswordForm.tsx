@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useRouter } from "next/navigation";
@@ -7,43 +8,42 @@ import Alert from "../ui/alert/Alert";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
-import Image from "next/image";
 
 const NewPasswordForm = () => {
-    const [user, setUser] = useState({
-        'password': '',
-        'password_confirmation': ''
-    })
-    const [msg, setMsg] = useState('')
-    const [isError, setIsError] = useState(false)
-    const router = useRouter()
-    
-    function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
-        try {
-            setUser((prevUser) => {
-                return { ...prevUser, [event.target.name]: event.target.value}
-            })
-        } catch (error) {
-            setMsg(error)
-        }
+  const [user, setUser] = useState({
+    'password': '',
+    'password_confirmation': ''
+  })
+  const [msg, setMsg] = useState('')
+  const [isError, setIsError] = useState(false)
+  const router = useRouter()
+  
+  function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
+    try {
+      setUser((prevUser) => {
+        return { ...prevUser, [event.target.name]: event.target.value}
+      })
+    } catch (error) {
+      setMsg(error)
     }
-    async function handleOnSubmit(event: FormEvent) {
-        event.preventDefault()
-        const formData = new FormData()
-        formData.append('password', user.password)
-        formData.append('password_confirmation', user.password_confirmation)
-        try {
-            const response = await verifyOtp(formData)
-            setMsg(response.message)
-            setIsError(false)
-            router.push('/')
-        } catch (error) {
-            setMsg(error.response.data.message)
-            setIsError(true)
-        }
+  }
+  async function handleOnSubmit(event: FormEvent) {
+    event.preventDefault()
+    const formData = new FormData()
+    formData.append('password', user.password)
+    formData.append('password_confirmation', user.password_confirmation)
+    try {
+      const response = await verifyOtp(formData)
+      setMsg(response.message)
+      setIsError(false)
+      router.push('/')
+    } catch (error) {
+      setMsg(error.response.data.message)
+      setIsError(true)
     }
-
-    return (
+  }
+  
+  return (
     <>
       <section className="py-96 px-36 max-sm:py-64">
         { msg != '' && (<Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ !" : ""} message={msg} /> )}
@@ -65,7 +65,7 @@ const NewPasswordForm = () => {
               </div>
             </div>
           </form>
-          <Image src="/images/logo/logo-blue.png" alt="logo" width={350} className="max-sm:hidden" height={364} />
+          <img src="/images/logo/logo-blue.png" alt="logo" className="w-80 max-sm:hidden h-80" loading="lazy" />
         </div>
       </section>
     </>

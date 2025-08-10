@@ -2,7 +2,7 @@ import api from "../src/utils/api"
 
 export async function updateNotification(id: string) {
     try {
-        const response = await api.put(`/notification/read/${id}`, {})
+        const response = await api.post(`/notification/read/${id}`, {})
         return response
     } catch (error) {
         console.error('failed to update: ', error)

@@ -32,7 +32,7 @@ export async function createCase(newCase: FormData) {
 
 export async function updateCaseStatus(id: number, data: { status: string }) {
     try {
-        const response = await api.put(`/update-case-status/${id}`, data);
+        const response = await api.post(`/update-case-status/${id}`, data);
         return response;
     } catch (error) {
         console.error('failed to update cases status: ', error)

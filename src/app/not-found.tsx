@@ -4,7 +4,7 @@ import React from "react";
 export default function NotFound() {
   return (
     <div className="mx-auto text-center">
-      <img src="/images/error/404-vector.png" alt="404" className="w-[43%] float-left" />
+      <img src="/images/error/404-vector.png" alt="404" className="w-[43%] float-left" loading="lazy" />
       <div className="grid pt-96">
         <h1 className="text-9xl font-extrabold bg-gradient-to-r from-blue-300 to-sky-950 inline-block text-transparent bg-clip-text">404</h1>
         <h1 className="text-4xl font-medium">الصفحة غير موجودة</h1>
