@@ -1,6 +1,5 @@
 const nextConfig = {
-    output: "export",
-    useFileSystemPublicRoutes: false,
+    output: "export"
 }
 
 module.exports = nextConfig
