@@ -37,7 +37,7 @@ export default function Map() {
     <div className="w-full h-80 relative z-0">
       <MapContainer 
         ref={mapRef}
-        center={[24.709564738208442, 46.702315836546354]} 
+        center={[24.709564738208442, 46.702315836546354]}
         zoom={13} 
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%' }}
