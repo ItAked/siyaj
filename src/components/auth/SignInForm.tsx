@@ -29,7 +29,6 @@ export default function SignInForm() {
       alert(error)
     }
   }
-
   async function handleOnSubmit(event: FormEvent) {
     try {
       event.preventDefault()
@@ -69,8 +68,8 @@ export default function SignInForm() {
                 <div className="relative">
                   <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
                   defaultValue={user.password} />
-                  <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
-                    {showPassword ? ( <EyeIcon className="fill-gray-500 dark:fill-gray-400" /> ) : ( <EyeClosedIcon className="fill-gray-500 dark:fill-gray-400" /> )}
+                  <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
+                    {showPassword ? ( <EyeIcon className="dark:fill-gray-400" /> ) : ( <EyeClosedIcon className="dark:fill-gray-400" /> )}
                   </span>
                 </div>
               </div>
