@@ -15,7 +15,7 @@ export default function Hero() {
         </div>
       </article>
 
-      <img src="/images/background-dot.png" alt="" loading="lazy" className="mt-16 w-[519px] h-[521px]" />
+      <img src="/images/vaadin_scale.png" alt="" loading="lazy" className="mt-16 w-[519px] h-[521px]" />
     </section>
   );
 }
