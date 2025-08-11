@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -9,7 +10,6 @@ import { useRouter } from "next/navigation";
 import Alert from "../ui/alert/Alert";
 import { login } from "../../../services/auth";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
-
 
 export default function SignInPractitionerForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +29,6 @@ export default function SignInPractitionerForm() {
       alert(error)
     }
   }
-
   async function handleOnSubmit(event: FormEvent) {
     try {
       event.preventDefault()
@@ -52,69 +51,36 @@ export default function SignInPractitionerForm() {
   }
 
   return (
-    <div className="flex flex-col flex-1 lg:w-1/2 w-full mx-auto">
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto mt-60">
-        <div>
-          <div className="mb-5 sm:mb-8 grid gap-y-4">
-            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg.toString()} /> )}
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md text-right">
-              تسجيل الدخول
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-right">
-              أدخل البريد الإلكتروني والرقم السري للدخول إلى حسابك
-            </p>
-          </div>
-          <div>
-            <form onSubmit={handleOnSubmit}>
-              <div className="space-y-6 text-right">
-                <div>
-                  <Label>
-                    البريد الإلكتروني <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
-                </div>
-                <div>
-                  <Label>
-                    كلمة المرور <span className="text-error-500">*</span>{" "}
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      onChange={handleUserChange}
-                      name="password"
-                      defaultValue={user.password}
-                    />
-                    <span
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                    >
-                      {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
-                      ) : (
-                        <EyeClosedIcon className="fill-gray-500 dark:fill-gray-400" />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between" dir="rtl">
-                  <Link
-                    href="/practitioner/auth/signup"
-                    className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                  >
-                    ليس لديك حساب؟
-                  </Link>
-                </div>
-                <div>
-                  <Button className="w-full bg-sky-600" size="sm">
-                    تسجيل الدخول
-                  </Button>
+    <section className="flex items-center justify-evenly py-36">
+      <div>
+        { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg.toString()} /> )}
+        <h1 className="font-medium text-4xl my-10">تسجيل الدخول</h1>
+          <form onSubmit={handleOnSubmit}>
+            <div className="space-y-6 text-right">
+              <div>
+                <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
+                <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
+              </div>
+              <div>
+                <Label>كلمة المرور <span className="text-error-500">*</span></Label>
+                <div className="relative">
+                  <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
+                  defaultValue={user.password} />
+                  <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
+                    {showPassword ? (<EyeIcon />) : (<EyeClosedIcon />)}
+                  </span>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
+              <Link href="/reset-password" className="text-brand-500 text-sm">هل نسيت كلمة المرور؟</Link>
+              <Button className="w-full bg-brand-500 mt-11" size="sm">تسجيل الدخول</Button>
+              <div className="flex items-center gap-x-0.5 justify-center text-sm">
+                <p className="text-gray-500">لا تملك حسابًا؟</p>
+                <Link href="/practitioner/auth/signup" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">أنشئ حسابًا جديدًا</Link>
+              </div>
+            </div>
+          </form>
       </div>
-    </div>
+      <img src="/images/logo/Logo.png" alt="logo" className="max-sm:hidden" />
+    </section>
   );
 }

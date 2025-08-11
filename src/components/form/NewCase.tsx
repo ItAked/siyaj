@@ -1,21 +1,14 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import ComponentCard from "../common/ComponentCard";
 import Label from "./Label";
 import Input from "./input/InputField";
 import Alert from "../ui/alert/Alert";
 import { createCase } from "../../../services/cases";
-import { readAllLawyers } from "../../../services/lawyers";
-
-interface Lawyers {
-  id: number;
-  name: string;
-}
 
 export default function NewCase() {
   const [newCase, setNewCase] = useState({
-    'lawyer': '',
     'description': '',
     'title': '',
     'status': '',
@@ -23,7 +16,6 @@ export default function NewCase() {
     'case_number': '',
     'attachment': ''
   })
-  const [lawyers, setLawyers] = useState<Lawyers[]>([])
   const [msg, setMsg] = useState('')
   const [isError, setIsError] = useState(false)
 
@@ -40,17 +32,11 @@ export default function NewCase() {
     }
   }
 
-  async function getAllLawyers(){
-    const response = await readAllLawyers()
-    setLawyers(response.data);
-  }
-
   const handleSave = async (event: FormEvent) => {
     event.preventDefault()
 
     try {
       const form = new FormData()
-      form.append('lawyer', newCase.lawyer)
       form.append('description', newCase.description)
       form.append('title', newCase.title)
       form.append('status', newCase.status)
@@ -66,10 +52,6 @@ export default function NewCase() {
       setMsg(error.response.data.message)
     }
   };
-
-  useEffect(() => {
-    getAllLawyers()
-  }, [])
 
   return (
     <ComponentCard>
@@ -98,18 +80,6 @@ export default function NewCase() {
             <div className="col-span-1">
               <Label>محتوى الدعوة</Label>
               <textarea className="textarea w-full" name="description" onChange={handleInputChange} required placeholder="محتوى الدعوة"></textarea>
-            </div>
-
-            <div className="col-span-1">
-                <fieldset className="fieldset">
-                    <Label>المحامي</Label>
-                    <select defaultValue={newCase.lawyer} name="lawyer" className="select w-full" onChange={handleInputChange} required>
-                        <option disabled={true}>اختر المحامي</option>
-                        { lawyers.map((lawyer, index) => (
-                          <option key={index} value={lawyer.id}>{lawyer.name}</option>
-                        ))}
-                    </select>
-                </fieldset>
             </div>
 
             <div className="col-span-1">
