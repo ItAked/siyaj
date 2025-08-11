@@ -15,10 +15,10 @@ import { getAppointments } from "../../../services/appointments";
 
 interface Appointment {
   id: string;
+  lawyer: string;
+  practitioner: string;
   title: string;
   description: string;
-  practitioner_name: string;
-  lawyer_name: string;
   date: string;
   time: string;
   status: string;
@@ -49,7 +49,9 @@ const Calendar: React.FC = () => {
   async function readAppointments() {
     try {
       setLoading(true);
-      const response = await getAppointments();      
+      const response = await getAppointments();
+      console.log(response);
+      
       setAppointments(response);
     } catch (err) {
       setError(String(err));
@@ -67,8 +69,8 @@ const Calendar: React.FC = () => {
       setSelectedAppointment(appointment);
       setAppointmentName(appointment.title)
       setAppointmentAttachment(appointment.attachments);
-      setAppointmentLawyer(appointment.lawyer_name)
-      setAppointmentPractitioner(appointment.practitioner_name)
+      setAppointmentLawyer(appointment.lawyer)
+      setAppointmentPractitioner(appointment.practitioner)
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
