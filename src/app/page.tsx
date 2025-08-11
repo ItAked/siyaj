@@ -8,6 +8,7 @@ import Subscriptions from "../components/home/Categories";
 import ContactUs from "../components/home/ContactUs";
 import { Metadata } from "next";
 import Footer from "../components/home/footer";
+import OurLawyers from "../components/home/OurLawyers";
 
 export const metadata: Metadata = {
   title: "الصفحة الرئيسية",
@@ -23,6 +24,7 @@ export default function Home() {
             <Vision />
             <OurGoals />
             <OurServices />
+            <OurLawyers />
             <Subscriptions />
             <ContactUs />
             <Footer />

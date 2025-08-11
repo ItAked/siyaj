@@ -107,7 +107,6 @@ const CalendarPractitioner: React.FC = () => {
   const handleEventClick = (clickInfo: EventClickArg) => {
     const event = clickInfo.event;
     const appointment = appointments.find(a => a.id.toString() === event.id);
-    
     if (appointment) {
       setSelectedAppointment(appointment);
       setAppointmentTitle(appointment.title);

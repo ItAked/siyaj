@@ -51,19 +51,16 @@ const Categories = () => {
     const response = await readSubscriptions()
     setCategories(response.data)
   }
-
   async function handleSubmitPayment(event: FormEvent) {
     event.preventDefault()
     setIsSubmitting(true)
     setSubmitError('')
     setSubmitSuccess(false)
-
     if (!selectedCategory || !paymentFile) {
       setSubmitError('Please select a category and upload a payment file')
       setIsSubmitting(false)
       return
     }
-
     try {
       const formData = new FormData()
       formData.append('name', selectedCategory.name)
@@ -78,7 +75,6 @@ const Categories = () => {
       setIsSubmitting(false)
     }
   }
-
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       setPaymentFile(event.target.files[0])
@@ -101,6 +97,7 @@ const Categories = () => {
                 <span className="text-4xl font-bold">{`${category.price} ريال`}</span>
                 <span className="text-gray-600 ml-2">/ سنويًا</span>
               </div>
+              <p className='text-xl text-gray-500 font-normal'>وصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف</p>
             </div>
             <div className="p-6 bg-white mx-auto">
               { getToken() ? (
@@ -113,7 +110,6 @@ const Categories = () => {
                 const dialog = document.getElementById('my_modal_3')as HTMLDialogElement | null; 
                 if (dialog) dialog.showModal();
               }}>إختيار التصنيف</button>}
-              
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box grid place-items-center">
                   <form method="dialog">
@@ -123,7 +119,6 @@ const Categories = () => {
                   <a href={'/practitioner/auth/signin'} className="my-8 link">لتسجيل الدخول</a>
                 </div>
               </dialog>
-              
               <dialog id="my_modal_4" className="modal">
                 <div className="modal-box">
                   <form method="dialog">

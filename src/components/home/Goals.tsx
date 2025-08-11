@@ -1,9 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-key */
 "use client"
 
 import goals from "../../../public/data/goals";
-import carousel_arrow from "../../../public/images/carousel_arrow.png";
 import { useEffect, useState, useRef } from "react";
 import { Clock, LaptopMinimal, Shield, Tag } from "lucide-react";
 
@@ -14,22 +12,10 @@ export default function OurGoals() {
         <Tag className="text-blue-300 w-[70px] h-[70px]" />,
         <LaptopMinimal className="text-blue-300 w-[70px] h-[70px]" />
     ];
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [currentIndex, ] = useState(0);
+    const [isAnimating, ] = useState(false);
     const animationTime = 300;
     const carouselRef = useRef<HTMLDivElement>(null);
-    const handleNext = () => {
-        if (isAnimating) return;
-        setIsAnimating(true);
-        setCurrentIndex(prev => (prev + 1) % goals.length);
-        setTimeout(() => setIsAnimating(false), animationTime);
-    };
-    const handlePrev = () => {
-        if (isAnimating) return;
-        setIsAnimating(true);
-        setCurrentIndex(prev => (prev - 1 + goals.length) % goals.length);
-        setTimeout(() => setIsAnimating(false), animationTime);
-    };
 
     useEffect(() => {
         const carousel = carouselRef.current;
@@ -49,9 +35,6 @@ export default function OurGoals() {
         <>
             <div id="membersContent" className="max-sm:w-full max-sm:flex max-sm:flex-col max-sm:items-center hidden max-sm:bg-gray-900">
                 <div id="membersCarousel" className="flex flex-row w-full justify-center items-center relative">
-                    <button onClick={handleNext} className="rounded-full mr-10 z-10 h-[48px] w-[48px] transition-colors shrink-0" disabled={isAnimating}>
-                        <img src={carousel_arrow.src} alt="a previous button" loading="lazy" />
-                    </button>
                     <div className="my-20 relative overflow-hidden w-[60%] h-[200px] flex items-center justify-center">
                         <div ref={carouselRef} className="absolute w-full text-center transition-transform duration-300">
                             <div className="flex flex-col items-center" data-aos="flip-down">
@@ -65,9 +48,6 @@ export default function OurGoals() {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handlePrev} className="rounded-full rotate-180 z-10 h-[48px] w-[48px] ml-10 transition-colors shrink-0" disabled={isAnimating}>
-                        <img src={carousel_arrow.src} alt="a next button" loading="lazy" />
-                    </button>
                 </div>
             </div>
             <style jsx global>{`

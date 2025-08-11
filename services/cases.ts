@@ -10,15 +10,11 @@ export async function readCasesStatus () {
 }
 
 export async function getCases(value?: string, search?: string, page: number = 1) {
-    try {
-        const params: Record<string, unknown> = {page};
-        if (value) params.value = value;
-        if (search) params.search = search;
-        const response = await api.get('/cases', { params });
-        return response.data;
-    } catch (error) {
-        console.error('failed to fetch cases: ', error)
-    }
+    const params: Record<string, unknown> = {page};
+    if (value) params.value = value;
+    if (search) params.search = search;
+    const response = await api.get('/cases', { params });
+    return response.data;
 }
 
 export async function createCase(newCase: FormData) {

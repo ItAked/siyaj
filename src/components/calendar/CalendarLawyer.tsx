@@ -10,19 +10,18 @@ import {
   EventClickArg,
   EventContentArg,
 } from "@fullcalendar/core";
-import { getPractitioners } from "../../../services/practitioners";
 import { getCases } from "../../../services/cases";
 import { createAppointment, getAppointments, updateAppointment } from "../../../services/appointmnets";
 
 interface Appointment {
   id: string;
-  practitioner_id: number;
   date: string;
   time: string;
   status: string;
   title: string;
+  case_id: number;
 }
-interface Practitioner {
+interface Case {
   value: number;
   label: string;
 }
@@ -30,7 +29,7 @@ interface Practitioner {
 const CalendarLawyer: React.FC = () => {
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [appointmentTitle, setAppointmentTitle] = useState("");
-  const [appointmentPractitioner, setAppointmentPractitioner] = useState(0);
+  const [appointmentCase, setAppointmentCase] = useState(0);
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("");
@@ -38,8 +37,7 @@ const CalendarLawyer: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const calendarRef = useRef<FullCalendar>(null);
-  const[practitioner, setPractitioner] = useState<Practitioner[]>([])
-
+  const [cases, setCases] = useState<Case[]>([]);
   const statusOptions = {
     "منظورة للشؤون الصحية": "primary",
     "منظورة لدى الدائرة القضائية": "primary",
@@ -49,71 +47,57 @@ const CalendarLawyer: React.FC = () => {
   const handleTitleChange = (value: string) => {    
     setAppointmentTitle(value);
   };
-  const handlePractitionerChange = (value: number) => {
-    setAppointmentPractitioner(value);
-  };
-
+  const handleCaseChange = (value: number) => {
+    setAppointmentCase(value)
+  }
   async function readCases() {
     try {
       setLoading(true)
-
-      await getCases("", "", 1)
+      const response = await getCases("", "", 1)
+      const p = response.data.map((caseItem: { id: number; case: string; }) => ({
+        value: caseItem.id,
+        label: caseItem.case
+      })) as Case[];
+      setCases(p)
     } catch (error) {
       setError(String(error));
     } finally {
       setLoading(false)
     }
   }
-
   async function readAppointments() {
     try {
       setLoading(true);
-
       const response = await getAppointments();
       setAppointments(response);
-
     } catch (err) {
-      setError(String(err));
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
   }
 
-  async function readPractitioners() {
-    const response = await getPractitioners('')
-    const p = response.data.map((practitionerItem: { id: number; name: string; }) => ({
-        value: practitionerItem.id,
-        label: practitionerItem.name
-    })) as Practitioner[];
-
-    setPractitioner(p)
-  }
-
   useEffect(() => {
     readAppointments();
     readCases()
-    readPractitioners()
   }, []);
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     resetModalFields();
     setAppointmentDate(selectInfo.startStr.split("T")[0]);
   };
-
   const handleEventClick = (clickInfo: EventClickArg) => {
     const event = clickInfo.event;
     const appointment = appointments.find(a => a.id.toString() === event.id);
-    
     if (appointment) {
       setSelectedAppointment(appointment);
       setAppointmentTitle(appointment.title);
-      setAppointmentPractitioner(appointment.practitioner_id)
       setAppointmentDate(appointment.date);
       setAppointmentTime(appointment.time.split(":").slice(0, 2).join(":")); // Format time to HH:MM
       setAppointmentStatus(appointment.status);
+      setAppointmentCase(appointment.case_id)
     }
   };
-
   const handleAddOrUpdateAppointment = async () => {
     try {
       if (selectedAppointment) {        
@@ -125,7 +109,6 @@ const CalendarLawyer: React.FC = () => {
                   date: appointmentDate,
                   time: appointmentTime + ":00",
                   status: appointmentStatus,
-                  practitioner_id: Number(appointmentPractitioner),
                   title: appointmentTitle
                 }
               : appointment
@@ -136,10 +119,9 @@ const CalendarLawyer: React.FC = () => {
           date: appointmentDate,
           time: appointmentTime + ":00",
           status: appointmentStatus,
-          practitioner_id: Number(appointmentPractitioner),
-          title: appointmentTitle
+          title: appointmentTitle,
+          case_id: appointmentCase
         };
-        
         await updateAppointment(updatedSelectedAppointment, Number(selectedAppointment.id));        
       } else {
         const newAppointment: Appointment = {
@@ -147,10 +129,9 @@ const CalendarLawyer: React.FC = () => {
           date: appointmentDate,
           time: appointmentTime + ":00", // Add seconds for API format
           status: appointmentStatus,
-          practitioner_id: Number(appointmentPractitioner),
-          title: appointmentTitle
+          title: appointmentTitle,
+          case_id: appointmentCase
         };
-        
         const response = await createAppointment(newAppointment);
         setAppointments(prevAppointments => [...prevAppointments, response]);
       }
@@ -161,7 +142,6 @@ const CalendarLawyer: React.FC = () => {
       setError("Failed to save appointment");
     }
   };
-
   const resetModalFields = () => {
     setAppointmentTitle("");
     setAppointmentDate("");
@@ -169,7 +149,6 @@ const CalendarLawyer: React.FC = () => {
     setAppointmentStatus("");
     setSelectedAppointment(null);
   };
-
   const calendarEvents = appointments.map(appointment => ({
     id: appointment.id,
     start: `${appointment.date}T${appointment.time}`,
@@ -182,7 +161,6 @@ const CalendarLawyer: React.FC = () => {
   if (loading) {
     return <span className="loading loading-spinner text-warning"></span>
   }
-
   if (error) {
     return <div className="text-center py-8 text-red-500">{error}</div>;
   }
@@ -226,23 +204,23 @@ const CalendarLawyer: React.FC = () => {
             <div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  عنوان الدعوة
+                 عنوان الإجتماع
                 </label>
                 <input type="text" name="title" className="input w-full" value={appointmentTitle || ''} onChange={(e) => handleTitleChange(e.target.value)} />
               </div>
             </div>
-            <div className="my-8">
+            <div className={`my-8 ${selectedAppointment ? 'hidden' : 'block'}`}>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  الممارس الصحي
+                  إسم الدعوة
                 </label>
-                <select name="practitioner_id" className="select w-full" value={appointmentPractitioner} onChange={(e) => handlePractitionerChange(Number(e.target.value))}>
+                <select name="case_id" className="select w-full" value={appointmentCase} onChange={(e) => handleCaseChange(Number(e.target.value))}>
                   {selectedAppointment && (
-                    <option key="selected" value={appointmentPractitioner} disabled>
-                      {practitioner.find(p => p['value'] === appointmentPractitioner)?.label}
+                    <option key="selected" value={appointmentCase} disabled>
+                      {cases.find(c => c['value'] === appointmentCase)?.label}
                     </option>
                   )}
-                  {practitioner.filter(p => !selectedAppointment || p['value'] !== appointmentPractitioner).map((p, index) => (
+                  {cases.filter(c => !selectedAppointment || c['value'] !== appointmentCase).map((p, index) => (
                     <option key={index} value={p['value']}>{p['label']}</option>
                     ))
                   }

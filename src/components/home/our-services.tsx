@@ -7,7 +7,7 @@ export default function OurServices() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="py-12 md:py-20">
           {/* Section header */}
-          <div className="mx-auto max-w-3xl pb-16 text-center md:pb-20">
+          <div className="max-w-3xl pb-16 text-right md:pb-20">
             <h2 className="text-6xl text-gray-900">خدماتنا</h2>
           </div>
           {/* Grid */}

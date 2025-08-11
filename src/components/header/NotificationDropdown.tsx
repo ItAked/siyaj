@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
@@ -25,10 +26,13 @@ export default function NotificationDropdown() {
   }
 
   async function getNotifications() {
-    const response = await readNotifications()
-    
-    setNotifications(response.data)
-    setNotifying(true);
+    try {
+      const response = await readNotifications()
+      setNotifications(response.data)
+      setNotifying(true);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   }
 
   async function markAsRead(id: string) {

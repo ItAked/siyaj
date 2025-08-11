@@ -10,10 +10,6 @@ export async function updateNotification(id: string) {
 }
 
 export async function readNotifications() {
-    try {
-        const response = await api.get('/notifications')
-        return response.data
-    } catch (error) {
-        console.error('failed to fetch notifications: ', error)
-    }
+    const response = await api.get('/notifications')
+    return response.data
 }

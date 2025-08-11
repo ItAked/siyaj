@@ -1,12 +1,8 @@
 import api from "../src/utils/api"
 
 export async function getAppointments () {
-    try {
-        const response = await api.get('/appointments')
-        return response.data
-    } catch (error) {
-        console.error('failed to fetch appointments: ', error)
-    }
+    const response = await api.get('/appointments')
+    return response.data
 }
 
 export async function createAppointment(data: unknown) {
