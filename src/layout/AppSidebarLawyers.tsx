@@ -56,54 +56,23 @@ const AppSidebarLawyers: React.FC = () => {
       {navItems.map((nav, index) => (
         <li key={nav.name}>
           {nav.subItems ? (
-            <button
-              onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`menu-item group  ${
-                openSubmenu?.type === menuType && openSubmenu?.index === index
-                  ? "menu-item-active"
-                  : "menu-item-inactive"
-              } cursor-pointer ${
-                !isExpanded ? "lg:justify-center" : "lg:justify-start"
-              }`}
-            >
-              <span
-                className={` ${
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? "menu-item-icon-active"
-                    : "menu-item-icon-inactive"
-                }`}
-              >
+            <button onClick={() => handleSubmenuToggle(index, menuType)} className={`menu-item group  ${ openSubmenu?.type === menuType && openSubmenu?.index === index
+              ? "menu-item-active" : "menu-item-inactive" } cursor-pointer ${ !isExpanded ? "lg:justify-center" : "lg:justify-start" }`}>
+              <span className={` ${ openSubmenu?.type === menuType && openSubmenu?.index === index ? "menu-item-icon-active" : "menu-item-icon-inactive"}`}>
                 {nav.icon}
               </span>
               {(isExpanded || isMobileOpen) && (
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isMobileOpen) && (
-                <ChevronDownIcon
-                  className={`ml-auto w-5 h-5 transition-transform duration-200  ${
-                    openSubmenu?.type === menuType &&
-                    openSubmenu?.index === index
-                      ? "rotate-180 text-brand-500"
-                      : ""
-                  }`}
-                />
+                <ChevronDownIcon className={`ml-auto w-5 h-5 transition-transform duration-200  ${ openSubmenu?.type === menuType && openSubmenu?.index === index
+                  ? "rotate-180 text-brand-500" : "" }`} />
               )}
             </button>
           ) : (
             nav.path && (
-              <Link
-                href={nav.path}
-                className={`menu-item group ${
-                  isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
-                }`}
-              >
-                <span
-                  className={`${
-                    isActive(nav.path)
-                      ? "menu-item-icon-active"
-                      : "menu-item-icon-inactive"
-                  }`}
-                >
+              <Link href={nav.path} className={`menu-item group ${ isActive(nav.path) ? "menu-item-active" : "menu-item-inactive" }`}>
+                <span className={`${ isActive(nav.path) ? "menu-item-icon-active" : "menu-item-icon-inactive"}`}>
                   {nav.icon}
                 </span>
                 {(isExpanded || isMobileOpen) && (
@@ -113,54 +82,14 @@ const AppSidebarLawyers: React.FC = () => {
             )
           )}
           {nav.subItems && (isExpanded || isMobileOpen) && (
-            <div
-              ref={(el) => {
-                subMenuRefs.current[`${menuType}-${index}`] = el;
-              }}
-              className="overflow-hidden transition-all duration-300"
-              style={{
-                height:
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
-                    ? `${subMenuHeight[`${menuType}-${index}`]}px`
-                    : "0px",
-              }}
-            >
+            <div ref={(el) => { subMenuRefs.current[`${menuType}-${index}`] = el;}}
+              className="overflow-hidden transition-all duration-300" style={{ height: openSubmenu?.type === menuType && openSubmenu?.index === index
+                ? `${subMenuHeight[`${menuType}-${index}`]}px` : "0px"}} >
               <ul className="mt-2 space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.name}>
-                    <Link
-                      href={subItem.path}
-                      className={`menu-dropdown-item ${
-                        isActive(subItem.path)
-                          ? "menu-dropdown-item-active"
-                          : "menu-dropdown-item-inactive"
-                      }`}
-                    >
+                    <Link href={subItem.path} className={`menu-dropdown-item ${ isActive(subItem.path) ? "menu-dropdown-item-active" : "menu-dropdown-item-inactive"}`}>
                       {subItem.name}
-                      <span className="flex items-center gap-1 ml-auto">
-                        {subItem.new && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge `}
-                          >
-                            new
-                          </span>
-                        )}
-                        {subItem.pro && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge `}
-                          >
-                            pro
-                          </span>
-                        )}
-                      </span>
                     </Link>
                   </li>
                 ))}
@@ -185,7 +114,6 @@ const AppSidebarLawyers: React.FC = () => {
 
   useEffect(() => {
   }, [pathname,isActive]);
-
   useEffect(() => {
     if (openSubmenu !== null) {
       const key = `${openSubmenu.type}-${openSubmenu.index}`;
@@ -200,11 +128,7 @@ const AppSidebarLawyers: React.FC = () => {
 
   const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
     setOpenSubmenu((prevOpenSubmenu) => {
-      if (
-        prevOpenSubmenu &&
-        prevOpenSubmenu.type === menuType &&
-        prevOpenSubmenu.index === index
-      ) {
+      if ( prevOpenSubmenu && prevOpenSubmenu.type === menuType && prevOpenSubmenu.index === index ) {
         return null;
       }
       return { type: menuType, index };
@@ -212,27 +136,12 @@ const AppSidebarLawyers: React.FC = () => {
   };
 
   return (
-    <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-blue-300 dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
-        duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48
-        ${
-          isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]"
-        }
-        ${isMobileOpen ? "-translate-x-44" : "-translate-x-full"}
-        lg:translate-x-0`}
-    >
-      <div
-        className={`py-8 flex justify-center`}
-      >
+    <aside className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-blue-300 dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
+      duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48 ${ isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]" }
+      ${isMobileOpen ? "-translate-x-44" : "-translate-x-full"} lg:translate-x-0`}>
+      <div className={`py-8 flex justify-center`}>
         <Link href="/">
-          {isExpanded || isMobileOpen ? (
-            <>
-              <img src="/images/logo/logo-white.png" alt="Logo" className="w-12 h-12 dark:hidden" loading="lazy" />
-              <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12 hidden dark:block" loading="lazy" />
-            </>
-          ) : (
-            <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12" loading="lazy" />
-          )}
+          <img src="/images/logo/blue-white.png" alt="Logo" className="w-24" loading="lazy" />
         </Link>
       </div>
       <div className="flex flex-col flex-grow overflow-y-auto duration-300 ease-linear no-scrollbar">
