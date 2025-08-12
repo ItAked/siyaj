@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -52,38 +51,41 @@ export default function SignInForm() {
   }
 
   return (
-    <>
-      <section className="py-96 px-36 max-sm:py-64">
-        { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
-        <h1 className="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">تسجيل الدخول</h1>
-        <div className="flex items-center gap-x-80">
-          <form onSubmit={handleOnSubmit} className="w-1/2 max-sm:w-full">
-            <div className="space-y-6 text-right">
-              <div>
-                <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
-                <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
-              </div>
-              <div>
-                <Label>كلمة المرور <span className="text-error-500">*</span></Label>
-                <div className="relative">
-                  <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
-                  defaultValue={user.password} />
-                  <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
-                    {showPassword ? ( <EyeIcon className="dark:fill-gray-400" /> ) : ( <EyeClosedIcon className="dark:fill-gray-400" /> )}
-                  </span>
+    <div className="flex flex-col flex-1 lg:w-1/2 w-full">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+        <div>
+          <div className="mb-5 sm:mb-8">
+            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
+            <h1 className="mb-2 font-medium text-gray-800 text-title-md dark:text-white/90 sm:text-title-md text-right">تسجيل الدخول</h1>
+          </div>
+          <div>
+            <form onSubmit={handleOnSubmit}>
+              <div className="space-y-6 text-right">
+                <div>
+                  <Label className="text-2xl font-normal">البريد الإلكتروني <span className="text-error-500">*</span></Label>
+                  <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
+                </div>
+                <div>
+                  <Label className="text-2xl font-normal">كلمة المرور <span className="text-error-500">*</span></Label>
+                  <div className="relative">
+                    <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
+                    defaultValue={user.password} />
+                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
+                      {showPassword ? (<EyeIcon/>) : (<EyeClosedIcon/>)}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Link href="/reset-password" className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400">هل نسيت كلمة المرور؟</Link>
+                </div>
+                <div>
+                  <Button className="w-full" size="sm">تسجيل الدخول</Button>
                 </div>
               </div>
-              <div className="flex items-center justify-between" dir="rtl">
-                <Link href="/reset-password" className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">نسيت كلمة المرور؟</Link>
-              </div>
-              <div>
-                <Button className="w-full" size="sm">تسجيل الدخول</Button>
-              </div>
-            </div>
-          </form>
-          <img src="/images/logo/logo-blue.png" alt="logo" className="w-80 max-sm:hidden h-80" loading="lazy" />
+            </form>
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

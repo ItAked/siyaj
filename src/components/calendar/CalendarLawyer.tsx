@@ -159,7 +159,7 @@ const CalendarLawyer: React.FC = () => {
   }));
 
   if (loading) {
-    return <span className="loading loading-spinner text-warning"></span>
+    return <div className="text-center py-8">جاري تحميل المواعيد....</div>;
   }
   if (error) {
     return <div className="text-center py-8 text-red-500">{error}</div>;
@@ -203,58 +203,39 @@ const CalendarLawyer: React.FC = () => {
             </h5>
             <div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                 عنوان الإجتماع
-                </label>
-                <input type="text" name="title" className="input w-full" value={appointmentTitle || ''} onChange={(e) => handleTitleChange(e.target.value)} />
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان الإجتماع</label>
+                <input type="text" name="title" className="input w-full dark:bg-gray-800 dark:text-white" value={appointmentTitle || ''}
+                onChange={(e) => handleTitleChange(e.target.value)} />
               </div>
             </div>
             <div className={`my-8 ${selectedAppointment ? 'hidden' : 'block'}`}>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                  إسم الدعوة
-                </label>
-                <select name="case_id" className="select w-full" value={appointmentCase} onChange={(e) => handleCaseChange(Number(e.target.value))}>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم الدعوة</label>
+                <select name="case_id" className="select w-full dark:bg-gray-800 dark:text-white" value={appointmentCase}
+                onChange={(e) => handleCaseChange(Number(e.target.value))}>
                   {selectedAppointment && (
                     <option key="selected" value={appointmentCase} disabled>
                       {cases.find(c => c['value'] === appointmentCase)?.label}
                     </option>
                   )}
                   {cases.filter(c => !selectedAppointment || c['value'] !== appointmentCase).map((p, index) => (
-                    <option key={index} value={p['value']}>{p['label']}</option>
-                    ))
+                    <option key={index} value={p['value']}>{p['label']}</option>))
                   }
                 </select>
               </div>
             </div>
             <div className="mt-6">
-              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-                حالة الدعوة
-              </label>
+              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوة</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
                   <div key={`status-${statusKey}`} className="n-chk">
                     <div className={`form-check form-check-${statusValue} form-check-inline`}>
-                      <label
-                        className="flex items-center text-sm text-gray-700 form-check-label dark:text-gray-400"
-                        htmlFor={`modal-${statusKey}`}
-                      >
+                      <label className="flex items-center text-sm text-gray-700 form-check-label dark:text-gray-400" htmlFor={`modal-${statusKey}`}>
                         <span className="relative">
-                          <input
-                            className="sr-only form-check-input"
-                            type="radio"
-                            name="appointment-status"
-                            value={statusKey}
-                            id={`modal-${statusKey}`}
-                            checked={appointmentStatus === statusKey}
-                            onChange={() => setAppointmentStatus(statusKey)}
-                          />
+                          <input className="sr-only form-check-input" type="radio" name="appointment-status" value={statusKey} id={`modal-${statusKey}`}
+                          checked={appointmentStatus === statusKey} onChange={() => setAppointmentStatus(statusKey)} />
                           <span className="flex items-center justify-center w-5 h-5 mr-2 border border-gray-300 rounded-full box dark:border-gray-700">
-                            <span
-                              className={`h-2 w-2 rounded-full bg-white ${
-                                appointmentStatus === statusKey ? "block" : "hidden"
-                              }`}
-                            ></span>
+                            <span className={`h-2 w-2 rounded-full bg-white ${ appointmentStatus === statusKey ? "block" : "hidden"}`}></span>
                           </span>
                         </span>
                         {statusKey}
@@ -264,36 +245,22 @@ const CalendarLawyer: React.FC = () => {
                 ))}
               </div>
             </div>
-
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                تاريخ الموعد
-              </label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">تاريخ الموعد</label>
               <div className="relative">
-                <input
-                  id="appointment-date"
-                  type="date"
-                  value={appointmentDate}
-                  onChange={(e) => setAppointmentDate(e.target.value)}
-                  className="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm
-                  text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                  dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                />
+                <input id="appointment-date" type="date" value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} className="dark:bg-dark-900 h-11
+                w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs
+                placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900
+                dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"/>
               </div>
             </div>
-
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                وقت الموعد
-              </label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">وقت الموعد</label>
               <div className="relative">
-                <input
-                  id="appointment-time"
-                  type="time"
-                  value={appointmentTime}
-                  onChange={(e) => setAppointmentTime(e.target.value)}
-                  className="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                />
+                <input id="appointment-time" type="time" value={appointmentTime} onChange={(e) => setAppointmentTime(e.target.value)} className="dark:bg-dark-900 h-11 w-full
+                appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs
+                placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900
+                dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"/>
               </div>
             </div>
           </div>
@@ -301,12 +268,8 @@ const CalendarLawyer: React.FC = () => {
             <form method="dialog">
               <button className="btn">إغلاق</button>
             </form>
-            <button
-              onClick={handleAddOrUpdateAppointment}
-              type="button"
-              className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-sky-600
-              sm:w-auto"
-            >
+            <button onClick={handleAddOrUpdateAppointment} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5
+            text-sm font-medium text-white hover:bg-sky-600 sm:w-auto">
               {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}
             </button>
           </div>
