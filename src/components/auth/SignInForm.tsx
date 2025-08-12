@@ -9,7 +9,6 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "../../../services/auth";
 
-
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -30,13 +29,10 @@ export default function SignInForm() {
 
   async function handleOnSubmit(event: FormEvent) {
     event.preventDefault()
-
     const formData = new FormData()
     formData.append('email', user.email)
     formData.append('password', user.password)
-
     await login(formData)
-    
     alert('مرحبًا من جديد')
     router.push('/admin')
   }
@@ -46,9 +42,7 @@ export default function SignInForm() {
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-medium text-gray-800 text-title-md dark:text-white/90 sm:text-title-md text-right">
-              تسجيل الدخول
-            </h1>
+            <h1 className="mb-2 font-medium text-gray-800 text-title-md dark:text-white/90 sm:text-title-md text-right">تسجيل الدخول</h1>
           </div>
           <div>
             <form onSubmit={handleOnSubmit}>
@@ -60,37 +54,18 @@ export default function SignInForm() {
                 <div>
                   <Label className="text-2xl font-normal">كلمة المرور <span className="text-error-500">*</span></Label>
                   <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      onChange={handleUserChange}
-                      name="password"
-                      defaultValue={user.password}
-                    />
-                    <span
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2"
-                    >
-                      {showPassword ? (
-                        <EyeIcon/>
-                      ) : (
-                        <EyeCloseIcon/>
-                      )}
+                    <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
+                    defaultValue={user.password} />
+                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
+                      {showPassword ? (<EyeIcon/>) : (<EyeCloseIcon/>)}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <Link
-                    href="/reset-password"
-                    className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                  >
-                    هل نسيت كلمة المرور؟
-                  </Link>
+                  <Link href="/reset-password" className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400">هل نسيت كلمة المرور؟</Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm">
-                    تسجيل الدخول
-                  </Button>
+                  <Button className="w-full" size="sm">تسجيل الدخول</Button>
                 </div>
               </div>
             </form>
