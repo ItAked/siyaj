@@ -45,7 +45,7 @@ export default function AllCasesPractitioner() {
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-2 mb-4">
         <div>
-          <h3 className="text-base font-medium text-gray-800 dark:text-white/90">الدعوات</h3>
+          <h3 className="text-base font-medium text-gray-800 dark:text-white/90">جميع الدعوات</h3>
         </div>
 
         <div className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export default function AllCasesPractitioner() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان الدعوة" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان الدعوة أو بإسم الممارس الصحي" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis /></summary>

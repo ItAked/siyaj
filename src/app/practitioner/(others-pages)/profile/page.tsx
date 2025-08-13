@@ -1,15 +1,47 @@
+'use client'
+
 import UserMetaCard from "../../../../components/user-profile/UserMetaCard";
 import UserInfoCard from "../../../../components/user-profile/UserInfoCard";
-import { Metadata } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { readSetting } from "../../../../../services/setting";
+import UserHealthCard from "../../../../components/user-profile/UserHealthCard";
 
-export const metadata: Metadata = {
-  title: "الحساب الشخصي",
-  description:
-    "This is Next.js Profile page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-};
+type MetaSetting = {
+  email?: string;
+  name?: string;
+  medical? :string;
+  phone?:  string;
+}
+type HealthSetting = {
+  license? :string;
+  medical?: string;
+  employer?: string;
+  license_file?: string;
+}
 
 export default function Profile() {
+  const [metaSetting, setMetaSetting] = useState<MetaSetting>({})
+  const [healthSetting, setHealthSetting] = useState<HealthSetting>({})
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  async function getProfileData(){
+    try {
+      setLoading(true)
+      const response = await readSetting()
+      setMetaSetting(response.data)
+      setHealthSetting(response.data)
+    } catch (error) {
+      setError(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getProfileData()
+  }, [])
+
   return (
     <div>
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
@@ -17,8 +49,10 @@ export default function Profile() {
           الحساب الشخصي
         </h3>
         <div className="space-y-6">
-          <UserMetaCard />
-          <UserInfoCard />
+          <UserMetaCard loading={loading} error={error} email={metaSetting.email} medical={metaSetting.medical} name={metaSetting.name} />
+          <UserInfoCard loading={loading} error={error} email={metaSetting.email} phone={metaSetting.phone} name={metaSetting.name} />
+          <UserHealthCard loading={loading} error={error} employer={healthSetting.employer} license={healthSetting.license} license_file={healthSetting.license_file}
+          medical={healthSetting.medical } />
         </div>
       </div>
     </div>

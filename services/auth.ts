@@ -27,8 +27,8 @@ export async function logout() {
 }
 
 export async function signup (newUser: FormData) {
-    const data  = await api.post(`/register`, newUser)    
-    const token = data.data.message.access_token;
+    const data  = await api.post(`/register`, newUser)
+    const token = data.data.access_token;
     if (token) {
         const pipeIndex = token.indexOf('|');
         const tokenSubstring = token.substring(pipeIndex + 1)

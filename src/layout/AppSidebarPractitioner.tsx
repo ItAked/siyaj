@@ -23,8 +23,8 @@ const navItems: NavItem[] = [
   },
   {
     icon: <File />,
-    name: "التصنيفات المشترك فيها",
-    subItems: [{ name: 'عرض جميع التصنيفات المشترك فيها', path: '/practitioner/subscription', pro: false},
+    name: "الاشتراكات",
+    subItems: [{ name: 'عرض جميع الاشتراكات', path: '/practitioner/subscription', pro: false},
       { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
   },
   {
@@ -134,14 +134,7 @@ const AppSidebarPractitioner: React.FC = () => {
       ${isMobileOpen ? "-translate-x-44" : "-translate-x-full"} lg:translate-x-0`}>
       <div className={`py-8 flex justify-center`}>
         <Link href="/">
-          {isExpanded || isMobileOpen ? (
-            <>
-              <img src="/images/logo/logo-white.png" alt="Logo" className="w-12 h-12 dark:block hidden" loading="lazy" />
-              <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12 dark:hidden" loading="lazy" />
-            </>
-          ) : (
-            <img src="/images/logo/Logo.png" alt="Logo" className="w-12 h-12" loading="lazy" />
-          )}
+          <img src="/images/logo/logo-blue-light-blue.png" className="w-20" alt="logo" />
         </Link>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">

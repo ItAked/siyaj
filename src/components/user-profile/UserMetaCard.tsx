@@ -1,48 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { readSetting } from "../../../services/setting";
+import React from "react";
 
-export default function UserMetaCard() {
-
-  type Profile = {
-    name?: string;
-    email?: string;
-    password?: string;
-    phone?: string;
-  };
-
-  const [profile, setProfile] = useState<Profile>({})
-
-  async function getProfileData() {
-    const response = await readSetting()
-    
-    setProfile(response['data'])
-  }
-
-  useEffect(() => {
-    getProfileData()
-  }, [])
-
-
-
+export default function UserMetaCard(props: { loading: boolean; error: string; email: string | undefined; medical: string | undefined; name: string | undefined; }) {
   return (
     <>
-      <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
-            <div className="order-3 xl:order-2">
-              <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-right">
-                { profile.name }
-              </h4>
-              <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-right">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  { profile.email }
-                </p>
+      { props.loading ? (
+        <div>جاري تحميل البيانات</div>
+      ) : (
+        <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+          <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
+              <div className="order-3 xl:order-2">
+                <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-right">{props.email}</h4>
+                <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-right">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{props.name}</p>
+                </div>
+                <div className="badge badge-soft badge-primary mt-3">{props.medical}</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
