@@ -6,16 +6,17 @@ import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { updateSetting } from "../../../services/setting";
 
-export default function UserInfoCard(props: { loading: boolean; error: string; email: string | undefined; phone: string | undefined; name: string | undefined; }) {
-  const [profileName, setProfileName] = useState("")
-  const [profileEmail, setProfileEmail] = useState("")
-  const [profilePhone, setProfilePhone] = useState("")
+export default function UserHealthCard(props: { loading: boolean; error: string; employer: string | undefined; license: string | undefined;
+    license_file: string | undefined; medical: string | undefined; }) {
+  const [profileEmployer, setProfileEmployer] = useState("")
+  const [profileLicense, setProfileLicense] = useState("")
+  const [profileMedical, setProfileMedical] = useState("")
   
   async function handleSave (){
     await updateSetting({
-      name: profileName !== "" ? profileName : props.name,
-      email: profileEmail !== "" ? profileEmail : props.email,
-      phone: profilePhone !== "" ? profilePhone : props.phone
+      name: profileEmployer !== "" ? profileEmployer : props.employer,
+      email: profileLicense !== "" ? profileLicense : props.license,
+      phone: profileMedical !== "" ? profileMedical : props.medical
     })
   };
 
@@ -23,44 +24,46 @@ export default function UserInfoCard(props: { loading: boolean; error: string; e
     <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h4 className="text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-6">المعلومات الشخصية</h4>
+          <h4 className="text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-6">معلومات الممارس المهنية</h4>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
             <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">الإسم</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.name }</p>
+              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الترخيص المهني</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.license }</p>
             </div>
             <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">البريد الإلكتروني</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.email }</p>
+              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">التخصص الطبي</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.medical }</p>
             </div>
             <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الجوال</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.phone }</p>
+              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">اسم جهة العمل</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.employer }</p>
+            </div>
+            <div>
+              <a href={ props.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link" download={true}>تحميل الترخيص المهني</a>
             </div>
           </div>
         </div>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id="my_modal_2" className="modal">
           <div className="modal-box dark:bg-gray-900">
             <form method="dialog"><button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button></form>
             <div className="px-2 pr-14">
-              <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">تعديل البيانات الشخصية</h4>
+              <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">تعديل معلومات الممارس المهنية</h4>
             </div>
             <form className="flex flex-col">
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
                 <div className="mt-7">
-                  <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">البيانات الشخصية</h5>
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                     <div className="col-span-2 lg:col-span-1">
-                      <Label>الإسم</Label>
-                      <Input onChange={(e) => setProfileName(e.target.value)} type="text" defaultValue={props.name} />
+                      <Label>رقم الترخيص المهني</Label>
+                      <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={props.license} />
                     </div>
                     <div className="col-span-2 lg:col-span-1">
-                      <Label>البريد الإلكتروني</Label>
-                      <Input type="email" onChange={(e) => setProfileEmail(e.target.value)} defaultValue={props.email} />
+                      <Label>التخصص الطبي</Label>
+                      <Input type="text" onChange={(e) => setProfileMedical(e.target.value)} defaultValue={props.medical} />
                     </div>
                     <div className="col-span-2 lg:col-span-1">
-                      <Label>رقم الجوال</Label>
-                      <Input type="number" onChange={(e) => setProfilePhone(e.target.value)} defaultValue={props.phone} />
+                      <Label>إسم جهة العمل</Label>
+                      <Input type="text" onChange={(e) => setProfileEmployer(e.target.value)} defaultValue={props.employer} />
                     </div>
                   </div>
                 </div>
@@ -72,7 +75,7 @@ export default function UserInfoCard(props: { loading: boolean; error: string; e
           </div>
         </dialog>
         <button onClick={() => {
-          const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+          const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null;
           if (dialog) dialog.showModal();
         }} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700
         shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]

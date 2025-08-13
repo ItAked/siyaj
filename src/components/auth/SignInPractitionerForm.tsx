@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -51,36 +50,45 @@ export default function SignInPractitionerForm() {
   }
 
   return (
-    <section className="flex items-center justify-evenly py-36">
-      <div>
-        { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg.toString()} /> )}
-        <h1 className="font-medium text-4xl my-10">تسجيل الدخول</h1>
-          <form onSubmit={handleOnSubmit}>
-            <div className="space-y-6 text-right">
-              <div>
-                <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
-                <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
-              </div>
-              <div>
-                <Label>كلمة المرور <span className="text-error-500">*</span></Label>
-                <div className="relative">
-                  <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
-                  defaultValue={user.password} />
-                  <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
-                    {showPassword ? (<EyeIcon />) : (<EyeClosedIcon />)}
-                  </span>
+    <div className="flex flex-col flex-1 lg:w-1/2 w-full">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+        <div>
+          <div className="mb-5 sm:mb-8">
+            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
+            <h1 className="mb-2 font-medium text-gray-800 text-title-md dark:text-white/90 sm:text-title-md text-right">تسجيل الدخول</h1>
+          </div>
+          <div>
+            <form onSubmit={handleOnSubmit}>
+              <div className="space-y-6 text-right">
+                <div>
+                  <Label className="text-2xl font-normal">البريد الإلكتروني <span className="text-error-500">*</span></Label>
+                  <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
+                </div>
+                <div>
+                  <Label className="text-2xl font-normal">كلمة المرور <span className="text-error-500">*</span></Label>
+                  <div className="relative">
+                    <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
+                    defaultValue={user.password} />
+                    <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
+                      {showPassword ? (<EyeIcon/>) : (<EyeClosedIcon/>)}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Link href="/reset-password" className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400">هل نسيت كلمة المرور؟</Link>
+                </div>
+                <div>
+                  <Button className="w-full" size="sm">تسجيل الدخول</Button>
+                  <div className="flex items-center gap-x-0.5 my-11 justify-center text-sm">
+                    <p className="text-gray-500">لا تملك حسابًا؟</p>
+                    <Link href="/practitioner/auth/signup" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">أنشئ حسابًا جديدًا</Link>
+                  </div>
                 </div>
               </div>
-              <Link href="/reset-password" className="text-brand-500 text-sm">هل نسيت كلمة المرور؟</Link>
-              <Button className="w-full bg-brand-500 mt-11" size="sm">تسجيل الدخول</Button>
-              <div className="flex items-center gap-x-0.5 justify-center text-sm">
-                <p className="text-gray-500">لا تملك حسابًا؟</p>
-                <Link href="/practitioner/auth/signup" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">أنشئ حسابًا جديدًا</Link>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
+        </div>
       </div>
-      <img src="/images/logo/Logo.png" alt="logo" className="max-sm:hidden" />
-    </section>
+    </div>
   );
 }
