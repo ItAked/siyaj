@@ -39,7 +39,8 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.employer }</p>
             </div>
             <div>
-              <a href={ props.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link" download={true}>تحميل الترخيص المهني</a>
+              { props.license_file }
+              <a href={ props.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link">تحميل الترخيص المهني</a>
             </div>
           </div>
         </div>
