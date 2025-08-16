@@ -46,7 +46,7 @@ export default function SignInForm() {
         return;
       }
     } catch (error) {
-      setErrorMsg(error);
+      setErrorMsg(error.response.data.message);
     }
   }
 
