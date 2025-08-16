@@ -48,5 +48,5 @@ export async function verifyOtp(data: FormData){
 }
 
 export async function loginGoogleAuth() {
-    window.location.href = window.location.href = 'http://127.0.0.1:8000/auth/google/redirect';
+    window.location.href = window.location.href = 'https://dev.siyaj.sa/auth/google/redirect';
 }
