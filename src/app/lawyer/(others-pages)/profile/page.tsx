@@ -4,7 +4,6 @@ import UserMetaCard from "../../../../components/user-profile/UserMetaCard";
 import UserInfoCard from "../../../../components/user-profile/UserInfoCard";
 import React, { useEffect, useState } from "react";
 import { readSetting } from "../../../../../services/setting";
-import UserHealthCard from "../../../../components/user-profile/UserHealthCard";
 
 type MetaSetting = {
   email?: string;
