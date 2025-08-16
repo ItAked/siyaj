@@ -192,8 +192,8 @@ export default function SuccessPayment({
                 ${ downloadStatus ? "bg-green-600 text-white" : "bg-green-500 hover:bg-green-600 text-white hover:shadow-green-500/30"}`}>
                 {downloadStatus || "تحميل الفاتورة"}
                 </button>
-                <button onClick={goHome} className="px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold transition-all duration-300 transform
-                hover:-translate-y-1 hover:shadow-lg hover:shadow-gray-500/30">الرجوع إلى الصفحة الرئيسية</button>
+                <button onClick={goHome} className={`px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-semibold transition-all duration-300 transform
+                hover:-translate-y-1 hover:shadow-lg hover:shadow-gray-500/30`}>الرجوع إلى الصفحة الرئيسية</button>
             </div>
         </div>
       </div>
