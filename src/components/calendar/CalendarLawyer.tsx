@@ -210,7 +210,7 @@ const CalendarLawyer: React.FC = () => {
             </div>
             <div className={`my-8 ${selectedAppointment ? 'hidden' : 'block'}`}>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم الدعوة</label>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم الدعوى</label>
                 <select name="case_id" className="select w-full dark:bg-gray-800 dark:text-white" value={appointmentCase}
                 onChange={(e) => handleCaseChange(Number(e.target.value))}>
                   {selectedAppointment && (
@@ -225,7 +225,7 @@ const CalendarLawyer: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوة</label>
+              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوى</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
                   <div key={`status-${statusKey}`} className="n-chk">
