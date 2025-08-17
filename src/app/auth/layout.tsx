@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { ThemeProvider } from "../../../context/ThemeContext";
 import React from "react";
+import { ThemeProvider } from "../../context/ThemeContext";
 
 export default function AuthLayout({
   children,

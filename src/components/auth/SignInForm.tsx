@@ -41,8 +41,11 @@ export default function SignInForm() {
       if(response.role === 'lawyer') {
         setErrorMsg('')
         router.push('/lawyer')
+      } else if(response.role === 'practitioner') {
+        setErrorMsg('')
+        router.push('/practitioner')
       } else {
-        setErrorMsg('الحساب لا يخص المحامين')
+        setErrorMsg('الحساب لا يخص المحامين أو الممارسين الصحيين')
         return;
       }
     } catch (error) {
