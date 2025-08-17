@@ -1,5 +1,6 @@
 const nextConfig = {
-    output: "export"
+    // output: "export"
+    matcher: ["/lawyer", "/practitioner"]
 }
 
 module.exports = nextConfig

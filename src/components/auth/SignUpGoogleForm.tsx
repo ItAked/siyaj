@@ -141,7 +141,7 @@ export default function SignUpGoogle(){
                 <div>
                   <Button className="w-full bg-sky-600" size="sm">إنشاء الحساب</Button>
                 </div>
-                <Link href="/practitioner/auth/signin" className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">هل لديك حساب؟</Link>
+                <Link href="/auth/signin" className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">هل لديك حساب؟</Link>
               </div>
             </form>
           </div>

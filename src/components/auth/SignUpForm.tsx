@@ -149,7 +149,7 @@ export default function SignUp() {
                 </div>
                 <div className="flex items-center gap-x-0.5 justify-center text-sm">
                   <p className="text-gray-500">لديك حساب؟</p>
-                  <Link href="/practitioner/auth/signin" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">سجّل الدخول</Link>
+                  <Link href="/auth/signin" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">سجّل الدخول</Link>
                 </div>
               </div>
             </form>
