@@ -67,26 +67,26 @@ export default function NewCase() {
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
             <div className="col-span-1">
-              <Label>عنوان الدعوة</Label>
-              <Input type="text" placeholder="عنوان الدعوة" required defaultValue={newCase.title} name="title" onChange={handleInputChange} />
+              <Label>عنوان الدعوى</Label>
+              <Input type="text" placeholder="عنوان الدعوى" required defaultValue={newCase.title} name="title" onChange={handleInputChange} />
             </div>
 
             <div className="col-span-1">
-              <Label>رقم الدعوة</Label>
-              <Input type="integer" placeholder="إدخال رقم الدعوة المكون من ١٠ أرقام" name="case_number" required defaultValue={newCase.case_number}
+              <Label>رقم الدعوى</Label>
+              <Input type="integer" placeholder="إدخال رقم الدعوى المكون من ١٠ أرقام" name="case_number" required defaultValue={newCase.case_number}
               onChange={handleInputChange} />
             </div>
 
             <div className="col-span-1">
-              <Label>محتوى الدعوة</Label>
-              <textarea className="textarea w-full" name="description" onChange={handleInputChange} required placeholder="محتوى الدعوة"></textarea>
+              <Label>محتوى الدعوى</Label>
+              <textarea className="textarea w-full" name="description" onChange={handleInputChange} required placeholder="محتوى الدعوى"></textarea>
             </div>
 
             <div className="col-span-1">
                 <fieldset className="fieldset">
-                    <Label>حالة الدعوة</Label>
+                    <Label>حالة الدعوى</Label>
                     <select defaultValue={newCase.status} name="status" className="select w-full" required onChange={handleInputChange}>
-                        <option disabled={true}>اختر حالة الدعوة</option>
+                        <option disabled={true}>اختر حالة الدعوى</option>
                         <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
                         <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>
                         <option value="منظورة للشؤون الصحية">منظورة للشؤون الصحية</option>
@@ -96,9 +96,9 @@ export default function NewCase() {
 
             <div className="col-span-1">
                 <fieldset className="fieldset">
-                    <Label>مرحلة الدعوة</Label>
+                    <Label>مرحلة الدعوى</Label>
                     <select defaultValue={newCase.stages} name="stages" className="select w-full" required onChange={handleInputChange}>
-                        <option disabled={true}>اختر مرحلة الدعوة</option>
+                        <option disabled={true}>اختر مرحلة الدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
                         <option value="أحيلت لدائرة الدعوات">أحيلت لدائرة الدعوات</option>
@@ -107,7 +107,7 @@ export default function NewCase() {
             </div>
 
             <div className="col-span-1">
-                <Label>ملفات الدعوة</Label>
+                <Label>ملفات الدعوى</Label>
                 <input required defaultValue={undefined} name="attachment" onChange={handleInputChange} type="file" className="file-input" />
             </div>
           </div>

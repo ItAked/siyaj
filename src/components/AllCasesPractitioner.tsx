@@ -56,7 +56,7 @@ export default function AllCasesPractitioner() {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان الدعوة أو بإسم الممارس الصحي" />
+            <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث بعنوان الدعوى أو بإسم الممارس الصحي" />
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis /></summary>
@@ -82,7 +82,7 @@ export default function AllCasesPractitioner() {
                 isHeader
                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                الدعوة
+                الدعوى
               </TableCell>
               <TableCell
                 isHeader
