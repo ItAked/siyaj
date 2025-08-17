@@ -21,3 +21,8 @@ export async function readPractitionerId(id: number) {
         console.error('failed to fetch practitioner data: ', error)
     }
 }
+
+export async function updateSubscribe(userId: number, categoryId: number) {
+    const response = await api.post(`/practitioner/subscribe/${userId}/${categoryId}`)
+    return response.data
+}

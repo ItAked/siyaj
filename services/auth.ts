@@ -3,7 +3,7 @@ import { removeToken, setToken } from '../utils/auth';
 
 export const login = async (data: FormData): Promise<boolean> => {
   try {
-    const response = await api.post('/login', data);
+    const response = await api.post('/login', data);    
     setToken(response.data.access_token);
     return true;
   } catch (error) {

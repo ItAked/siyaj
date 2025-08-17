@@ -49,9 +49,7 @@ const Calendar: React.FC = () => {
   async function readAppointments() {
     try {
       setLoading(true);
-      const response = await getAppointments();
-      console.log(response);
-      
+      const response = await getAppointments();      
       setAppointments(response);
     } catch (err) {
       setError(String(err));

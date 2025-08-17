@@ -37,9 +37,7 @@ const Practitioner = ({ id }) => {
     async function getPractitionerId(){
         const response = await readPractitionerId(id);
         setPractitioner(response.data)
-        setCases(response.data.cases)
-        console.log(response.data.category);
-        
+        setCases(response.data.cases)        
         setCategories(response.data.category)
     }
 
@@ -52,6 +50,7 @@ const Practitioner = ({ id }) => {
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-normal">{practitioner.name}</h2>
                     <p className="text-sm font-normal text-gray-500">{practitioner.email}</p>
+                    <div className="badge bg-blue-300 text-sky-950 border-sky-950">{categories.length > 0 ? categories[categories.length - 1].name : 'لا توجد اشتراكات'}</div>
                 </div>
             </div>
 
