@@ -6,10 +6,8 @@ export async function readSetting() {
 }
 
 export async function updateSetting(data: { name: string|undefined; email: string|undefined; phone: string|undefined; }) {
-    try {
-        const response = await api.post(`/update-setting`, data);
-        return response
-    } catch (error) {
-        console.error('failed to update setting: ', error)
-    }
+    console.log(data);
+    
+    const response = await api.post(`/update-setting`, data);
+    return response.data
 }
