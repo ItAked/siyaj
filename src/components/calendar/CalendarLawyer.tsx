@@ -47,17 +47,11 @@ const CalendarLawyer: React.FC = () => {
   const handleTitleChange = (value: string) => {    
     setAppointmentTitle(value);
   };
-  const handleCaseChange = (value: number) => {
-    setAppointmentCase(value)
-  }
   async function readCases() {
     try {
       setLoading(true)
       const response = await getCases("", "", 1)
-      const p = response.data.map((caseItem: { id: number; case: string; }) => ({
-        value: caseItem.id,
-        label: caseItem.case
-      })) as Case[];
+      const p = response.data.map((caseItem: { id: number; case: string; }) => ({value: caseItem.id, label: caseItem.case})) as Case[];
       setCases(p)
     } catch (error) {
       setError(String(error));
@@ -100,20 +94,7 @@ const CalendarLawyer: React.FC = () => {
   };
   const handleAddOrUpdateAppointment = async () => {
     try {
-      if (selectedAppointment) {        
-        setAppointments(prevAppointments =>
-          prevAppointments.map(appointment =>
-            appointment.id === selectedAppointment.id
-              ? {
-                  ...appointment,
-                  date: appointmentDate,
-                  time: appointmentTime + ":00",
-                  status: appointmentStatus,
-                  title: appointmentTitle
-                }
-              : appointment
-          )
-        );
+      if (selectedAppointment) {
         const updatedSelectedAppointment = {
           ...selectedAppointment,
           date: appointmentDate,
@@ -122,12 +103,13 @@ const CalendarLawyer: React.FC = () => {
           title: appointmentTitle,
           case_id: appointmentCase
         };
-        await updateAppointment(updatedSelectedAppointment, Number(selectedAppointment.id));        
+        await updateAppointment(updatedSelectedAppointment, Number(selectedAppointment.id));
+        setAppointments(prevAppointments => prevAppointments.map(appointment => appointment.id === selectedAppointment.id ? updatedSelectedAppointment : appointment));
       } else {
         const newAppointment: Appointment = {
           id: Date.now().toString(),
           date: appointmentDate,
-          time: appointmentTime + ":00", // Add seconds for API format
+          time: appointmentTime + ":00",
           status: appointmentStatus,
           title: appointmentTitle,
           case_id: appointmentCase
@@ -168,30 +150,19 @@ const CalendarLawyer: React.FC = () => {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
       <div className="custom-calendar">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: "prev,next addEventButton",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
+        <FullCalendar ref={calendarRef} plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} initialView="dayGridMonth" headerToolbar={{
+            left: "prev,next addEventButton", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay"}}
           events={calendarEvents}
           selectable={true}
           select={handleDateSelect}
           eventClick={handleEventClick}
           eventContent={renderEventContent}
           customButtons={{
-            addEventButton: {
-              text: selectedAppointment ? "تعديل الموعد" : "إضافة موعد",
-              click: () => {
-                const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
-                if (modal && typeof modal.showModal === 'function') {
-                  modal.showModal();
-                }
-              },
-            },
+            addEventButton: {text: selectedAppointment ? "تعديل الموعد" : "إضافة موعد", click: () => {
+              const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+              if (modal && typeof modal.showModal === 'function') { modal.showModal();}
+              }
+            }
           }}
         />
       </div>
@@ -212,15 +183,11 @@ const CalendarLawyer: React.FC = () => {
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">إسم الدعوى</label>
                 <select name="case_id" className="select w-full dark:bg-gray-800 dark:text-white" value={appointmentCase}
-                onChange={(e) => handleCaseChange(Number(e.target.value))}>
-                  {selectedAppointment && (
-                    <option key="selected" value={appointmentCase} disabled>
-                      {cases.find(c => c['value'] === appointmentCase)?.label}
-                    </option>
-                  )}
-                  {cases.filter(c => !selectedAppointment || c['value'] !== appointmentCase).map((p, index) => (
-                    <option key={index} value={p['value']}>{p['label']}</option>))
-                  }
+                onChange={(e) => setAppointmentCase(Number(e.target.value))}>
+                  <option value={0}>اختر الدعوى</option>
+                  {cases.map((p, index) => (
+                    <option key={index} value={p.value}>{p.label}</option>
+                  ))}
                 </select>
               </div>
             </div>

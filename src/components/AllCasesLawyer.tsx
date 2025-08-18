@@ -97,7 +97,7 @@ export default function AllCasesLawyer() {
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.practitioner_name}</TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.date}</TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                    <select defaultValue={item.status} className="select" name="status" onChange={(e) => updateCase(item.id, e.target.value)}>
+                    <select defaultValue={item.status} className="select dark:bg-gray-800" name="status" onChange={(e) => updateCase(item.id, e.target.value)}>
                         <option disabled={true}>{item.status}</option>
                         <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
                         <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>

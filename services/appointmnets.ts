@@ -6,19 +6,12 @@ export async function getAppointments () {
 }
 
 export async function createAppointment(data: unknown) {
-    try {
-        const response = await api.post('/create-appointment', data)
-        return response.data
-    } catch (error) {
-        console.error('failed to create appointment: ', error)
-    }
+    console.log(data);
+    const response = await api.post('/create-appointment', data)
+    return response.data
 }
 
 export async function updateAppointment(data: unknown, id:number) {
-    try {
-        const response = await api.post(`/update-appointment/${id}`, data)
-        return response.data
-    } catch (error) {
-        console.error('failed to update appointment: ', error)
-    }
+    const response = await api.post(`/update-appointment/${id}`, data)
+    return response.data
 }
