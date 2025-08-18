@@ -28,6 +28,11 @@ const navItems: NavItem[] = [
       { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
   },
   {
+    icon: <File />,
+    name: "الخدمات",
+    path: '/practitioner/services'
+  },
+  {
     icon: <User />,
     name: "الإعدادات",
     path: "/practitioner/profile"

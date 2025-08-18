@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { CheckIcon } from "lucide-react"
+import { CheckIcon, SaudiRiyal } from "lucide-react"
 import type { JSX } from "react/jsx-runtime"
 import { assignSubscription } from "../../services/subscriptions"
 
@@ -184,7 +184,7 @@ export default function SuccessPayment({
                 </div>
                 <div className="flex justify-between items-center py-3 font-bold text-gray-800">
                     <span>Amount Paid</span>
-                    <span>{(Number(amount) / 100).toFixed(2)} ريال</span>
+                    <span>{(Number(amount) / 100).toFixed(2)} <SaudiRiyal /></span>
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp-5">
