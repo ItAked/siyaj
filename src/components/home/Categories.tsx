@@ -3,6 +3,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { getToken } from '../../utils/auth';
 import { assignSubscription, readSubscriptions } from '../../../services/subscriptions';
+import { SaudiRiyal } from 'lucide-react';
 
 interface Faetures {
   id: number;
@@ -94,7 +95,7 @@ const Categories = () => {
             <div className='px-6 pt-8 pb-6'>
               <h3 className="text-2xl font-bold mb-1">{category.name}</h3>
               <div className="flex items-baseline mb-2">
-                <span className="text-4xl font-bold">{`${category.price} ريال`}</span>
+                <span className="text-4xl font-bold flex items-center">{`${category.price}`} <SaudiRiyal /></span>
                 <span className="text-gray-600 ml-2">/ سنويًا</span>
               </div>
               <p className='text-xl text-gray-500 font-normal'>وصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف</p>
