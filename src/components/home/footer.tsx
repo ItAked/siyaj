@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <>
-      <footer className="footer sm:footer-horizontal bg-sky-950 text-neutral-content p-10">
+      <footer className="footer sm:footer-horizontal bg-sky-950 text-neutral-content p-10 dark:bg-gray-950">
         <div className="grid gap-y-10">
           <img src="/images/logo/logo-name.png" alt="logo" className="w-56" loading="lazy" />
           <div className="flex items-center justify-center gap-x-3.5">
@@ -30,7 +30,7 @@ export default function Footer() {
           </ul>
         </div>
       </footer>
-      <p className="text-center bg-[#0B233B] py-3 text-white">جميع الحقوق محفوظة</p>
+      <p className="text-center bg-[#0B233B] py-3 text-white dark:bg-gray-950">جميع الحقوق محفوظة</p>
     </>
   );
 }

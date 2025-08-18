@@ -68,7 +68,7 @@ const AppHeader: React.FC = () => {
           lg:shadow-none`}>
           <div className="flex items-center gap-2 2xsm:gap-3">
             <ThemeToggleButton />
-           <NotificationDropdown /> 
+            <NotificationDropdown /> 
           </div>
         </div>
       </div>
