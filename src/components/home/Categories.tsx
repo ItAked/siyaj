@@ -87,7 +87,7 @@ const Categories = () => {
   }, [])
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8 my-32" id='packages'>
+    <div className="w-full max-w-6xl mx-auto px-4 py-8 my-32 dark:text-white" id='packages'>
       <h2 className="text-6xl font-light text-center mb-2 max-sm:text-4xl" data-aos="zoom-y-out">إختر التصنيف</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-14" data-aos="zoom-in">
         {categories.map((category) => (

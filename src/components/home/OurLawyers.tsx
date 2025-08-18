@@ -45,7 +45,7 @@ const OurLawyers = () => {
                 <div className="mx-auto">
                     <div className="py-12 md:py-20">
                         <div className="max-w-3xl pb-16 text-right md:pb-20 px-14">
-                            <h2 className="text-6xl text-gray-900">محامينا</h2>
+                            <h2 className="text-6xl text-gray-900 dark:text-white">محامينا</h2>
                         </div>
                         <div className="carousel w-full overflow-x-auto" ref={carouselRef}>
                             {Array.from({ length: Math.ceil(lawyers.length / 3) }).map((_, index) => {
@@ -54,7 +54,7 @@ const OurLawyers = () => {
                                 const lawyersChunk = lawyers.slice(startIndex, endIndex);
                                 return (
                                     <div key={`item${index + 1}`} id={`item${index + 1}`} ref={el => addToRefs(el, index)} className="carousel-item grid grid-cols-3 w-full
-                                    gap-x-0 place-items-center snap-start">
+                                    gap-x-0 place-items-center snap-start max-sm:grid-cols-1 max-sm:gap-y-4">
                                         {lawyersChunk.map((lawyer, key: number) => (
                                             <div key={key} className="card bg-[#BCBDBF] w-[425px] h-[561px] shadow-xl flex flex-col justify-between">
                                                 <div className="card-body">

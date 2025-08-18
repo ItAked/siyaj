@@ -4,6 +4,7 @@
 import Link from "next/link";
 import Logo from "../../../public/images/logo/Logo.png";
 import { useState } from "react";
+import { ThemeToggleButton } from "../common/ThemeToggleButton";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,8 +17,8 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed z-30 w-full bg-white shadow">
-      <div className="w-full">
+    <header className="fixed z-30 w-full bg-white shadow dark:bg-gray-900 dark:text-white">
+      <div>
         <div className="relative flex items-center justify-between gap-3 py-8 px-4 md:px-14">
           {/* Desktop Nav */}
           <ul className="hidden mx-auto md:flex items-center text-2xl justify-center gap-x-10" dir="rtl">
@@ -28,7 +29,8 @@ export default function Header() {
             ))}
           </ul>
 
-          <div>
+          <div className="flex items-center gap-x-4">
+            <ThemeToggleButton />
             <Link href='/'>
               <img src={Logo.src} alt="logo" className="w-12 h-12" loading="lazy" />
             </Link>

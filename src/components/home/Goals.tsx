@@ -80,7 +80,7 @@ export default function OurGoals() {
                     to { transform: translateX(100%); opacity: 0; }
                 }
             `}</style>
-            <section className="bg-gray-900 text-white py-20 max-sm:hidden">
+            <section className="bg-gray-900 text-white py-20 max-sm:hidden dark:bg-gray-950">
                 <div className="grid grid-cols-4">
                     {goals.map((goal, index) => (
                         <article key={index} className="grid place-items-center gap-y-2.5 text-balance text-center" data-aos="flip-down">

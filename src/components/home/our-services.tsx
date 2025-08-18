@@ -7,13 +7,13 @@ export default function OurServices() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="py-12 md:py-20">
           {/* Section header */}
-          <div className="max-w-3xl pb-16 text-right md:pb-20">
-            <h2 className="text-6xl text-gray-900">خدماتنا</h2>
+          <div className="max-w-3xl text-right">
+            <h2 className="text-6xl text-gray-900 dark:text-white">خدماتنا</h2>
           </div>
           {/* Grid */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-aos="zoom-in">
             { services.map((service, index) => (
-                <article key={index} className="text-balance text-gray-900 text-right shadow-md rounded-md py-8 px-10">
+                <article key={index} className="text-balance text-gray-900 text-right shadow-md rounded-md py-8 px-10 dark:bg-gray-700 dark:text-white">
                   <Scroll className="bg-sky-950 text-white p-1 rounded-full mb-6" />
                   <h3 className="mb-2 font-medium text-2xl">{service.title}</h3>
                   <p className="text-[20px]">{service.description}</p>

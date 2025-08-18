@@ -41,27 +41,26 @@ export default function ContactUs(){
     }
     return(
         <>
-            <section className="flex items-center justify-center gap-x-9 px-14 py-28 max-sm:flex-col-reverse max-sm:gap-y-9" data-aos="fade-up" dir="rtl">
-                <form className="w-md h-[560px] shadow py-14 px-11 rounded-lg" onSubmit={handleSubmit}>
-                    <div className="space-y-4">
+            <section className="flex items-center justify-center gap-x-9 px-14 py-28 max-sm:flex-col-reverse max-sm:gap-y-9" data-aos="fade-up" dir="rtl" id="contactUs">
+                <form className="w-md h-fit shadow py-14 px-11 rounded-lg" onSubmit={handleSubmit}>
+                    <div className="space-y-14">
                         <div>
-                            <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="name">الإسم الثلاثي</label>
-                            <input id="name" name="name" value={contactData.name} onChange={handleContactChange} className="input form-input w-full py-2" type="text"
+                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800" htmlFor="name">الإسم الثلاثي</label>
+                            <input id="name" name="name" value={contactData.name} onChange={handleContactChange} className="input form-input w-full py-2 dark:bg-gray-800 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" type="text"
                             placeholder="لجين صلاح" required />
                         </div>
                         <div>
-                            <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="email">البريد الإلكتروني</label>
-                            <input id="email" name="email" value={contactData.email} onChange={handleContactChange} className="input form-input w-full py-2" type="email"
+                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800" htmlFor="email">البريد الإلكتروني</label>
+                            <input id="email" name="email" value={contactData.email} onChange={handleContactChange} className="input form-input w-full py-2 dark:bg-gray-800 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" type="email"
                             placeholder="lujain@akedco.com" required />
                         </div>
                         <div>
-                            <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="message">الرسالة</label>
-                            <textarea id="message" name="message" value={contactData.message} onChange={handleContactChange} className="input form-input w-full py-2"
-                            autoComplete="on" placeholder="الرسالة" required></textarea>
+                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800" htmlFor="message">الرسالة</label>
+                            <textarea id="message" name="message" value={contactData.message} onChange={handleContactChange} className="input form-input w-full py-2 dark:bg-gray-800 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 h-48" autoComplete="on" placeholder="الرسالة" required></textarea>
                         </div>
                     </div>
                     <div className="mt-6 space-y-3">
-                        <button className="btn w-full bg-linear-to-t bg-sky-950 text-white border-none">
+                        <button className="btn w-full bg-sky-950 text-white border-none">
                             إرسال
                         </button>
                         { msg != '' && (
@@ -72,7 +71,7 @@ export default function ContactUs(){
                     </div>
                 </form>
 
-                <div className="grid gap-y-12 mb-auto">
+                <div className="grid gap-y-12 mb-auto dark:text-white">
                     <article className="grid gap-y-4 place-items-start text-balance">
                         <h1 className="text-6xl font-light">تواصل معنا</h1>
                         <p className="text-2xl font-normal">نسعد باستقبال الآراء والاقتراحات ونستمع لشكواكم بإهتمام, وسنحاول الرد عليكم في أقرب وقت</p>
