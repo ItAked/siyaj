@@ -58,7 +58,7 @@ export default function SignInForm() {
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">
-            { errorMsg != '' && (<Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> )}
+            { errorMsg != '' && (<div className="mb-4"><Alert variant={"error"} title={"حدث خطأ !"} message={errorMsg} /> </div>)}
             <h1 className="mb-2 font-medium text-gray-800 text-title-md dark:text-white/90 sm:text-title-md text-right">تسجيل الدخول</h1>
           </div>
           <div>
@@ -79,7 +79,7 @@ export default function SignInForm() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <Link href="/reset-password" className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400">هل نسيت كلمة المرور؟</Link>
+                  <Link href="/auth/reset-password" className="text-sm font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400">هل نسيت كلمة المرور؟</Link>
                 </div>
                 <div>
                   <Button className="w-full" size="sm">تسجيل الدخول</Button>
