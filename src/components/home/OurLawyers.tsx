@@ -5,11 +5,13 @@ import { useState, useEffect, useRef } from "react";
 import lawyers from "../../../public/data/lawyers"
 
 const OurLawyers = () => {
-    const [activePage, setActivePage] = useState(1);
-    const carouselRef = useRef(null);
-    const itemsRef = useRef([]);
+    const [activePage, setActivePage] = useState<number>(1);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
+        const currentCarouselRef = carouselRef.current;
+        const currentItemsRef = itemsRef.current;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -18,19 +20,20 @@ const OurLawyers = () => {
                     setActivePage(pageNumber);
                 }
             });
-        }, { root: carouselRef.current, threshold: 0.5});
-        itemsRef.current.forEach(item => {
+        }, {
+            root: currentCarouselRef,
+            threshold: 0.5
+        });
+        currentItemsRef.forEach(item => {
             if (item) observer.observe(item);
         });
-
         return () => {
-            itemsRef.current.forEach(item => {
+            currentItemsRef.forEach(item => {
                 if (item) observer.unobserve(item);
             });
         };
     }, []);
-
-    const addToRefs = (el, index) => {
+    const addToRefs = (el: HTMLDivElement | null, index: number) => {
         if (el && !itemsRef.current.includes(el)) {
             itemsRef.current[index] = el;
         }
@@ -50,9 +53,9 @@ const OurLawyers = () => {
                                 const endIndex = startIndex + 3;
                                 const lawyersChunk = lawyers.slice(startIndex, endIndex);
                                 return (
-                                    <div key={`item${index + 1}`} id={`item${index + 1}`} ref={el => addToRefs(el, index)}className="carousel-item grid grid-cols-3 w-full
+                                    <div key={`item${index + 1}`} id={`item${index + 1}`} ref={el => addToRefs(el, index)} className="carousel-item grid grid-cols-3 w-full
                                     gap-x-0 place-items-center snap-start">
-                                        {lawyersChunk.map((lawyer, key) => (
+                                        {lawyersChunk.map((lawyer, key: number) => (
                                             <div key={key} className="card bg-[#BCBDBF] w-[425px] h-[561px] shadow-xl flex flex-col justify-between">
                                                 <div className="card-body">
                                                     <div className="card-title text-2xl font-medium">{lawyer.name}</div>
@@ -70,8 +73,7 @@ const OurLawyers = () => {
                         <div className="flex w-full justify-center gap-2 py-2">
                             {Array.from({ length: Math.ceil(lawyers.length / 3) }).map((_, index) => (
                                 <a key={`nav${index + 1}`} href={`#item${index + 1}`} className={`btn ${activePage === index + 1 ? 'w-20' : 'w-5 h-5'} btn-xs rounded-full
-                                transition-all duration-300 ${activePage === index + 1 ? 'bg-gray-900' : 'bg-gray-300'}`}>
-                                </a>
+                                transition-all duration-300 ${activePage === index + 1 ? 'bg-gray-900' : 'bg-gray-300'}`}></a>
                             ))}
                         </div>
                     </div>
@@ -80,4 +82,5 @@ const OurLawyers = () => {
         </>
     )
 }
-export default OurLawyers
+
+export default OurLawyers;
