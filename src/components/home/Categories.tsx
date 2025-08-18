@@ -100,14 +100,14 @@ const Categories = () => {
               </div>
               <p className='text-xl text-gray-500 font-normal'>وصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف للتصنيفوصف</p>
             </div>
-            <div className="p-6 bg-white mx-auto">
+            <div className="p-6 bg-white mx-auto dark:bg-black">
               { getToken() ? (
-                <button className="btn" onClick={()=> {
+                <button className="btn dark:shadow-none" onClick={()=> {
                   const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
                   setSelectedCategory(category); 
                   if (dialog) dialog.showModal();
                 }}>إختيار التصنيف</button>
-              ) : <button className="btn btn-wide bg-sky-950 border-none text-white" onClick={()=> {
+              ) : <button className="btn btn-wide bg-sky-950 border-none text-white dark:shadow-none" onClick={()=> {
                 const dialog = document.getElementById('my_modal_3')as HTMLDialogElement | null; 
                 if (dialog) dialog.showModal();
               }}>إختيار التصنيف</button>}
