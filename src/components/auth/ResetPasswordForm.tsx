@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Input from "../../components/form/input/InputField";
@@ -32,7 +31,7 @@ export default function ResetPasswordForm() {
         const response = await sendOtp(formData)
         setIsError(false)
         setMsg(response.message)
-        router.push('/verify-otp')
+        router.push('/auth/verify-otp')
     } catch (error) {
         setIsError(true)
         setMsg(error.response.data.message)
@@ -41,25 +40,27 @@ export default function ResetPasswordForm() {
 
   return (
     <>
-      <section className="py-96 px-36 max-sm:py-64">
-        { msg != '' && (<Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ !" : ""} message={msg} /> )}
-        <h1 className="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md ">إعادة تعيين كلمة المرور</h1>
-        <p className="font-normal text-sm text-gray-500 mt-6">يرجى إدخال البريد الإلكتروني لإعادة تعيين كلمة المرور</p>
-        <div className="flex items-center gap-x-80">
-          <form onSubmit={handleOnSubmit} className="w-1/2 max-sm:w-full max-sm:mt-4">
-            <div className="space-y-6 text-right">
-              <div>
-                <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
-                <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
-              </div>
-              <div>
-                <Button className="w-full" size="sm">تأكيد</Button>
-              </div>
+      <div className="flex flex-col flex-1 lg:w-1/2 w-full">
+        <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+          <div>
+            <div className="mb-5 sm:mb-8">
+              { msg != '' && (<Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ !" : ""} message={msg} /> )}
+              <h1 className="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md ">إعادة تعيين كلمة المرور</h1>
             </div>
-          </form>
-          <img src="/images/logo/logo-blue.png" alt="logo" className="w-80 max-sm:hidden h-80" loading="lazy" />
+            <form onSubmit={handleOnSubmit} className="max-sm:w-full max-sm:mt-4">
+              <div className="space-y-6 text-right">
+                <div>
+                  <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
+                  <Input placeholder="info@gmail.com" name="email" defaultValue={user.email} type="email"onChange={handleUserChange} />
+                </div>
+                <div>
+                  <Button className="w-full" size="sm">تأكيد</Button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
