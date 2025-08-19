@@ -1,23 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { updateSetting } from "../../../services/setting";
 
 export default function UserHealthCard(props: { loading: boolean; error: string; employer: string | undefined; license: string | undefined;
-    license_file: string | undefined; medical: string | undefined; }) {
-  const [profileEmployer, setProfileEmployer] = useState("")
-  const [profileLicense, setProfileLicense] = useState("")
-  const [profileMedical, setProfileMedical] = useState("")
+    license_file: string | undefined; medical: string | undefined; onUpdate?: () => void;}) {
+  const [profileEmployer, setProfileEmployer] = useState(props.employer || "")
+  const [profileLicense, setProfileLicense] = useState(props.license || "")
+  const [profileMedical, setProfileMedical] = useState(props.medical || "")
   
-  async function handleSave (){
-    await updateSetting({
-      name: profileEmployer !== "" ? profileEmployer : props.employer,
-      email: profileLicense !== "" ? profileLicense : props.license,
-      phone: profileMedical !== "" ? profileMedical : props.medical
-    })
+  useEffect(() => {
+    setProfileEmployer(props.employer || "");
+    setProfileLicense(props.license || "");
+    setProfileMedical(props.medical || "");
+  }, [props.employer, props.license, props.medical]);
+  
+  async function handleSave(event: FormEvent) {
+    event.preventDefault();
+    try {
+      await updateSetting({
+        name: undefined,
+        email: undefined,
+        phone: undefined,
+        license: profileLicense,
+        medical: profileMedical,
+        employer: profileEmployer
+      })
+      const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+      if (dialog) dialog.close();
+      if (props.onUpdate) {
+        props.onUpdate();
+      }
+    } catch (error) {
+      console.error(error.response.data.message)
+    }
   };
 
   return (
@@ -28,15 +47,15 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الترخيص المهني</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.license }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileLicense }</p>
             </div>
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">التخصص الطبي</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.medical }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileMedical }</p>
             </div>
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">اسم جهة العمل</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ props.employer }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileEmployer }</p>
             </div>
             <div>
               <a href={ props.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link">تحميل الترخيص المهني</a>
@@ -49,27 +68,27 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
             <div className="px-2 pr-14">
               <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">تعديل معلومات الممارس المهنية</h4>
             </div>
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSave}>
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
                 <div className="mt-7">
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                     <div className="col-span-2 lg:col-span-1">
                       <Label>رقم الترخيص المهني</Label>
-                      <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={props.license} />
+                      <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={profileLicense} />
                     </div>
                     <div className="col-span-2 lg:col-span-1">
                       <Label>التخصص الطبي</Label>
-                      <Input type="text" onChange={(e) => setProfileMedical(e.target.value)} defaultValue={props.medical} />
+                      <Input type="text" onChange={(e) => setProfileMedical(e.target.value)} defaultValue={profileMedical} />
                     </div>
                     <div className="col-span-2 lg:col-span-1">
                       <Label>إسم جهة العمل</Label>
-                      <Input type="text" onChange={(e) => setProfileEmployer(e.target.value)} defaultValue={props.employer} />
+                      <Input type="text" onChange={(e) => setProfileEmployer(e.target.value)} defaultValue={profileEmployer} />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-                <Button size="sm" onClick={handleSave}>تعديل</Button>
+                <Button size="sm">تعديل</Button>
               </div>
             </form>
           </div>

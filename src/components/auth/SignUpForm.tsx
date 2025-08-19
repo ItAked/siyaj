@@ -100,9 +100,6 @@ export default function SignUp() {
       return;
     }
     setStep(2);
-    console.log(step1Data);
-    console.log(step2Data);
-    
     setErrorMsg('');
   }
 
