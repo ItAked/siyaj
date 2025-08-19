@@ -157,7 +157,7 @@ const AppSidebarPractitioner: React.FC = () => {
             <div className="mt-auto pb-6">
               <button onClick={handleSignout} className="btn no-underline gap-3 px-3 py-2 font-medium text-gray-900 rounded-lg group text-theme-sm dark:text-gray-400
               bg-transparent border-none shadow-none">
-                <svg className="fill-gray-900 dark:group-hover:fill-gray-300" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                <svg className="fill-gray-900 dark:fill-gray-300" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M15.1007 19.247C14.6865 19.247 14.3507 18.9112 14.3507 18.497L14.3507 14.245H12.8507V18.497C12.8507 19.7396
                   13.8581 20.747 15.1007 20.747H18.5007C19.7434 20.747 20.7507 19.7396 20.7507 18.497L20.7507 5.49609C20.7507 4.25345 19.7433 3.24609 18.5007
