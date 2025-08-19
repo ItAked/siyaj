@@ -139,23 +139,25 @@ const AppSidebarPractitioner: React.FC = () => {
 
   return (
     <aside className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 right-0 bg-white dark:bg-gray-900 dark:border-gray-900 text-gray-900 h-screen transition-all
-      duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48 border-l-2 ${isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]"}
+      duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48 ${ isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]" }
       ${isMobileOpen ? "-translate-x-44" : "-translate-x-full"} lg:translate-x-0`}>
       <div className={`py-8 flex justify-center`}>
         <Link href="/">
-          <img src="/images/logo/logo-blue-light-blue.png" className="w-20" alt="logo" />
+          <img src="/images/logo/logo-blue-light-blue.png" alt="Logo" className="w-24" loading="lazy" />
         </Link>
       </div>
-      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
-        <nav className="mb-6">
-          <div className="flex flex-col gap-4">
-            <div>
+      <div className="flex flex-col flex-grow overflow-y-auto duration-300 ease-linear no-scrollbar">
+        <nav className="mb-6 flex-grow">
+          <div className="flex flex-col gap-4 h-full">
+            <div className="flex-grow">
               {renderMenuItems(navItems, "main")}
             </div>
+
+            {/* Sign out button at the bottom */}
             <div className="mt-auto pb-6">
-              <button onClick={handleSignout} className="btn no-underline gap-3 px-3 py-2 font-medium text-sky-950 rounded-lg group text-theme-sm dark:text-gray-400
+              <button onClick={handleSignout} className="btn no-underline gap-3 px-3 py-2 font-medium text-gray-900 rounded-lg group text-theme-sm dark:text-gray-400
               bg-transparent border-none shadow-none">
-                <svg className="fill-sky-950 dark:fill-gray-300" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                <svg className="fill-gray-900 dark:group-hover:fill-gray-300" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M15.1007 19.247C14.6865 19.247 14.3507 18.9112 14.3507 18.497L14.3507 14.245H12.8507V18.497C12.8507 19.7396
                   13.8581 20.747 15.1007 20.747H18.5007C19.7434 20.747 20.7507 19.7396 20.7507 18.497L20.7507 5.49609C20.7507 4.25345 19.7433 3.24609 18.5007
@@ -166,7 +168,7 @@ const AppSidebarPractitioner: React.FC = () => {
                   7.61255 9.44847 7.13767 9.15547 6.84488C8.86248 6.55209 8.3876 6.55226 8.09481 6.84525L3.52309 11.4202C3.35673 11.5577 3.25073 11.7657 3.25073 11.9984Z"
                   fill=""/>
                 </svg>
-                تسجيل الخروج
+                {isExpanded || isMobileOpen ? "تسجيل الخروج" : ""}
               </button>
             </div>
           </div>
