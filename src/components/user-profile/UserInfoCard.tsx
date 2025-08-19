@@ -5,6 +5,7 @@ import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { updateSetting } from "../../../services/setting";
+import Alert from "../ui/alert/Alert";
 
 export default function UserInfoCard(props: { 
   loading: boolean; 
@@ -17,6 +18,8 @@ export default function UserInfoCard(props: {
   const [profileName, setProfileName] = useState(props.name || "");
   const [profileEmail, setProfileEmail] = useState(props.email || "");
   const [profilePhone, setProfilePhone] = useState(props.phone || "");
+  const [isError, setIsError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   
   useEffect(() => {
     setProfileName(props.name || "");
@@ -30,15 +33,20 @@ export default function UserInfoCard(props: {
       await updateSetting({
         name: profileName,
         email: profileEmail,
-        phone: profilePhone
+        phone: profilePhone,
+        license: undefined,
+        medical: undefined,
+        employer: undefined
       });
       const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
       if (dialog) dialog.close();
       if (props.onUpdate) {
         props.onUpdate();
       }
+      setErrorMsg('')
     } catch (error) {
-      console.error("Error updating profile:", error);
+      setIsError(true)
+      setErrorMsg(error.response.data.message)
     }
   };
 
@@ -73,7 +81,9 @@ export default function UserInfoCard(props: {
             <form className="flex flex-col" onSubmit={handleSave}>
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
                 <div className="mt-7">
-                  <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">البيانات الشخصية</h5>
+                  <div className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                  { errorMsg && (<Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ!" : ""} message={errorMsg} />)}
+                  </div>
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                     <div className="col-span-2 lg:col-span-1">
                       <Label>الإسم</Label>

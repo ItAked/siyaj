@@ -5,9 +5,9 @@ export async function readSetting() {
     return response.data
 }
 
-export async function updateSetting(data: { name: string|undefined; email: string|undefined; phone: string|undefined; }) {
-    console.log(data);
-    
+export async function updateSetting(data: { name: string|undefined; email: string|undefined; phone: string|undefined; license: string|undefined; medical: string|undefined
+    employer: string|undefined;
+}) {    
     const response = await api.post(`/update-setting`, data);
     return response.data
 }

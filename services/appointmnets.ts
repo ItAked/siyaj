@@ -6,7 +6,6 @@ export async function getAppointments () {
 }
 
 export async function createAppointment(data: unknown) {
-    console.log(data);
     const response = await api.post('/create-appointment', data)
     return response.data
 }
