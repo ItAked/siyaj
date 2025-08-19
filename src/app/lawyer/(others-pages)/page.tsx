@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import React from "react";
-import NewCasesTable from "../../../components/NewCasesTable";
-import { CasesStatus } from "../../../components/CasesStatus";
+import { CasesStatus } from "../../../components/cards/CasesStatus";
+import NewCasesTable from "../../../components/tables/NewCasesTable";
 
 export const metadata: Metadata = {
-  title:
-    "الصفحة الرئيسية",
+  title: "الصفحة الرئيسية",
   description: "This is Next.js Home for TailAdmin Dashboard Template",
 };
 
@@ -15,7 +14,6 @@ export default function LawyerPanel() {
       <div className="col-span-12 space-y-6">
         <CasesStatus />
       </div>
-
       <div className="col-span-12">
         <NewCasesTable />
       </div>

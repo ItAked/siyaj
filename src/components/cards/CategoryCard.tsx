@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { readLastSubscribe } from "../../services/subscriptions";
+import { readLastSubscribe } from "../../../services/subscriptions";
 
 type LastCategory = {
     name?: string;
@@ -10,9 +10,9 @@ type LastCategory = {
 
 const CategoryCard = () => {
     const [lastCategory, setLastCategoy] = useState<LastCategory>({})
+    
     async function showLastCategory() {
         const response = await readLastSubscribe()
-        
         setLastCategoy(response.data)   
     }
 

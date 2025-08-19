@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "./ui/table";
-import Pagination from "./tables/Pagination";
-import Badge from "./ui/badge/Badge";
-import { getPayments } from "../../services/payments";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
+import Pagination from "./Pagination";
+import Badge from "../ui/badge/Badge";
+import { getPayments } from "../../../services/payments";
 
 type Meta = {
   current_page?: number;

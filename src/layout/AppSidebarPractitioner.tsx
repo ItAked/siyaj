@@ -22,10 +22,14 @@ const navItems: NavItem[] = [
     path: "/practitioner"
   },
   {
+    icon: <Grid />,
+    name: "الدعاوى",
+    subItems: [{ name: 'إنشاء دعوى جديدة', path: '/practitioner/create-case', pro: false}]
+  },
+  {
     icon: <File />,
     name: "الاشتراكات",
-    subItems: [{ name: 'عرض جميع الاشتراكات', path: '/practitioner/subscription', pro: false},
-      { name: 'إنشاء قضية', path: '/practitioner/create-case', pro: false}]
+    path: '/practitioner/subscription'
   },
   {
     icon: <File />,
@@ -74,8 +78,8 @@ const AppSidebarPractitioner: React.FC = () => {
               )}
             </button>
           ) : (
-            nav.path && (<Link href={nav.path} className={`menu-item group ${ isActive(nav.path) ?
-              "bg-sky-950 text-white dark:bg-gray-900/[0.12] dark:text-white;" : "text-sky-950 hover:bg-gray-100 hover:text-sky-950 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;"
+            nav.path && (<Link href={nav.path} className={`menu-item group ${ isActive(nav.path) ? "bg-sky-950 text-white dark:bg-gray-900/[0.12] dark:text-white;"
+              : "text-sky-950 hover:bg-gray-100 hover:text-sky-950 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;"
                 }`} >
                   <span className={`${isActive(nav.path) ? "text-white dark:text-brand-400" :
                   "text-sky-950 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300"}`}>

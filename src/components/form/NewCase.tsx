@@ -34,7 +34,6 @@ export default function NewCase() {
 
   const handleSave = async (event: FormEvent) => {
     event.preventDefault()
-
     try {
       const form = new FormData()
       form.append('description', newCase.description)
@@ -43,7 +42,6 @@ export default function NewCase() {
       form.append('stages', newCase.stages)
       form.append('case_number', newCase.case_number)
       form.append('attachment', newCase.attachment)
-  
       const response = await createCase(form)
       setIsError(false)
       setMsg(response.message)
@@ -55,7 +53,7 @@ export default function NewCase() {
 
   return (
     <ComponentCard>
-        <form>
+        <form onSubmit={handleSave}>
           { msg != '' && (
             isError ? (<div className="mb-4">
             <Alert variant={"error"} title={"حدث خطأ!"} message={msg} />
@@ -63,7 +61,7 @@ export default function NewCase() {
             <Alert variant={"success"} title={""} message={msg} />
           </div>)
           )}
-          <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">إنشاء قضية جديدة</h4>
+          <h4 className="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">إنشاء دعوى جديدة</h4>
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
             <div className="col-span-1">
@@ -73,7 +71,7 @@ export default function NewCase() {
 
             <div className="col-span-1">
               <Label>رقم الدعوى</Label>
-              <Input type="integer" placeholder="إدخال رقم الدعوى المكون من ١٠ أرقام" name="case_number" required defaultValue={newCase.case_number}
+              <Input type="integer" placeholder="إدخال رقم الدعوى المكون من ١٠ أرقام" name="case_number" defaultValue={newCase.case_number}
               onChange={handleInputChange} />
             </div>
 
@@ -86,7 +84,7 @@ export default function NewCase() {
                 <fieldset className="fieldset">
                     <Label>حالة الدعوى</Label>
                     <select defaultValue={newCase.status} name="status" className="select w-full" required onChange={handleInputChange}>
-                        <option disabled={true}>اختر حالة الدعوى</option>
+                        <option value={0}>اختر حالة الدعوى</option>
                         <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
                         <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>
                         <option value="منظورة للشؤون الصحية">منظورة للشؤون الصحية</option>
@@ -98,7 +96,7 @@ export default function NewCase() {
                 <fieldset className="fieldset">
                     <Label>مرحلة الدعوى</Label>
                     <select defaultValue={newCase.stages} name="stages" className="select w-full" required onChange={handleInputChange}>
-                        <option disabled={true}>اختر مرحلة الدعوى</option>
+                        <option value={0}>اختر مرحلةالدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
                         <option value="أحيلت لدائرة الدعوات">أحيلت لدائرة الدعوات</option>
@@ -113,11 +111,7 @@ export default function NewCase() {
           </div>
 
           <div className="flex items-center justify-end w-full gap-3 mt-6">
-            {/* <Button size="sm" onClick={handleSave}>
-              Save Changes
-            </Button> */}
-            <button type="submit" className="btn btn-sm bg-gray-900 text-white dark:shadow-none dark:bg-white dark:text-gray-950 dark:border"
-            onClick={handleSave}>إضافة قضية</button>
+            <button type="submit" className="btn btn-sm bg-gray-900 text-white dark:shadow-none dark:bg-white dark:text-gray-950 dark:border">إضافة دعوى</button>
           </div>
         </form>
     </ComponentCard>

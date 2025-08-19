@@ -1,8 +1,8 @@
 import PageBreadcrumb from "../../../../components/common/PageBreadCrumb";
 import { Metadata } from "next";
 import React from "react";
-import CategoryCard from "../../../../components/CategoryCard";
-import CategoriesTable from "../../../../components/CategoriesTable";
+import CategoriesTable from "../../../../components/tables/CategoriesTable";
+import CategoryCard from "../../../../components/cards/CategoryCard";
 
 export const metadata: Metadata = {
   title: "الإشتراكات",
