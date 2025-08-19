@@ -4,7 +4,7 @@ import PageBreadcrumb from "../../../../../components/common/PageBreadCrumb";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "الدعوات",
+  title: "الدعاوى",
   description:
     "This is Next.js Basic Table  page for TailAdmin  Tailwind CSS Admin Dashboard Template"
 };
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function BasicTables() {
   return (
     <div>
-      <PageBreadcrumb pageTitle="الدعوات" />
+      <PageBreadcrumb pageTitle="الدعاوى" />
       <div className="space-y-6">
         <ComponentCard>
           <AllCasesLawyer />

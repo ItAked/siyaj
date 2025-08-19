@@ -22,13 +22,13 @@ const navItems: NavItem[] = [
     path: "/lawyer"
   },
   {
-    name: "الدعوات",
+    name: "الدعاوى",
     icon: <FileText />,
     path: "/lawyer/cases"
   },
   {
     icon: <Calendar />,
-    name: "جدولة الدعوات",
+    name: "جدولة الدعاوى",
     path: "/lawyer/calendar",
   },
   {

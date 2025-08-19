@@ -118,7 +118,7 @@ export default function EditCase(props: {id: number;}) {
                                 <option value="">اختر مرحلة الدعوى</option>
                                 <option value="شؤون صحية">شؤون صحية</option>
                                 <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
-                                <option value="أحيلت لدائرة الدعوات">أحيلت لدائرة الدعوات</option>
+                                <option value="أحيلت لدائرة الدعاوى">أحيلت لدائرة الدعاوى</option>
                             </select>
                         </fieldset>
                     </div>
