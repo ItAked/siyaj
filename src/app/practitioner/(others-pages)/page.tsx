@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
-import { CasesStatus } from "../../../components/CasesStatus";
-import AllCasesPractitioner from "../../../components/AllCasesPractitioner";
+import AllCasesPractitioner from "../../../components/tables/AllCasesPractitioner";
+import { CasesStatus } from "../../../components/cards/CasesStatus";
 
 export const metadata: Metadata = {
   title:
@@ -15,7 +15,6 @@ export default function PractitionerPanel() {
       <div className="col-span-12 space-y-6">
         <CasesStatus />
       </div>
-
       <div className="col-span-12">
         <AllCasesPractitioner />
       </div>

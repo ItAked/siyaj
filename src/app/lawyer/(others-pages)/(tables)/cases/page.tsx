@@ -1,4 +1,4 @@
-import AllCasesLawyer from "../../../../../components/AllCasesLawyer";
+import AllCasesLawyer from "../../../../../components/tables/AllCasesLawyer";
 import ComponentCard from "../../../../../components/common/ComponentCard";
 import PageBreadcrumb from "../../../../../components/common/PageBreadCrumb";
 import { Metadata } from "next";

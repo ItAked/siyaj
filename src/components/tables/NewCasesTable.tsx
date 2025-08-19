@@ -1,17 +1,11 @@
 'use client'
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
-import Badge from "./ui/badge/Badge";
 import React, { useEffect, useState } from "react";
-import Pagination from "./tables/Pagination";
-import { getCases } from "../../services/cases";
 import { Ellipsis } from "lucide-react";
+import { getCases } from "../../../services/cases";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
+import Badge from "../ui/badge/Badge";
+import Pagination from "./Pagination";
 
 interface Case {
   id: number;

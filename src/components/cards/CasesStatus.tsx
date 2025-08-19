@@ -1,7 +1,8 @@
 "use client";
+
 import { BoxIcon, DownloadIcon, Lock } from "lucide-react";
-import { readCasesStatus } from "../../services/cases";
 import { useEffect, useState } from "react";
+import { readCasesStatus } from "../../../services/cases";
 
 export const CasesStatus = () => {
   const [casesStatus, setCasesStatus] = useState([])
