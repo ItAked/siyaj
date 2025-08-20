@@ -112,7 +112,7 @@ const Categories = () => {
                 if (dialog) dialog.showModal();
               }}>إختيار التصنيف</button>}
               <dialog id="my_modal_3" className="modal">
-                <div className="modal-box grid place-items-center">
+                <div className="modal-box grid place-items-center dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
@@ -121,7 +121,7 @@ const Categories = () => {
                 </div>
               </dialog>
               <dialog id="my_modal_4" className="modal">
-                <div className="modal-box">
+                <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>

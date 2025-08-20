@@ -35,7 +35,6 @@ export default function SignUp() {
       setErrorMsg(error instanceof Error ? error.message : String(error));
     }
   }
-
   function handleStep2Change(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     try {
       if (event.target.type === 'file') {
