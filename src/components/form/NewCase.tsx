@@ -80,13 +80,15 @@ export default function NewCase() {
 
             <div className="col-span-1">
               <Label>محتوى الدعوى</Label>
-              <textarea className="textarea w-full" name="description" onChange={handleInputChange} required placeholder="محتوى الدعوى"></textarea>
+              <textarea className="textarea w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" name="description"
+              onChange={handleInputChange} required placeholder="محتوى الدعوى"></textarea>
             </div>
 
             <div className="col-span-1">
                 <fieldset className="fieldset">
                     <Label>حالة الدعوى</Label>
-                    <select defaultValue={newCase.status} name="status" className="select w-full" required onChange={handleInputChange}>
+                    <select defaultValue={newCase.status} name="status" className="select w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90
+                    dark:focus:border-brand-800" required onChange={handleInputChange}>
                         <option value={0}>اختر حالة الدعوى</option>
                         <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
                         <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>
@@ -98,7 +100,8 @@ export default function NewCase() {
             <div className="col-span-1">
                 <fieldset className="fieldset">
                     <Label>مرحلة الدعوى</Label>
-                    <select defaultValue={newCase.stages} name="stages" className="select w-full" required onChange={handleInputChange}>
+                    <select defaultValue={newCase.stages} name="stages" className="select w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90
+                    dark:focus:border-brand-800" required onChange={handleInputChange}>
                         <option value={0}>اختر مرحلةالدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
@@ -109,7 +112,8 @@ export default function NewCase() {
 
             <div className="col-span-1">
                 <Label>ملفات الدعوى</Label>
-                <input required defaultValue={undefined} name="attachment" onChange={handleInputChange} type="file" className="file-input" />
+                <input required defaultValue={undefined} name="attachment" onChange={handleInputChange} type="file" className="file-input dark:border-gray-700
+                dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" />
             </div>
           </div>
 

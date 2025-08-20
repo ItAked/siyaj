@@ -98,12 +98,12 @@ export default function EditCase(props: {id: number;}) {
                     </div>
                     <div className="col-span-1">
                         <Label>محتوى الدعوى</Label>
-                        <textarea className="textarea w-full" name="description" value={editCase.description || ''} onChange={handleInputChange}></textarea>
+                        <textarea className="textarea w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" name="description" value={editCase.description || ''} onChange={handleInputChange}></textarea>
                     </div>
                     <div className="col-span-1">
                         <fieldset className="fieldset">
                             <Label>حالة الدعوى</Label>
-                            <select value={editCase.status || ''} name="status" className="select w-full" onChange={handleInputChange}>
+                            <select value={editCase.status || ''} name="status" className="select w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" onChange={handleInputChange}>
                                 <option value="">اختر حالة الدعوى</option>
                                 <option value="منظورة لدى الدائرة القضائية">منظورة لدى الدائرة القضائية</option>
                                 <option value="منظورة لمنصة تراضي">منظورة لمنصة تراضي</option>
@@ -114,7 +114,7 @@ export default function EditCase(props: {id: number;}) {
                     <div className="col-span-1">
                         <fieldset className="fieldset">
                             <Label>مرحلة الدعوى</Label>
-                            <select value={editCase.stages || ''}  name="stages" className="select w-full" onChange={handleInputChange}>
+                            <select value={editCase.stages || ''}  name="stages" className="select w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" onChange={handleInputChange}>
                                 <option value="">اختر مرحلة الدعوى</option>
                                 <option value="شؤون صحية">شؤون صحية</option>
                                 <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
@@ -124,7 +124,7 @@ export default function EditCase(props: {id: number;}) {
                     </div>
                     <div className="col-span-1">
                         <Label>ملفات الدعوى الحالية</Label>
-                        <div className="bg-gray-100 border rounded-md border-gray-500 flex items-center px-7 py-4 gap-x-10">
+                        <div className="bg-gray-100 border rounded-md border-gray-500 flex items-center px-7 py-4 gap-x-10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                             <File color="#EF5350" />
                             <a href={editCase.attachments} className="link" target="_blank" rel="noopener noreferrer">{filePath || 'No file attached'}</a>
                         </div>

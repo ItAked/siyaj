@@ -15,7 +15,7 @@ export default function Page({ params }) {
         <>
             <div className="flex items-center justify-between">
                 <PageBreadcrumb pageTitle="تفاصيل الدعوى" />
-                <a href={`/practitioner/edit-case/${id}`} className="link no-underline"><Pencil size={16} /></a>
+                <a href={`/practitioner/edit-case/${id}`} className="link no-underline dark:text-white"><Pencil size={16} /></a>
             </div>
             <EditCasePage id={id} />
         </>
