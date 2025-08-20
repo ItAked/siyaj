@@ -83,7 +83,7 @@ export default function ContactUs(){
                         </div>
                         <div className="flex items-center gap-x-2">
                             <Mail className="text-white p-1 mb-1 rounded-full bg-sky-950" />
-                            <span className="text-gray-900">lujain@akedco.com</span>
+                            <span>lujain@akedco.com</span>
                         </div>
                     </div>
                     <Map />
