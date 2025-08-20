@@ -60,8 +60,8 @@ export default function AllCasesLawyer() {
             <input type="search" name="search" onChange={(e) => readCases("", e.target.value)} className="w-full" placeholder="إبحث باسم الممارس الصحي" />
           </label>
           <details className="dropdown">
-            <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis /></summary>
-            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
+            <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis className="dark:text-white" /></summary>
+            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6 dark:bg-gray-900 dark:text-white">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>
               <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة للشؤون الصحية"
