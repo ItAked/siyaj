@@ -92,11 +92,15 @@ export default function SignUp() {
       return;
     }
     if (step1Data.phone.length < 9) {
-      setErrorMsg('رقم الهاتف يجب أن يكون على الأقل ٩ أرقام');
+      setErrorMsg('رقم الهاتف يجب أن يكون على الأقل 9 أرقام');
       return;
     }
     if (!step1Data.phone.startsWith('5')) {
-      setErrorMsg('رقم الهاتف يجب أن يبدأ بالرقم ٥');
+      setErrorMsg('رقم الهاتف يجب أن يبدأ بالرقم 5');
+      return;
+    }
+    if (step1Data.password.length < 8) {
+      setErrorMsg('كلمة المرور يجب أن تكون على الأقل ٨ أحرف مكونة من حرف كبير، أحرف صغيرة، أرقام، علامة');
       return;
     }
     setStep(2);
@@ -123,21 +127,21 @@ export default function SignUp() {
                 <div className="space-y-6 text-right">
                   <div>
                     <Label>الإسم الثلاثي <span className="text-error-500">*</span></Label>
-                    <Input required={true} placeholder="الإسم الثلاثي" name="name" defaultValue={step1Data.name} type="text" onChange={handleStep1Change} />
+                    <Input placeholder="الإسم الثلاثي" name="name" defaultValue={step1Data.name} type="text" onChange={handleStep1Change} />
                   </div>
                   <div>
                     <Label>البريد الإلكتروني <span className="text-error-500">*</span></Label>
-                    <Input required={true} placeholder="info@gmail.com" name="email" defaultValue={step1Data.email} type="email" onChange={handleStep1Change} />
+                    <Input placeholder="info@gmail.com" name="email" defaultValue={step1Data.email} type="email" onChange={handleStep1Change} />
                   </div>
                   <div>
                     <Label>رقم الجوال <span className="text-error-500">*</span></Label>
-                    <Input required={true} placeholder="555527557" name="phone" defaultValue={step1Data.phone} type="tel" onChange={handleStep1Change} />
+                    <Input placeholder="555527557" name="phone" defaultValue={step1Data.phone} type="tel" onChange={handleStep1Change} />
                   </div>
                   <div>
                     <Label>كلمة المرور <span className="text-error-500">*</span></Label>
                     <div className="relative">
                       <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleStep1Change} name="password"
-                      defaultValue={step1Data.password} required={true} />
+                      defaultValue={step1Data.password} />
                       <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
                         {showPassword ? (<EyeIcon className="fill-white dark:fill-gray-400" />) : (<EyeClosedIcon className="fill-white dark:fill-gray-400" />)}
                       </span>
@@ -147,7 +151,7 @@ export default function SignUp() {
                     <Label> تأكيد كلمة المرور <span className="text-error-500">*</span></Label>
                     <div className="relative">
                       <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleStep1Change} name="password_confirmation"
-                      defaultValue={step1Data.password_confirmation} required={true} />
+                      defaultValue={step1Data.password_confirmation} />
                       <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
                         {showPassword ? (<EyeIcon className="fill-white dark:fill-gray-400" />) : (<EyeClosedIcon className="fill-white dark:fill-gray-400" />)}
                       </span>
