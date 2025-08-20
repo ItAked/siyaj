@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { readNotifications, updateNotification } from "../../../services/notification";
+import { useRouter } from "next/navigation";
 
 interface Notification {
   id: string;
@@ -16,6 +16,7 @@ export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifying, setNotifying] = useState(false);
   const [notification, setNotifications] = useState<Notification[]>([])
+  const router = useRouter()
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -34,6 +35,7 @@ export default function NotificationDropdown() {
   }
   async function markAsRead(id: string) {
     await updateNotification(id);
+    router.push('/lawyer/cases')
     getNotifications()
   }
   const handleClick = () => {
@@ -93,8 +95,8 @@ export default function NotificationDropdown() {
             </li>
           ))}
         </ul>
-        <Link href="/" className="block px-4 py-2 mt-3 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100
-        dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700">View All Notifications</Link>
+        <a href="/lawyer/notification" className="block px-4 py-2 mt-3 text-sm font-medium text-center text-gray-500 bg-white border border-gray-300 rounded-lg
+        hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 link">عرض جميع التنبيهات</a>
       </Dropdown>
     </div>
   );

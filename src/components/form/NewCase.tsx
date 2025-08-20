@@ -6,6 +6,7 @@ import Label from "./Label";
 import Input from "./input/InputField";
 import Alert from "../ui/alert/Alert";
 import { createCase } from "../../../services/cases";
+import { useRouter } from "next/navigation";
 
 export default function NewCase() {
   const [newCase, setNewCase] = useState({
@@ -18,6 +19,7 @@ export default function NewCase() {
   })
   const [msg, setMsg] = useState('')
   const [isError, setIsError] = useState(false)
+  const router = useRouter()
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     if (event.target.type === 'file') {
@@ -45,6 +47,7 @@ export default function NewCase() {
       const response = await createCase(form)
       setIsError(false)
       setMsg(response.message)
+      router.push('/practitioner/cases')
     } catch (error) {
       setIsError(true)
       setMsg(error.response.data.message)
@@ -99,7 +102,7 @@ export default function NewCase() {
                         <option value={0}>اختر مرحلةالدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
-                        <option value="أحيلت لدائرة الدعاوى">أحيلت لدائرة الدعاوى</option>
+                        <option value="أحيلت لدائرة القضايا">أحيلت لدائرة القضايا</option>
                     </select>
                 </fieldset>
             </div>

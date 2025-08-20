@@ -10,7 +10,7 @@ export default function Hero() {
         <p className="text-xl" data-aos="zoom-y-out" data-aos-delay={300}>منصة رقمية متخصصة تقدم للممارسين الصحيين
           حلولًا قانونية متكاملة، من الاستشارة إلى المتابعة، لتمنحك الأمان القانوني الكامل أثناء ممارسة عملك.</p>
         <div className="flex items-center gap-x-3">
-          <Link className="btn bg-sky-950 text-white border-none font-medium text-base dark:shadow-none" href="/auth/signup">الدخول كممارس صحي</Link>
+          <Link className="btn bg-sky-950 text-white border-none font-medium text-base dark:shadow-none" href="/auth/signin">الدخول كممارس صحي</Link>
           <Link className="btn text-sky-950 border-sky-950 bg-white font-medium text-base dark:shadow-none" href="/auth/signin">الدخول كمحامي</Link>
         </div>
       </article>

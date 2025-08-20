@@ -86,6 +86,10 @@ export default function SignInForm() {
                 </div>
               </div>
             </form>
+            <div className="flex items-center gap-x-0.5 justify-center text-sm mt-4">
+              <p className="text-gray-500">ليس لديك حساب؟</p>
+              <Link href="/auth/signup" className="text-brand-500 hover:text-brand-600 dark:text-brand-400">قم بإنشاء حساب فقط للممارسين الصحيين</Link>
+            </div>
           </div>
         </div>
       </div>
