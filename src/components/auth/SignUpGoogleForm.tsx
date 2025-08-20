@@ -64,7 +64,7 @@ export default function SignUpGoogle(){
         }
         await signup(formData);
         setErrorMsg('');
-        router.push('/auth/signin');
+        router.push('/practitioner');
       } catch (error) {
         setErrorMsg(error instanceof Error ? error.message : String(error));
       }
