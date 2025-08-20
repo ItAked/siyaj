@@ -193,7 +193,7 @@ const CalendarLawyer: React.FC = () => {
             </div>
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوى</label>
-              <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+              <div className="grid gap-4 sm:gap-5">
                 {Object.entries(statusOptions).map(([statusKey, statusValue]) => (
                   <div key={`status-${statusKey}`} className="n-chk">
                     <div className={`form-check form-check-${statusValue} form-check-inline`}>
@@ -229,14 +229,17 @@ const CalendarLawyer: React.FC = () => {
                 placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900
                 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"/>
               </div>
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                يرجى إدخال الوقت بالتنسيق التالي: ساعة:دقيقة ثم am (صباحًا) أو (مثال: 2:30 PM)
+              </p>
             </div>
           </div>
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn">إغلاق</button>
+              <button className="btn shadow-none">إغلاق</button>
             </form>
             <button onClick={handleAddOrUpdateAppointment} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5
-            text-sm font-medium text-white hover:bg-sky-600 sm:w-auto">
+            text-sm font-medium text-white hover:bg-sky-600 sm:w-auto shadow-none">
               {selectedAppointment ? "تحديث البيانات" : "إضافة موعد"}
             </button>
           </div>
