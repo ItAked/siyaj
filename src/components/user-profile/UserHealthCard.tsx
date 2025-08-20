@@ -4,20 +4,40 @@ import React, { FormEvent, useEffect, useState } from "react";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
-import { updateSetting } from "../../../services/setting";
+import { readSetting, updateSetting } from "../../../services/setting";
+import Alert from "../ui/alert/Alert";
 
-export default function UserHealthCard(props: { loading: boolean; error: string; employer: string | undefined; license: string | undefined;
-    license_file: string | undefined; medical: string | undefined; onUpdate?: () => void;}) {
-  const [profileEmployer, setProfileEmployer] = useState(props.employer || "")
-  const [profileLicense, setProfileLicense] = useState(props.license || "")
-  const [profileMedical, setProfileMedical] = useState(props.medical || "")
+type HealthSetting = {
+  license? :string;
+  medical?: string;
+  employer?: string;
+  license_file?: string;
+}
+
+export default function UserHealthCard() {
+  const [healthSetting, setHealthSetting] = useState<HealthSetting>({})
+  const [error, setError] = useState('')
+  const [profileEmployer, setProfileEmployer] = useState(healthSetting.employer || "")
+  const [profileLicense, setProfileLicense] = useState(healthSetting.license || "")
+  const [profileMedical, setProfileMedical] = useState(healthSetting.medical || "")
   
   useEffect(() => {
-    setProfileEmployer(props.employer || "");
-    setProfileLicense(props.license || "");
-    setProfileMedical(props.medical || "");
-  }, [props.employer, props.license, props.medical]);
-  
+    setProfileEmployer(healthSetting.employer || "");
+    setProfileLicense(healthSetting.license || "");
+    setProfileMedical(healthSetting.medical || "");
+  }, [healthSetting.employer, healthSetting.license, healthSetting.medical]);
+  useEffect(() => {
+    getProfileData()
+  }, [])
+
+  async function getProfileData(){
+    try {
+      const response = await readSetting()
+      setHealthSetting(response.data)
+    } catch (error) {
+      setError(error)
+    }
+  }
   async function handleSave(event: FormEvent) {
     event.preventDefault();
     try {
@@ -30,10 +50,8 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
         employer: profileEmployer
       })
       const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+      getProfileData()
       if (dialog) dialog.close();
-      if (props.onUpdate) {
-        props.onUpdate();
-      }
     } catch (error) {
       console.error(error.response.data.message)
     }
@@ -58,7 +76,7 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileEmployer }</p>
             </div>
             <div>
-              <a href={ props.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link">تحميل الترخيص المهني</a>
+              <a href={ healthSetting.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link">تحميل الترخيص المهني</a>
             </div>
           </div>
         </div>
@@ -72,6 +90,7 @@ export default function UserHealthCard(props: { loading: boolean; error: string;
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
                 <div className="mt-7">
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+                    {error && (<Alert variant="error" title="حدث خطأ!" message={error} />)}
                     <div className="col-span-2 lg:col-span-1">
                       <Label>رقم الترخيص المهني</Label>
                       <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={profileLicense} />
