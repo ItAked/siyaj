@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
   {
     icon: <Grid />,
     name: "الدعاوى",
-    subItems: [{ name: 'إنشاء دعوى جديدة', path: '/practitioner/create-case', pro: false}]
+    path: '/practitioner/cases'
   },
   {
     icon: <File />,

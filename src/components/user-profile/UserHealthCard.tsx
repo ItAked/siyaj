@@ -16,10 +16,12 @@ type HealthSetting = {
 
 export default function UserHealthCard() {
   const [healthSetting, setHealthSetting] = useState<HealthSetting>({})
-  const [error, setError] = useState('')
   const [profileEmployer, setProfileEmployer] = useState(healthSetting.employer || "")
   const [profileLicense, setProfileLicense] = useState(healthSetting.license || "")
   const [profileMedical, setProfileMedical] = useState(healthSetting.medical || "")
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   
   useEffect(() => {
     setProfileEmployer(healthSetting.employer || "");
@@ -35,7 +37,7 @@ export default function UserHealthCard() {
       const response = await readSetting()
       setHealthSetting(response.data)
     } catch (error) {
-      setError(error)
+      setErrorMsg(error.response.data.message)
     }
   }
   async function handleSave(event: FormEvent) {
@@ -49,11 +51,20 @@ export default function UserHealthCard() {
         medical: profileMedical,
         employer: profileEmployer
       })
-      const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+      setIsSuccess(true)
+      setSuccessMsg('تم تحديث المعلومات بنجاح');
+      setErrorMsg('');
+      setTimeout(() => {
+        const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null;
+        getProfileData()
+        if (dialog) dialog.close();
+      }, 1500);
+      const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null;
       getProfileData()
       if (dialog) dialog.close();
     } catch (error) {
-      console.error(error.response.data.message)
+      setIsSuccess(false)
+      setErrorMsg(error.response?.data?.message || 'حدث خطأ أثناء التحديث');
     }
   };
 
@@ -65,15 +76,15 @@ export default function UserHealthCard() {
           <div className="grid grid-cols-1 gap-4 2xl:gap-x-32">
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الترخيص المهني</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileLicense }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ healthSetting.license }</p>
             </div>
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">التخصص الطبي</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileMedical }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ healthSetting.medical }</p>
             </div>
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">اسم جهة العمل</p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ profileEmployer }</p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">{ healthSetting.employer}</p>
             </div>
             <div>
               <a href={ healthSetting.license_file } className="text-sm font-medium text-gray-800 dark:text-white/90 link">تحميل الترخيص المهني</a>
@@ -89,8 +100,11 @@ export default function UserHealthCard() {
             <form className="flex flex-col" onSubmit={handleSave}>
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
                 <div className="mt-7">
+                  <div className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                    {errorMsg && (<Alert variant="error" title="حدث خطأ!" message={errorMsg} />)}
+                    {isSuccess && (<Alert variant="success" title="تم التحديث بنجاح" message={successMsg} />)}
+                  </div>
                   <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                    {error && (<Alert variant="error" title="حدث خطأ!" message={error} />)}
                     <div className="col-span-2 lg:col-span-1">
                       <Label>رقم الترخيص المهني</Label>
                       <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={profileLicense} />
@@ -112,12 +126,16 @@ export default function UserHealthCard() {
             </form>
           </div>
         </dialog>
-        <button onClick={() => {
-          const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null;
-          if (dialog) dialog.showModal();
-        }} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700
-        shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]
-        dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+        <button 
+          onClick={() => {
+            setIsSuccess(false);
+            setErrorMsg('');
+            const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null; 
+            if (dialog) dialog.showModal();
+          }} 
+          className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700
+          shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]
+          dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
           <svg className="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158
             3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814

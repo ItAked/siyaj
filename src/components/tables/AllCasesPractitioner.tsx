@@ -48,7 +48,7 @@ export default function AllCasesPractitioner() {
         </div>
 
         <div className="flex items-center gap-3">
-          <label className="input">
+          <label className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -59,7 +59,8 @@ export default function AllCasesPractitioner() {
           </label>
           <details className="dropdown">
             <summary className="btn bg-transparent border-none hover:shadow-none shadow-none"><Ellipsis className="dark:text-white" /></summary>
-            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6">
+            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm left-6 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90
+            dark:focus:border-brand-800">
               <li><label className="label"><input type="radio" defaultChecked className="radio" onChange={(e) => readCases(e.target.value)} value=""
               name="status" />الكل</label></li>
               <li><label className="label"><input type="radio" className="radio" onChange={(e) => readCases(e.target.value)} value="منظورة للشؤون الصحية"

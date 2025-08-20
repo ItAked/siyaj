@@ -19,7 +19,6 @@ export default function UserInfoCard() {
   const [profileName, setProfileName] = useState(metaSetting.name || "");
   const [profileEmail, setProfileEmail] = useState(metaSetting.email || "");
   const [profilePhone, setProfilePhone] = useState(metaSetting.phone || "");
-  const [, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
@@ -44,7 +43,6 @@ export default function UserInfoCard() {
 
   async function handleSave(event: FormEvent) {
     event.preventDefault();
-    setIsError(false);
     try {
       await updateSetting({
         name: profileName,
@@ -64,7 +62,6 @@ export default function UserInfoCard() {
       }, 1500);
     } catch (error) {
       setIsSuccess(false)
-      setIsError(true);
       setErrorMsg(error.response?.data?.message || 'حدث خطأ أثناء التحديث');
     }
   };
@@ -128,7 +125,6 @@ export default function UserInfoCard() {
         </dialog>
         <button 
           onClick={() => {
-            setIsError(false);
             setIsSuccess(false);
             setErrorMsg('');
             const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null; 
