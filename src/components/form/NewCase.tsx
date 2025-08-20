@@ -99,7 +99,7 @@ export default function NewCase() {
                         <option value={0}>اختر مرحلةالدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
-                        <option value="أحيلت لدائرة الدعاوى">أحيلت لدائرة الدعاوى</option>
+                        <option value="أحيلت لدائرة القضايا">أحيلت لدائرة القضايا</option>
                     </select>
                 </fieldset>
             </div>
