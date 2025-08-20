@@ -8,8 +8,8 @@ const CaseAttachmentsCard = ({ attachmentsData }) => {
                     <div className="flex items-center gap-x-4">
                         <p className="text-3xl font-medium text-gray-800 dark:text-white/90">مستندات الدعوى</p>
                     </div>
-                    <p className="text-xl flex items-center font-normal gap-x-1.5"><Download size={14} />
-                    {attachmentsData.attachments === null ? 'لا توجد مستندات لهذه لدعوى' : attachmentsData.attachments}</p>
+                    <a href={attachmentsData.attachments} className="text-xl flex items-center font-normal gap-x-1.5"><Download size={14} />
+                    {attachmentsData.attachments === null ? 'لا توجد مستندات لهذه لدعوى' : attachmentsData.attachments}</a>
                 </div>
             </div>
         </>
