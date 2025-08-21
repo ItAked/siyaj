@@ -5,10 +5,10 @@ import Label from "../../components/form/Label";
 import Button from "../../components/ui/button/Button";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import Alert from "../ui/alert/Alert";
 import { login } from "../../../services/auth";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,20 +34,9 @@ export default function SignInForm() {
       const formData = new FormData()
       formData.append('email', user.email)
       formData.append('password', user.password)
-      const response = await login(formData)
-      if (response.role === undefined) {
-        setErrorMsg(response.message)
-      }
-      if(response.role === 'lawyer') {
-        setErrorMsg('')
-        router.push('/lawyer')
-      } else if(response.role === 'practitioner') {
-        setErrorMsg('')
-        router.push('/practitioner')
-      } else {
-        setErrorMsg('الحساب لا يخص المحامين أو الممارسين الصحيين')
-        return;
-      }
+      await login(formData)
+      setErrorMsg('');
+      router.push('/auth/verify-otp-login')
     } catch (error) {
       setErrorMsg(error.response.data.message);
     }

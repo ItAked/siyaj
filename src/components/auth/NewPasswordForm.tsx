@@ -35,7 +35,7 @@ const NewPasswordForm = () => {
       const response = await verifyOtp(formData)
       setMsg(response.message)
       setIsError(false)
-      router.push('/')
+      router.push('/auth/login')
     } catch (error) {
       setMsg(error.response.data.message)
       setIsError(true)

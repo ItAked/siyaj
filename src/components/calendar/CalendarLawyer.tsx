@@ -253,8 +253,8 @@ const renderEventContent = (eventInfo: EventContentArg) => {
   return (
     <div className={`event-fc-color flex fc-event-main fc-bg-primary`}>
       <div className="fc-daygrid-event-dot"></div>
-      <div className="fc-event-time">{eventInfo.timeText}</div>
-      <div className="fc-event-title">{eventInfo.event.title}</div>
+      <div className="fc-event-time dark:text-black">{eventInfo.timeText}</div>
+      <div className="fc-event-title dark:text-black">{eventInfo.event.title}</div>
     </div>
   );
 };
