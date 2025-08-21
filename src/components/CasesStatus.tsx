@@ -1,8 +1,8 @@
 "use client";
 
 import { readCasesStatus } from "../../services/cases";
-import {BoxIconLine, DownloadIcon, LockIcon } from "../icons";
 import { useEffect, useState } from "react";
+import { Box, Download, Lock } from 'lucide-react'
 
 type CasesStatus = {
   health_affairs?: string;
@@ -26,7 +26,7 @@ export const CasesStatus = () => {
     <div className="grid grid-cols-1 mx-auto gap-4 sm:grid-cols-3 md:gap-6 my-16">
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-10 h-10 bg-blue-300 rounded-full dark:bg-gray-800">
-          <DownloadIcon className="text-white" />
+          <Download className="text-white" />
         </div>
         <div className="flex items-end justify-between mt-5">
           <div>
@@ -40,7 +40,7 @@ export const CasesStatus = () => {
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-10 h-10 bg-blue-300 rounded-full dark:bg-gray-800">
-          <BoxIconLine className="text-white" />
+          <Box className="text-white" />
         </div>
         <div className="flex items-end justify-between mt-5">
           <div>
@@ -54,7 +54,7 @@ export const CasesStatus = () => {
       {/* <!-- Metric Item Start --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-10 h-10 bg-blue-300 rounded-full dark:bg-gray-800">
-          <LockIcon className="text-white" />
+          <Lock className="text-white" />
         </div>
 
         <div className="flex items-end justify-between mt-5">

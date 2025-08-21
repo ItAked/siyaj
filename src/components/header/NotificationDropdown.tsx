@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { readNotifications, updateNotification } from "../../../services/notification";
+import { readNotifications } from "../../../services/notification";
 
 export default function NotificationDropdown() {
   interface Notification {
@@ -26,14 +26,8 @@ export default function NotificationDropdown() {
 
   async function getNotifications() {
     const response = await readNotifications()
-    
     setNotifications(response.data)
     setNotifying(true);
-  }
-
-  async function markAsRead(id: string) {
-    await updateNotification(id);
-    getNotifications()
   }
 
   const handleClick = () => {
@@ -83,7 +77,7 @@ export default function NotificationDropdown() {
         isOpen={isOpen}
         onClose={closeDropdown}
         className="absolute -right-[240px] mt-[17px] flex h-[480px] w-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg
-        dark:border-gray-800 dark:bg-gray-dark sm:w-[361px] lg:-right-56"
+        dark:border-gray-800 dark:bg-gray-dark sm:w-[361px] lg:-right-80"
       >
         <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-700">
           <h5 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
@@ -116,8 +110,7 @@ export default function NotificationDropdown() {
           {/* Example notification items */}
           {notification.map((n) => (
             <li key={n.id}>
-              <DropdownItem
-                onItemClick={() => markAsRead(n.id)} className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800
+              <DropdownItem className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800
                 dark:hover:bg-white/5">
 
                 <span className="block text-right">
@@ -136,11 +129,11 @@ export default function NotificationDropdown() {
           {/* Add more items as needed */}
         </ul>
         <Link
-          href="/"
+          href="/admin/notifications"
           className="block px-4 py-2 mt-3 text-sm font-medium text-center text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100
           dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
         >
-          View All Notifications
+          عرض جميع الإشعارات
         </Link>
       </Dropdown>
     </div>

@@ -3,11 +3,12 @@
 import Input from "../../components/form/input/InputField";
 import Label from "../../components/form/Label";
 import Button from "../../components/ui/button/Button";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "../../../services/auth";
+import Alert from "../ui/alert/Alert";
+import { Eye, EyeClosed} from 'lucide-react'
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +17,7 @@ export default function SignInForm() {
     'password': ''
   })
   const router = useRouter()
+  const [msg, setMsg] = useState('')
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -28,13 +30,17 @@ export default function SignInForm() {
   }
 
   async function handleOnSubmit(event: FormEvent) {
-    event.preventDefault()
-    const formData = new FormData()
-    formData.append('email', user.email)
-    formData.append('password', user.password)
-    await login(formData)
-    alert('مرحبًا من جديد')
-    router.push('/admin')
+    try {
+      event.preventDefault()
+      const formData = new FormData()
+      formData.append('email', user.email)
+      formData.append('password', user.password)
+      await login(formData)
+      setMsg('')
+      router.push('/verify-otp-login')
+    } catch (error) {
+      setMsg(error.response.data.message)
+    }
   }
 
   return (
@@ -46,6 +52,11 @@ export default function SignInForm() {
           </div>
           <div>
             <form onSubmit={handleOnSubmit}>
+              { msg && (
+                <div className="my-4">
+                  <Alert variant={"error"} title={"حدث خطأ!"} message={msg} />
+                </div>
+              )}
               <div className="space-y-6 text-right">
                 <div>
                   <Label className="text-2xl font-normal">البريد الإلكتروني <span className="text-error-500">*</span></Label>
@@ -57,7 +68,7 @@ export default function SignInForm() {
                     <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" onChange={handleUserChange} name="password"
                     defaultValue={user.password} />
                     <span onClick={() => setShowPassword(!showPassword)} className="absolute z-30 -translate-y-1/2 cursor-pointer left-4 top-1/2">
-                      {showPassword ? (<EyeIcon/>) : (<EyeCloseIcon/>)}
+                      {showPassword ? (<Eye/>) : (<EyeClosed/>)}
                     </span>
                   </div>
                 </div>

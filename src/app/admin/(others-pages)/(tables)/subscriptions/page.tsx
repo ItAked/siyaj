@@ -2,10 +2,10 @@
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
 import { useEffect, useState } from "react";
-import { HorizontaLDots } from "../../../../../icons";
 import Pagination from "../../../../../components/tables/Pagination";
 import Alert from "../../../../../components/ui/alert/Alert";
 import { createSubscriptions, deleteSubscriptions, readSubscriptions, updateSubscription } from "../../../../../../services/subscriptions";
+import { Ellipsis } from 'lucide-react';
 
 interface Subscription {
     id: number;
@@ -32,7 +32,6 @@ export default function Subscriptions() {
         setIsLoading(true);
         try {
             const response = await readSubscriptions(page);
-            
             setSubscriptions(response.data);
             setPages(response.meta)
         } catch (error) {
@@ -45,7 +44,6 @@ export default function Subscriptions() {
     async function handleAddSubscription() {
         try {
             const response = await createSubscriptions({name: titleFeature, price: featurePrice})
-            
             setIsError(false)
             setErrorMsg(response.message)
             getSubscriptions();
@@ -89,7 +87,7 @@ export default function Subscriptions() {
                                 const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                                 if (modal) modal.showModal();
                             }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                        py-2.5 text-base font-medium text-white hover:bg-sky-300 sm:w-auto">+ إضافة تصنيف جديد</button>
+                                        py-2.5 text-base font-medium text-white sm:w-auto shadow-none border-none">+ إضافة تصنيف جديد</button>
                     </div>
                 </div>
 
@@ -142,7 +140,7 @@ export default function Subscriptions() {
                 </dialog>
 
                 <dialog id="my_modal_7" className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box">
+                    <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div>
                                 <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">تعديل التصنيف</h5>
@@ -173,14 +171,14 @@ export default function Subscriptions() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
+                            <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-start modal-action">
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-sky-300 sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
+                                py-2.5 text-sm font-medium text-white sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
                                 <form method="dialog">
-                                    <button className="btn" onClick={() => {
+                                    <button className="btn border-black bg-transparent text-black dark:text-white dark:border-white" onClick={() => {
                                         setFeaturePrice(0)
                                         setTitleFeature('')
-                                        setErrorMsg('')}}>إغلاق</button>
+                                        setErrorMsg('')}}>إلغاء</button>
                                 </form>
                             </div>
                         </div>
@@ -212,8 +210,9 @@ export default function Subscriptions() {
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{subscription.price}</TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <details className="dropdown">
-                                        <summary className="btn btn-ghost dark:text-white hover:bg-transparent shadow-none border-none m-1"><HorizontaLDots /></summary>
-                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm left-4">
+                                        <summary className="btn btn-ghost dark:text-white hover:bg-transparent shadow-none border-none m-1">
+                                            <Ellipsis className="dark:text-white" /></summary>
+                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm left-4 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                                             <li>
                                                 <button onClick={() => {
                                                     const modal = document.getElementById('my_modal_7') as HTMLDialogElement | null;
@@ -222,11 +221,11 @@ export default function Subscriptions() {
                                                     setFeaturePrice(subscription.price)
                                                     setSubscriptionId(subscription.id)
                                                 }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg btn-ghost px-4
-                                                py-2.5 text-sm font-medium hover:bg-transparent text-gray-900 sm:w-auto">تعديل</button>
+                                                py-2.5 text-sm font-medium hover:bg-transparent dark:text-white text-black sm:w-auto shadow-none">تعديل</button>
                                             </li>
                                             <li>
                                                 <button onClick={() => handleRemoveSubscription(subscription.id)} type="button" className="btn btn-update-event flex w-full
-                                                justify-center rounded-lg btn-ghost px-4 py-2.5 text-sm font-medium hover:bg-transparent text-error
+                                                justify-center rounded-lg btn-ghost px-4 py-2.5 text-sm font-medium hover:bg-transparent text-error shadow-none
                                                 sm:w-auto">حذف</button>
                                             </li>
                                         </ul>

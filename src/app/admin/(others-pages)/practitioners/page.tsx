@@ -70,7 +70,7 @@ export default function Practitioners() {
                     <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">الممارسين الصحيين</h3>
                 </div>
             </div>
-            <label className="input my-4">
+            <label className="input my-4 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -110,7 +110,7 @@ export default function Practitioners() {
                                             const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
                                             if (modal) modal.showModal();
                                         }} type="button" className="link flex w-full justify-center rounded-lg px-4
-                                            py-2.5 text-base font-medium text-sky-950 sm:w-auto">{practitioner.category.length > 0
+                                            py-2.5 text-base font-medium text-sky-950 sm:w-auto dark:text-white">{practitioner.category.length > 0
                                                 ? practitioner.category[practitioner.category.length - 1].name : 'لا توجد اشتراكات'}</button>
                                         </TableCell>
                                 </TableRow>

@@ -120,31 +120,36 @@ const Calendar: React.FC = () => {
           }}
         />
       </div>
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box dark:bg-gray-900">
+      <dialog id="my_modal_1" className="modal justify-center">
+        <div className="modal-box w-80 dark:bg-gray-900">
           <div className="mt-8">
             <div>
+              <p className="text-black dark:text-white/90 text-center">تفاصيل القضية</p>
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان الدعوة</label>
-                <input type="text" className="input" value={appointmentName} readOnly />
+                <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                value={appointmentName} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">رقم الدعوة</label>
-                <input type="text" className="input" value={caseNumber} readOnly />
+                <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                value={caseNumber} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">المحامي</label>
-                <input type="text" className="input" value={appointmentLawyer} readOnly />
+                <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                value={appointmentLawyer} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">الممارس الصحي</label>
-                <input type="text" className="input" value={appointmentPractitioner} readOnly />
+                <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                value={appointmentPractitioner} readOnly />
               </div>
             </div>
             <div className="mt-6">
@@ -165,7 +170,8 @@ const Calendar: React.FC = () => {
             </div>
             <div className="mt-6">
               <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">الوصف</label>
-              <textarea className="textarea" value={appointmentDescription} readOnly></textarea>
+              <textarea className="textarea dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" value={appointmentDescription}
+              readOnly></textarea>
             </div>
             <div className="mt-6">
               <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات الدعوة</label>
@@ -174,9 +180,9 @@ const Calendar: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="modal-action">
+          <div className="modal-action flex justify-center">
             <form method="dialog">
-              <button className="btn btn-wide bg-sky-950 text-white">إغلاق</button>
+              <button className="btn w-64 bg-sky-950 text-white shadow-none border-none">إغلاق</button>
             </form>
           </div>
         </div>

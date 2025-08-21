@@ -3,9 +3,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Pagination from "../../../../components/tables/Pagination";
 import Alert from "../../../../components/ui/alert/Alert";
-import { ArrowDownIcon } from "../../../../icons";
 import { assignCases } from "../../../../../services/cases";
 import { createLawyer, readLawyers } from "../../../../../services/lawyers";
+import { ChevronDown } from 'lucide-react'
 
 interface CaseItem {
     id: number;
@@ -162,11 +162,11 @@ export default function Lawyers() {
                                     required />
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-end modal-action">
+                            <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-start modal-action">
                                 <button onClick={handleAddLawyer} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto">إضافة محامي</button>
+                                py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto shadow-none border-none">إضافة محامي</button>
                                 <form method="dialog">
-                                    <button className="btn" onClick={() => setErrorMsg('')}>إغلاق</button>
+                                    <button className="btn border-black bg-transparent text-black dark:text-white dark:border-white" onClick={() => setErrorMsg('')}>إلغاء</button>
                                 </form>
                             </div>
                         </div>
@@ -174,13 +174,13 @@ export default function Lawyers() {
                 </dialog>
 
             <div className="flex items-center justify-between max-sm:grid max-sm:gap-y-4">
-                <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="input w-1/2 max-sm:w-full" placeholder="ابحث بإسم المحامي" />
+                <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="input w-1/2 max-sm:w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" placeholder="ابحث بإسم المحامي" />
                 <button onClick={() => {const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                     if (modal) modal.showModal();}} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                    py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto">إضافة محامي</button>
+                    py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto shadow-none border-none">إضافة محامي</button>
             </div>
             {isLoading ? (<p className="text-center py-4">جار التحميل...</p>) : lawyers.map((lawyer, index) => (
-                        <div key={index} className="card bg-base-100 w-full shadow-sm my-11">
+                        <div key={index} className="card bg-base-100 w-full shadow-sm my-11 dark:bg-gray-800 dark:text-white/90 dark:focus:border-brand-800">
                             <div className="card-body">
                                 <h2 className="card-title">{lawyer.name}</h2>
                                 <p className="text-[20px]">{lawyer.email}</p>
@@ -189,13 +189,13 @@ export default function Lawyers() {
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
                                             <summary className="btn m-1 text-base font-normal bg-blue-300 border-none
-                                            text-white rounded-lg">إسناد قضايا</summary>
-                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm">
+                                            text-white rounded-lg shadow-none">إسناد قضايا</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                                                 {lawyer.unassigned_cases.map((caseItem) => (
                                                     <i key={caseItem.id} className="my-2">
                                                         <label className="flex items-center gap-2">
                                                             <input type="checkbox" value={caseItem.id} checked={false} onChange={(e) => handleCheckCases(e, lawyer.id)}
-                                                            className="checkbox" />
+                                                            className="checkbox dark:border-white" />
                                                             <span>{caseItem.title}</span>
                                                         </label>
                                                     </i>
@@ -207,8 +207,8 @@ export default function Lawyers() {
                                 <div className="collapse border">
                                     <input type="checkbox" className="peer" />
                                     <div className="collapse-title flex items-center justify-between">
-                                        <p>الدعوات المسندة</p>
-                                        <ArrowDownIcon />
+                                        <p>الدعاوى المسندة</p>
+                                        <ChevronDown />
                                     </div>
                                     <div className="collapse-content">
                                         <ul className="menu dropdown-content grid grid-cols-6 gap-x-16 rounded-box z-1 p-2">
@@ -216,7 +216,7 @@ export default function Lawyers() {
                                                 <i key={caseItem.id} className="my-2">
                                                     <label className="flex items-center gap-2">
                                                         <input type="checkbox" value={caseItem.id} checked={true} onChange={(e) => handleCheckCases(e, lawyer.id)}
-                                                        className="checkbox" />
+                                                        className="checkbox dark:text-white" />
                                                         <span>{caseItem.title}</span>
                                                     </label>
                                                 </i>

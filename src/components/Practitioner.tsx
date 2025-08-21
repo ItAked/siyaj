@@ -46,7 +46,7 @@ const Practitioner = ({ id }) => {
     }, [])
     return (
         <>
-            <div className="card card-border bg-base-100 w-full">
+            <div className="card card-border bg-base-100 w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-normal">{practitioner.name}</h2>
                     <p className="text-sm font-normal text-gray-500">{practitioner.email}</p>
@@ -54,7 +54,7 @@ const Practitioner = ({ id }) => {
                 </div>
             </div>
 
-            <div className="card card-border bg-base-100 w-full my-9">
+            <div className="card card-border bg-base-100 w-full my-9 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-medium">البيانات الشخصية</h2>
                     <div className="grid grid-cols-2 w-fit gap-x-32 gap-y-4 my-7">
@@ -68,7 +68,7 @@ const Practitioner = ({ id }) => {
                 </div>
             </div>
 
-            <div className="card card-border bg-base-100 w-full my-9">
+            <div className="card card-border bg-base-100 w-full my-9 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-medium">معلومات الممارس المهنية</h2>
                     <div className="grid grid-cols-2 w-fit gap-x-32 gap-y-4 my-7">
@@ -83,13 +83,14 @@ const Practitioner = ({ id }) => {
                 </div>
             </div>
 
-            <div className="max-w-full overflow-x-auto card card-border bg-base-100 w-full">
+            <div className="max-w-full overflow-x-auto card card-border bg-base-100 w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-medium">القضايا الخاصة بالممارس الصحي</h2>
 
                     <Table>
                         <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
                             <TableRow>
+                                <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">#</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">القضية</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الحالة</TableCell>
@@ -100,6 +101,7 @@ const Practitioner = ({ id }) => {
                         <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
                             { cases.map((c, index) => (
                                 <TableRow key={index}>
+                                    <TableCell className="py-3">{index + 1}</TableCell>
                                     <TableCell className="py-3">{c.case}</TableCell>
                                     <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.date}</TableCell>
                                     <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
@@ -112,13 +114,14 @@ const Practitioner = ({ id }) => {
                 </div>
             </div>
 
-            <div className="max-w-full overflow-x-auto card card-border bg-base-100 w-full my-7">
+            <div className="max-w-full overflow-x-auto card card-border bg-base-100 w-full my-7 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-medium">الإيصالات الخاصة بالممارس الصحي</h2>
 
                     <Table>
                         <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
                             <TableRow>
+                                <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">#</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الإيصال</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
                                 <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التصنيف</TableCell>
@@ -129,6 +132,7 @@ const Practitioner = ({ id }) => {
                         <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
                             { categories.map((c, index) => (
                                 <TableRow key={index}>
+                                    <TableCell className="py-3">{index + 1}</TableCell>
                                     <TableCell className="py-3">{c.payemnt_file != null && (<Link href={c.name} download={true}
                                     className="link text-sky-400">لتحميل الإيصال</Link>)}</TableCell>
                                     <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{c.expire_at}</TableCell>

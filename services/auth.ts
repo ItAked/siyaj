@@ -2,23 +2,13 @@ import api from '../utils/api';
 import { removeToken, setToken } from '../utils/auth';
 
 export const login = async (data: FormData): Promise<boolean> => {
-  try {
-    const response = await api.post('/login', data);    
-    setToken(response.data.access_token);
-    return true;
-  } catch (error) {
-    console.error('Login failed:', error);
-    return false;
-  }
+  const response = await api.post('/login', data);
+  return response.data;
 };
 
 export const logout = async () => {
-    try {
-        await api.post('/logout', {})
-        removeToken();
-    } catch (error) {
-        console.error('logout failed:', error)
-    }
+  await api.post('/logout', {})
+  removeToken();
 };
 
 export async function sendOtp(data: FormData){
@@ -33,5 +23,11 @@ export async function verifyOtp(data: FormData){
 
 export async function newPassword(data: FormData){
   const response = await api.post('/new-password', data)
+  return response.data
+}
+
+export async function verifyOtpLogin(data: FormData){
+  const response = await api.post('/verify-otp-login', data)
+  setToken(response.data.access_token);
   return response.data
 }

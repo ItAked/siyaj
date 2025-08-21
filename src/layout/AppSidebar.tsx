@@ -5,14 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import {
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  TableIcon,
-  UserCircleIcon,
-} from "../icons/index";
 import { logout } from "../../services/auth";
+import { Calendar, ChevronDown, LayoutGrid, Table, User } from 'lucide-react'
 
 type NavItem = {
   name: string;
@@ -23,32 +17,32 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <LayoutGrid />,
     name: "الرئيسية",
     path: "/admin"
   },
   {
-    icon: <CalenderIcon />,
-    name: "جدولة الدعوات",
+    icon: <Calendar />,
+    name: "جدولة الدعاوى",
     path: "/admin/calendar",
   },
   {
     name: "المحامين",
-    icon: <TableIcon />,
+    icon: <Table />,
     path: "/admin/lawyers"
   },
   {
     name: "الممارسين الصحيين",
-    icon: <TableIcon />,
+    icon: <Table />,
     path: "/admin/practitioners"
   },
   {
     name: "الإشتراكات",
-    icon: <TableIcon />,
+    icon: <Table />,
     path: "/admin/subscriptions"
   },
   {
-    icon: <UserCircleIcon />,
+    icon: <User />,
     name: "الإعدادات",
     path: "/admin/profile"
   }
@@ -81,7 +75,7 @@ const AppSidebar: React.FC = () => {
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isMobileOpen) && (
-                <ChevronDownIcon className={`ml-auto w-5 h-5 transition-transform duration-200  ${ openSubmenu?.type === menuType && openSubmenu?.index === index
+                <ChevronDown className={`ml-auto w-5 h-5 transition-transform duration-200  ${ openSubmenu?.type === menuType && openSubmenu?.index === index
                   ? "rotate-180 text-brand-500" : ""}`} />
               )}
             </button>
@@ -147,7 +141,7 @@ const AppSidebar: React.FC = () => {
         duration-300 ease-in-out z-50 border-r border-gray-200 max-sm:-right-48 ${isExpanded || isMobileOpen ? "w-[290px]" : "w-[90px]"}
         ${isMobileOpen ? "-translate-x-44" : "-translate-x-full"} lg:translate-x-0`}>
       <div className={`py-8 flex justify-center`}>
-        <Image className="dark:hidden" src="/images/logo/logo-white-blue.png" alt="Logo" width={124} height={162} />
+        <Image src="/images/logo/logo-white-blue.png" alt="Logo" width={124} height={162} />
       </div>
       <div className="flex flex-col flex-grow overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6 flex-grow">
@@ -166,7 +160,7 @@ const AppSidebar: React.FC = () => {
                   7.61255 9.44847 7.13767 9.15547 6.84488C8.86248 6.55209 8.3876 6.55226 8.09481 6.84525L3.52309 11.4202C3.35673 11.5577 3.25073 11.7657 3.25073 11.9984Z"
                   fill=""/>
                 </svg>
-                تسجيل الخروج
+                { isExpanded || isMobileOpen ? 'تسجيل الخروج' : ''}
               </button>
             </div>
           </div>

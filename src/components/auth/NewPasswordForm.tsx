@@ -3,11 +3,11 @@
 import Input from "../../components/form/input/InputField";
 import Label from "../../components/form/Label";
 import Button from "../../components/ui/button/Button";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { verifyOtp } from "../../../services/auth";
 import Alert from "../ui/alert/Alert";
+import { Eye, EyeClosed } from 'lucide-react'
 
 
 export default function NewPasswordForm() {
@@ -79,9 +79,9 @@ export default function NewPasswordForm() {
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                     >
                       {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <Eye className="fill-gray-500 dark:fill-gray-400" />
                       ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeClosed className="fill-gray-500 dark:fill-gray-400" />
                       )}
                     </span>
                   </div>
@@ -101,9 +101,9 @@ export default function NewPasswordForm() {
                       className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                     >
                       {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <Eye className="fill-gray-500 dark:fill-gray-400" />
                       ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeClosed className="fill-gray-500 dark:fill-gray-400" />
                       )}
                     </span>
                   </div>
