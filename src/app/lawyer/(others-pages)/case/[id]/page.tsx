@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: "صفحة الممارس الصحي"
 };
 
-export default function Page({ params }) {
-    const { id } = params
+export default async function Page({ params }) {
+    const { id } = await params
 
     return (
         <>

@@ -9,33 +9,54 @@ import CaseLawyerDataCard from "./cards/CaseLawyerDataCard";
 
 type CaseData = {
     id?: number;
-    attachments?: string;
+    case?: Cases;
+    file_name?: string;
+    file_path?: string;
+    lawyer?: Lawyer;
+}
+type Cases = {
+    id?: number;
     case_number?: number;
     created_at?: string;
     description?: string;
-    lawyer_email?: string;
-    lawyer_name?: string;
-    lawyer_phone?: string;
     stages?: string;
     status?: string;
     title?: string;
 }
+type Lawyer = {
+    id?: number;
+    name?: string;
+    email?: string;
+    phone?: string;
+}
 
-const EditPage = (props: {id: number;}) => {
+const EditPage = ({ id }) => {
     const[caseData, setCaseData] = useState<CaseData>({})
-
-    async function getCaseData() {
-        const response = await readCaseById(props.id)
-        setCaseData(response.data)        
-    }
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        async function getCaseData() {
+            try {
+                setLoading(true)
+                const response = await readCaseById(id)                
+                setCaseData(response.data)  
+            } catch (error) {
+                console.log(error?.response?.data?.message);
+                
+            } finally {
+                setLoading(false)
+            }  
+        }
         getCaseData()
-    }, [])
+    }, [id])
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
     <>
-        <CaseTitleCard titleData={caseData} />
+        <CaseTitleCard titleData={caseData.case} />
         <CaseDescriptionCard descriptionData={caseData} />
         <CaseAttachmentsCard attachmentsData={caseData} />
         <CaseLawyerDataCard lawyerData={caseData} />
