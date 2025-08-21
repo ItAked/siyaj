@@ -28,8 +28,7 @@ export async function updateSubscription(id: number, data: { name: string; price
 }
 
 export async function assignSubscription(form: FormData) {
-    const data = Object.fromEntries(form.entries());    
-    const response = await api.post('/subscribe', data);
+    const response = await api.post('/subscribe', form);
     return response.data
 }
 

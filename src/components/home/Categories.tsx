@@ -58,14 +58,14 @@ const Categories = () => {
     setSubmitError('')
     setSubmitSuccess(false)
     if (!selectedCategory || !paymentFile) {
-      setSubmitError('Please select a category and upload a payment file')
+      setSubmitError('الرجاء إرفاق الإيصال')
       setIsSubmitting(false)
       return
     }
     try {
       const formData = new FormData()
       formData.append('name', selectedCategory.name)
-      formData.append('payment_file', paymentFile)
+      formData.append('payment_file', paymentFile)      
       await assignSubscription(formData)
       const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
       if (dialog) dialog.close()
@@ -102,7 +102,7 @@ const Categories = () => {
             </div>
             <div className="p-6 bg-white mx-auto dark:bg-black">
               { getToken() ? (
-                <button className="btn dark:shadow-none" onClick={()=> {
+                <button className="btn btn-wide bg-sky-950 border-none text-white dark:shadow-none" onClick={()=> {
                   const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
                   setSelectedCategory(category); 
                   if (dialog) dialog.showModal();
@@ -117,27 +117,18 @@ const Categories = () => {
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                   </form>
                   <h3 className="font-medium text-3xl">يجب عليك تسجيل الدخول أولًا</h3>
-                  <a href={'/practitioner/auth/signin'} className="my-8 link">لتسجيل الدخول</a>
+                  <a href={'/auth/signin'} className="my-8 link">لتسجيل الدخول</a>
                 </div>
               </dialog>
               <dialog id="my_modal_4" className="modal">
-                <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                  </form>
+                <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 w-[630px]">
                   <form onSubmit={handleSubmitPayment}>
                     <h3 className="font-bold text-lg text-center">معلومات الدفع</h3>
-                    <div className="grid mt-7 w-full mx-16">
-                      <label className='text-start'>التصنيف المختار</label>
-                      <label className="input">
-                        <input type="text" className="grow" readOnly name='name' value={selectedCategory ? selectedCategory.name : ''} />
-                      </label>
-                    </div>
                     {paymentDetails.map((detail) => (
-                      <div className="grid mt-7 w-full mx-16" key={detail.id}>
+                      <div className="grid mt-7 mx-16" key={detail.id}>
                         <label className='text-start'>{detail.label}</label>
                         <label className="input">
-                          <input type="text" className="grow" readOnly value={detail.placeholder} />
+                          <input type="text" readOnly value={detail.placeholder} />
                           <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
                               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
@@ -147,32 +138,27 @@ const Categories = () => {
                         </label>
                       </div>
                     ))}
+                    <div className="grid mt-7 w-full mx-16">
+                      <label className='text-start'>التصنيف المختار</label>
+                      <label className="input">
+                        <input type="text" readOnly name='name' value={selectedCategory ? selectedCategory.name : ''} />
+                      </label>
+                    </div>
                     <fieldset className="fieldset mt-7 mx-16">
                       <label className="text-start text-base">رفع الإيصال</label>
-                      <input 
-                        type="file" 
-                        className="file-input" 
-                        onChange={handleFileChange}
-                        required
-                      />
+                      <input type="file" className="file-input" onChange={handleFileChange} required />
                     </fieldset>
-                    
-                    {submitError && (
-                      <div className="text-red-500 text-center mt-4">{submitError}</div>
-                    )}
-                    {submitSuccess && (
-                      <div className="text-green-500 text-center mt-4">
-                        تم تفعيل التصنيف بنجاح!
-                      </div>
-                    )}
-                    
-                    <button 
-                      type="submit" 
-                      className='btn btn-wide bg-sky-950 text-white font-normal mt-7 mx-24'
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'جاري الإرسال...' : 'إرسال'}
-                    </button>
+                    {submitError && (<div className="text-red-500 text-center mt-4">{submitError}</div>)}
+                    {submitSuccess && (<div className="text-green-500 text-center mt-4">تم تفعيل التصنيف بنجاح!</div>)}
+                    <div className='flex items-center mt-11 gap-x-4 justify-center'>
+                      <button type="submit" className='btn bg-sky-950 w-52 text-white font-normal' disabled={isSubmitting}>
+                        {isSubmitting ? 'جاري الإرسال...' : 'إرسال'}
+                      </button>
+                      <button type='button' className="btn bg-transparent border border-black w-52 text-black font-normal" onClick={() => {
+                        const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+                        if (dialog) dialog.close();
+                      }}>إلغاء</button>
+                    </div>
                   </form>
                 </div>
               </dialog>

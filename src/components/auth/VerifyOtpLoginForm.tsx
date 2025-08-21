@@ -7,6 +7,7 @@ import Input from "../form/input/InputField"
 import Button from "../ui/button/Button"
 import { useRouter } from "next/navigation"
 import { verifyOtpLogin } from "../../../services/auth"
+import { setRole } from "../../utils/auth"
 
 const VerifyOtpLoginForm = () => {
   const [user, setUser] = useState({'otp': ''})
@@ -30,6 +31,7 @@ const VerifyOtpLoginForm = () => {
     try {
       const response = await verifyOtpLogin(formData)
       setIsError(false)
+      setRole(response.role)
       if(response.role === 'lawyer') {
         setMsg('')
         router.push('/lawyer')
