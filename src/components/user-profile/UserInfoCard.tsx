@@ -55,7 +55,7 @@ export default function UserInfoCard() {
       setSuccessMsg('تم تحديث المعلومات بنجاح');
       setErrorMsg('');
       setTimeout(() => {
-        const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+        const dialog = document.getElementById('my_modal_5') as HTMLDialogElement | null;
         getProfileData()
         if (dialog) dialog.close();
       }, 1500);
@@ -85,7 +85,7 @@ export default function UserInfoCard() {
             </div>
           </div>
         </div>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id="my_modal_5" className="modal">
           <div className="modal-box dark:bg-gray-900">
             <div className="px-2">
               <h4 className="mb-2 text-xl text-gray-800 dark:text-white/90">تعديل البيانات الشخصية</h4>
@@ -116,7 +116,7 @@ export default function UserInfoCard() {
               <div className="flex items-center gap-3 px-2 mt-6 lg:justify-start">
                 <button type="submit" className="btn bg-brand-500 shadow-none border-none rounded-lg text-white w-36">تعديل</button>
                 <button className="btn bg-transparent shadow-none rounded-lg text-brand-500 border-brand-500 dark:border-white dark:text-white w-36"
-                onClick={() => {const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null; if (dialog) dialog.close();}}>إلغاء</button>
+                onClick={() => {const dialog = document.getElementById('my_modal_5') as HTMLDialogElement | null; if (dialog) dialog.close();}}>إلغاء</button>
               </div>
             </form>
           </div>
@@ -125,7 +125,7 @@ export default function UserInfoCard() {
           onClick={() => {
             setIsSuccess(false);
             setErrorMsg('');
-            const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null; 
+            const dialog = document.getElementById('my_modal_5') as HTMLDialogElement | null; 
             if (dialog) dialog.showModal();
           }} 
           className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700

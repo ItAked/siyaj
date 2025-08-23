@@ -45,7 +45,7 @@ const Categories = () => {
       formData.append('name', selectedCategory.name)
       formData.append('payment_file', paymentFile)      
       await assignSubscription(formData)
-      const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+      const dialog = document.getElementById('my_modal_7') as HTMLDialogElement | null;
       if (dialog) dialog.close()
     } catch (error) {
       console.error('Subscription error:', error)
@@ -81,7 +81,7 @@ const Categories = () => {
             <div className="p-6 bg-white mx-auto dark:bg-black">
               { getToken() ? (
                 <button className="btn btn-wide bg-sky-950 border-none text-white dark:shadow-none" onClick={()=> {
-                  const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+                  const dialog = document.getElementById('my_modal_7') as HTMLDialogElement | null;
                   setSelectedCategory(category); 
                   if (dialog) dialog.showModal();
                 }}>إختيار التصنيف</button>
@@ -98,7 +98,7 @@ const Categories = () => {
                   <a href={'/auth/signin'} className="my-8 link">لتسجيل الدخول</a>
                 </div>
               </dialog>
-              <dialog id="my_modal_4" className="modal">
+              <dialog id="my_modal_7" className="modal">
                 <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800 w-[630px]">
                   <form onSubmit={handleSubmitPayment}>
                     <h3 className="font-bold text-lg text-center">معلومات الدفع</h3>
@@ -133,7 +133,7 @@ const Categories = () => {
                         {isSubmitting ? 'جاري الإرسال...' : 'إرسال'}
                       </button>
                       <button type='button' className="btn bg-transparent border border-black w-52 text-black font-normal" onClick={() => {
-                        const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+                        const dialog = document.getElementById('my_modal_7') as HTMLDialogElement | null;
                         if (dialog) dialog.close();
                       }}>إلغاء</button>
                     </div>

@@ -9,10 +9,11 @@ const CaseAttachmentsCard = ({ attachmentsData }) => {
                     <div className="flex items-center gap-x-4">
                         <p className="text-2xl text-gray-800 dark:text-white/90">مستندات الدعوى</p>
                     </div>
-                    { attachmentsData.map((file: { file_path: string; file_name: string }, index: Key) => (
-                        <a key={index} href={file.file_path} className="text-sm flex items-center font-normal gap-x-1.5"><Download size={14} />
-                        {file.file_name === null ? 'لا توجد مستندات لهذه لدعوى' : file.file_name}</a>
-                    ))}
+                    { attachmentsData.length > 0 ? (
+                        attachmentsData.map((file: { file_path: string; file_name: string }, index: Key) => (
+                        <a key={index} href={file.file_path} className="text-sm flex items-center font-normal gap-x-1.5"><Download size={14} />{file.file_name}</a>
+                    ))
+                    ) : <p> لا توجد مستندات لهذه الدعوى</p>}
                 </div>
             </div>
         </>

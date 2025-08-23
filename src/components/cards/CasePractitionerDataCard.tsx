@@ -9,15 +9,15 @@ const CasePractitionerDataCard = ({ practitionerData }) => {
                     <div className="grid grid-cols-1 gap-4">
                         <div className="grid grid-cols-2 gap-x-0 mb-2 text-sm leading-normal text-black dark:text-gray-400 max-sm:grid-cols-1">
                             <p>اسم الممارس الصحي</p>
-                            <p>{practitionerData?.name}</p>
+                            <p>{practitionerData?.practitioner_name}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-x-0 mb-2 text-sm leading-normal text-black dark:text-gray-400 max-sm:grid-cols-1">
                             <p>المهنة</p>
-                            <p>{practitionerData?.medical}</p>
+                            <p>{practitionerData?.practitioner_medical}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-x-0 mb-2 text-sm leading-normal text-black dark:text-gray-400 max-sm:grid-cols-1">
                             <p>الهاتف</p>
-                            <p>{practitionerData?.phone}</p>
+                            <p>{practitionerData?.practitioner_phone}</p>
                         </div>
                     </div>
                 </div>
