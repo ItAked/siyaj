@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { getRole } from "../../utils/auth";
 
 interface BreadcrumbProps {
   pageTitle: string;
@@ -13,7 +14,7 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
           <li>
             <Link
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
-              href="/"
+              href={getRole() === 'lawyer' ? '/lawyer' : '/practitioner'}
             >
               الصفحة الرئيسية
               <svg

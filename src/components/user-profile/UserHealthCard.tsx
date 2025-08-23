@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
-import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { readSetting, updateSetting } from "../../../services/setting";
@@ -93,9 +92,8 @@ export default function UserHealthCard() {
         </div>
         <dialog id="my_modal_2" className="modal">
           <div className="modal-box dark:bg-gray-900">
-            <form method="dialog"><button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button></form>
             <div className="px-2 pr-14">
-              <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">تعديل معلومات الممارس المهنية</h4>
+              <h4 className="mb-2 text-2xl font-medium text-gray-800 dark:text-white/90">تعديل معلومات الممارس المهنية</h4>
             </div>
             <form className="flex flex-col" onSubmit={handleSave}>
               <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
@@ -104,7 +102,7 @@ export default function UserHealthCard() {
                     {errorMsg && (<Alert variant="error" title="حدث خطأ!" message={errorMsg} />)}
                     {isSuccess && (<Alert variant="success" title="تم التحديث بنجاح" message={successMsg} />)}
                   </div>
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-5">
                     <div className="col-span-2 lg:col-span-1">
                       <Label>رقم الترخيص المهني</Label>
                       <Input onChange={(e) => setProfileLicense(e.target.value)} type="text" defaultValue={profileLicense} />
@@ -120,8 +118,10 @@ export default function UserHealthCard() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-                <Button size="sm">تعديل</Button>
+              <div className="flex items-center gap-3 px-2 mt-6 lg:justify-start">
+                <button type="submit" className="btn bg-brand-500 shadow-none border-none rounded-lg text-white w-36">تعديل</button>
+                <button className="btn bg-transparent shadow-none rounded-lg text-brand-500 border-brand-500 dark:border-white dark:text-white w-36"
+                onClick={() => {const dialog = document.getElementById('my_modal_2') as HTMLDialogElement | null; if (dialog) dialog.close();}}>إلغاء</button>
               </div>
             </form>
           </div>
