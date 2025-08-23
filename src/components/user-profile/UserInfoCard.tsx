@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
-import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { readSetting, updateSetting } from "../../../services/setting";
@@ -67,43 +66,40 @@ export default function UserInfoCard() {
   };
 
   return (
-    <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+    <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <h4 className="text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-6">المعلومات الشخصية</h4>
-          <div className="grid grid-cols-1 gap-4 2xl:gap-x-32">
-            <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">الإسم</p>
+          <div className="grid gap-4 2xl:gap-x-32 max-sm:mt-4">
+            <div className="flex items-center gap-x-32">
+              <p className="text-xs leading-normal text-gray-500 dark:text-gray-400">الإسم الثلاثي</p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">{metaSetting.name}</p>
             </div>
-            <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">البريد الإلكتروني</p>
+            <div className="flex items-center gap-x-28">
+              <p className="text-xs leading-normal text-gray-500 dark:text-gray-400">البريد الإلكتروني</p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">{metaSetting.email}</p>
             </div>
-            <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الجوال</p>
+            <div className="flex items-center gap-x-32">
+              <p className="text-xs leading-normal text-gray-500 dark:text-gray-400">رقم الجوال</p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">{metaSetting.phone}</p>
             </div>
           </div>
         </div>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box dark:bg-gray-900">
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 pt-1">✕</button>
-            </form>
-            <div className="px-2 pr-14">
-              <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">تعديل البيانات الشخصية</h4>
+            <div className="px-2">
+              <h4 className="mb-2 text-xl text-gray-800 dark:text-white/90">تعديل البيانات الشخصية</h4>
             </div>
             <form className="flex flex-col" onSubmit={handleSave}>
-              <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
+              <div className="custom-scrollbar h-[450px] overflow-y-auto px-2">
                 <div className="mt-7">
                   <div className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
                     {errorMsg && (<Alert variant="error" title="حدث خطأ!" message={errorMsg} />)}
                     {isSuccess && (<Alert variant="success" title="تم التحديث بنجاح" message={successMsg} />)}
                   </div>
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-5">
                     <div className="col-span-2 lg:col-span-1">
-                      <Label>الإسم</Label>
+                      <Label>الإسم الثلاثي</Label>
                       <Input onChange={(e) => setProfileName(e.target.value)} type="text" defaultValue={profileName} required />
                     </div>
                     <div className="col-span-2 lg:col-span-1">
@@ -117,8 +113,10 @@ export default function UserInfoCard() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-                <Button type="submit" size="sm">تعديل</Button>
+              <div className="flex items-center gap-3 px-2 mt-6 lg:justify-start">
+                <button type="submit" className="btn bg-brand-500 shadow-none border-none rounded-lg text-white w-36">تعديل</button>
+                <button className="btn bg-transparent shadow-none rounded-lg text-brand-500 border-brand-500 dark:border-white dark:text-white w-36"
+                onClick={() => {const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null; if (dialog) dialog.close();}}>إلغاء</button>
               </div>
             </form>
           </div>

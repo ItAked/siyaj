@@ -5,14 +5,16 @@ import { readCaseById } from "../../services/cases";
 import CaseTitleCard from "./cards/CaseTitleCard";
 import CaseDescriptionCard from "./cards/CaseDescriptionCard";
 import CaseAttachmentsCard from "./cards/CaseAttachmentsCard";
-import CaseLawyerDataCard from "./cards/CaseLawyerDataCard";
+// import CaseLawyerDataCard from "./cards/CaseLawyerDataCard";
+import CasePractitionerDataCard from "./cards/CasePractitionerDataCard";
 
 type CaseData = {
     id?: number;
     case?: Cases;
     file_name?: string;
     file_path?: string;
-    lawyer?: Lawyer;
+    // lawyer?: Lawyer;
+    practitioner?: Practitioner
 }
 type Cases = {
     id?: number;
@@ -23,10 +25,16 @@ type Cases = {
     status?: string;
     title?: string;
 }
-type Lawyer = {
+// type Lawyer = {
+//     id?: number;
+//     name?: string;
+//     email?: string;
+//     phone?: string;
+// }
+type Practitioner = {
     id?: number;
     name?: string;
-    email?: string;
+    medical?: string;
     phone?: string;
 }
 
@@ -59,7 +67,8 @@ const CaseById = ({ id }) => {
         <CaseTitleCard titleData={caseData.case} />
         <CaseDescriptionCard descriptionData={caseData.case} />
         <CaseAttachmentsCard attachmentsData={caseData} />
-        <CaseLawyerDataCard lawyerData={caseData.lawyer} />
+        {/* <CaseLawyerDataCard lawyerData={caseData.lawyer} /> */}
+        <CasePractitionerDataCard practitionerData={caseData.practitioner} />
     </>
   );
 }

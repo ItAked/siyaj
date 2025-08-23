@@ -35,6 +35,7 @@ export default function SignInForm() {
       formData.append('email', user.email)
       formData.append('password', user.password)
       await login(formData)
+      
       setErrorMsg('');
       router.push('/auth/verify-otp-login')
     } catch (error) {

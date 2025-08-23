@@ -12,10 +12,11 @@ export default function AuthLayout({
       <ThemeProvider>
         <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col  dark:bg-gray-900 sm:p-0">
           {children}
-          <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden bg-gray-50">
+          <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden bg-gray-50 dark:bg-black">
             <div className="relative items-center justify-center  flex z-1">
               <div className="flex flex-col items-center max-w-xs">
-                <img src="/images/logo/logo-blue-light-blue.png" alt="logo" className="max-sm:hidden" />
+                <img src="/images/logo/logo-blue-light-blue.png" alt="logo" className="max-sm:hidden dark:hidden" />
+                <img src="/images/logo/blue-white.png" alt="logo" className="max-sm:hidden dark:block hidden" />
               </div>
             </div>
           </div>

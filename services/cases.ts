@@ -23,9 +23,7 @@ export async function updateCaseStatus(id: number, data: { status: string }) {
     return response.data;
 }
 
-export async function readCaseById(id: number) {
-    console.log(id);
-    
+export async function readCaseById(id: number) {    
     const response = await api.get(`/case/${id}`);
     return response.data
 }
