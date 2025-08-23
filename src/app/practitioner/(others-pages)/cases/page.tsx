@@ -13,8 +13,8 @@ export default function BasicTables() {
     <>
       <div className="flex items-center justify-between">
         <PageBreadcrumb pageTitle="الدعاوى" />
-        <a href='/practitioner/create-case' className="btn shadow-none dark:border-gray-700 dark:bg-gray-900 dark:text-white/90
-        dark:focus:border-brand-800">إضافة دعوى جديدة</a>
+        <a href='/practitioner/create-case' className="btn shadow-none dark:bg-white/90 font-medium text-base dark:text-gray-900
+        dark:focus:border-brand-800 bg-brand-500 border-none text-white">دعوى جديدة</a>
       </div>
       <div className="space-y-6">
         <AllCasesPractitioner />

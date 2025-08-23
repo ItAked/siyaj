@@ -32,3 +32,8 @@ export async function updateCaseById(form: FormData, id: number) {
     const response = await api.post(`/update-case/${id}`, form)
     return response.data
 }
+
+export async function deletAttachment(id: number) {
+    const response = await api.delete(`/remove-attacment-case/${id}`)
+    return response.data
+}

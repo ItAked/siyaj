@@ -7,42 +7,37 @@ import CaseDescriptionCard from "./cards/CaseDescriptionCard";
 import CaseAttachmentsCard from "./cards/CaseAttachmentsCard";
 import CaseLawyerDataCard from "./cards/CaseLawyerDataCard";
 
-type CaseData = {
-    id?: number;
-    case?: Cases;
-    file_name?: string;
-    file_path?: string;
-    lawyer?: Lawyer;
+interface Attachments {
+    file_name: string;
+    file_path: string;
 }
 type Cases = {
+    case?: string;
+    date?: string;
     id?: number;
-    case_number?: number;
-    created_at?: string;
-    description?: string;
-    stages?: string;
+    lawyer_email?: string;
+    lawyer_name?: string;
+    lawyer_phone?: string;
     status?: string;
-    title?: string;
-}
-type Lawyer = {
-    id?: number;
-    name?: string;
-    email?: string;
-    phone?: string;
+    stages?: string;
+    case_number?: number;
+    description?: string;
 }
 
 const EditPage = ({ id }) => {
-    const[caseData, setCaseData] = useState<CaseData>({})
+    const[caseData, setCaseData] = useState<Cases>({})
+    const[caseAttachments, setCaseAttachments] = useState<Attachments[]>([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getCaseData() {
             try {
                 setLoading(true)
-                const response = await readCaseById(id)                
-                setCaseData(response.data)  
+                const response = await readCaseById(id)
+                setCaseData(response.cases)
+                setCaseAttachments(response.attachments)
             } catch (error) {
                 console.log(error?.response?.data?.message);
-                
             } finally {
                 setLoading(false)
             }  
@@ -56,9 +51,9 @@ const EditPage = ({ id }) => {
 
     return (
     <>
-        <CaseTitleCard titleData={caseData.case} />
+        <CaseTitleCard titleData={caseData} />
         <CaseDescriptionCard descriptionData={caseData} />
-        <CaseAttachmentsCard attachmentsData={caseData} />
+        <CaseAttachmentsCard attachmentsData={caseAttachments} />
         <CaseLawyerDataCard lawyerData={caseData} />
     </>
   );
