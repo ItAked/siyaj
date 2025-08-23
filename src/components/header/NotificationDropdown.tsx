@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { readNotifications, updateNotification } from "../../../services/notification";
-import { useRouter } from "next/navigation";
+import { readNotifications } from "../../../services/notification";
+import { getRole } from "../../utils/auth";
 
 interface Notification {
   id: string;
@@ -16,7 +16,6 @@ export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifying, setNotifying] = useState(false);
   const [notification, setNotifications] = useState<Notification[]>([])
-  const router = useRouter()
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -32,11 +31,6 @@ export default function NotificationDropdown() {
     } catch (error) {
       console.log(error.response.data.message);
     }
-  }
-  async function markAsRead(id: string) {
-    await updateNotification(id);
-    router.push('/lawyer/cases')
-    getNotifications()
   }
   const handleClick = () => {
     toggleDropdown();
@@ -80,7 +74,7 @@ export default function NotificationDropdown() {
         <ul className="flex flex-col h-auto overflow-y-auto custom-scrollbar ml-4">
           {notification.map((n) => (
             <li key={n.id}>
-              <DropdownItem onItemClick={() => markAsRead(n.id)} className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100
+              <DropdownItem className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100
               dark:border-gray-800 dark:hover:bg-white/5">
                 <span className="block text-right">
                   <span className="mb-1.5 space-x-1 block text-theme-sm text-gray-500 dark:text-gray-400">
@@ -95,8 +89,9 @@ export default function NotificationDropdown() {
             </li>
           ))}
         </ul>
-        <a href="/lawyer/notification" className="block px-4 py-2 mt-3 text-sm font-medium text-center text-gray-500 bg-white border border-gray-300 rounded-lg
-        hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 link">عرض جميع التنبيهات</a>
+        <a href={getRole() === 'lawyer' ? "/lawyer/notification" : "/practitioner/notification"} className="block px-4 py-2 mt-3 text-sm font-medium text-center
+        text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400
+        dark:hover:bg-gray-700 link">عرض جميع التنبيهات</a>
       </Dropdown>
     </div>
   );

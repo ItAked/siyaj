@@ -40,7 +40,7 @@ export default function UserMetaCard() {
               <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-right">
                 <p className="text-sm text-gray-500 dark:text-gray-400">{metaSetting.name}</p>
               </div>
-              <div className="badge badge-soft badge-primary mt-3">{metaSetting.medical}</div>
+              {/* <div className="badge badge-soft badge-primary mt-3">{metaSetting.medical}</div> */}
             </div>
           </div>
         </div>

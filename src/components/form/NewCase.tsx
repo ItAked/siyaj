@@ -15,7 +15,7 @@ export default function NewCase() {
     'status': '',
     'stages': '',
     'case_number': '',
-    'attachment': ''
+    'attachments': [] as File[] // Changed to array for multiple files
   })
   const [msg, setMsg] = useState('')
   const [isError, setIsError] = useState(false)
@@ -24,9 +24,14 @@ export default function NewCase() {
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     if (event.target.type === 'file') {
       const fileInput = event.target as HTMLInputElement
-      setNewCase((prevCase) => {
-        return { ...prevCase, [event.target.name]: fileInput.files?.[0]}
-      })
+      if (fileInput.files) {
+        const filesArray = Array.from(fileInput.files)
+        console.log(filesArray);
+        
+        setNewCase((prevCase) => {
+          return { ...prevCase, attachments: filesArray }
+        })
+      }
     } else {
       setNewCase((prevCase) => {
         return { ...prevCase, [event.target.name]: event.target.value}
@@ -42,18 +47,20 @@ export default function NewCase() {
       form.append('title', newCase.title)
       form.append('status', newCase.status)
       form.append('stages', newCase.stages)
-      form.append('case_number', newCase.case_number)
-      form.append('attachment', newCase.attachment)
+      form.append('case_number', newCase.case_number)      
+      newCase.attachments.forEach((file) => {
+        form.append('attachments[]', file)
+      })
       const response = await createCase(form)
       setIsError(false)
       setMsg(response.message)
       router.push('/practitioner/cases')
     } catch (error) {
       setIsError(true)
-      setMsg(error.response.data.message)
+      setMsg(error.response?.data?.message || 'حدث خطأ أثناء إنشاء الدعوى')
     }
   };
-
+  
   return (
     <ComponentCard>
         <form onSubmit={handleSave}>
@@ -102,7 +109,7 @@ export default function NewCase() {
                     <Label>مرحلة الدعوى</Label>
                     <select defaultValue={newCase.stages} name="stages" className="select w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90
                     dark:focus:border-brand-800" required onChange={handleInputChange}>
-                        <option value={0}>اختر مرحلةالدعوى</option>
+                        <option value={0}>اختر مرحلة الدعوى</option>
                         <option value="شؤون صحية">شؤون صحية</option>
                         <option value="أحيلت لمنصة تراضي">أحيلت لمنصة تراضي</option>
                         <option value="أحيلت لدائرة القضايا">أحيلت لدائرة القضايا</option>
@@ -111,9 +118,20 @@ export default function NewCase() {
             </div>
 
             <div className="col-span-1">
-                <Label>ملفات الدعوى</Label>
-                <input required defaultValue={undefined} name="attachment" onChange={handleInputChange} type="file" className="file-input dark:border-gray-700
-                dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" />
+                <Label>ملفات الدعوى (يمكن اختيار أكثر من ملف)</Label>
+                <input 
+                  required 
+                  name="attachments" 
+                  onChange={handleInputChange} 
+                  type="file" 
+                  multiple // Add multiple attribute
+                  className="file-input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" 
+                />
+                {newCase.attachments.length > 0 && (
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    تم اختيار {newCase.attachments.length} ملف(ات)
+                  </p>
+                )}
             </div>
           </div>
 

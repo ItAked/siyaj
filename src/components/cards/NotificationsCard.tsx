@@ -19,9 +19,7 @@ const NotificationCard = () => {
         try {
             setIsLoading(true)
             setError('')
-            const response = await readNotifications()
-            console.log(response.data);
-            
+            const response = await readNotifications()            
             setNotifications(response.data);
         } catch (error) {
             setIsError(true)

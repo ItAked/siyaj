@@ -23,14 +23,17 @@ export async function updateCaseStatus(id: number, data: { status: string }) {
     return response.data;
 }
 
-export async function readCaseById(id: number) {
-    console.log(id);
-    
+export async function readCaseById(id: number) {    
     const response = await api.get(`/case/${id}`);
     return response.data
 }
 
 export async function updateCaseById(form: FormData, id: number) {
     const response = await api.post(`/update-case/${id}`, form)
+    return response.data
+}
+
+export async function deletAttachment(id: number) {
+    const response = await api.delete(`/remove-attacment-case/${id}`)
     return response.data
 }

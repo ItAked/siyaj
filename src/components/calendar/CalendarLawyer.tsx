@@ -159,14 +159,14 @@ const CalendarLawyer: React.FC = () => {
           eventContent={renderEventContent}
           customButtons={{
             addEventButton: {text: selectedAppointment ? "تعديل الموعد" : "إضافة موعد", click: () => {
-              const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+              const modal = document.getElementById('my_modal_6') as HTMLDialogElement | null;
               if (modal && typeof modal.showModal === 'function') { modal.showModal();}
               }
             }
           }}
         />
       </div>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="my_modal_6" className="modal">
         <div className="modal-box dark:bg-gray-900">
           <div className="mt-8">
             <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">
@@ -230,7 +230,7 @@ const CalendarLawyer: React.FC = () => {
                 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"/>
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                يرجى إدخال الوقت بالتنسيق التالي: ساعة:دقيقة ثم am (صباحًا) أو (مثال: 2:30 PM)
+                يرجى إدخال الوقت بالتنسيق التالي: ساعة:دقيقة ثم am (صباحًا) أو pm (مساءًا) (مثال: 2:30 PM)
               </p>
             </div>
           </div>
@@ -253,8 +253,8 @@ const renderEventContent = (eventInfo: EventContentArg) => {
   return (
     <div className={`event-fc-color flex fc-event-main fc-bg-primary`}>
       <div className="fc-daygrid-event-dot"></div>
-      <div className="fc-event-time dark:text-black">{eventInfo.timeText}</div>
-      <div className="fc-event-title dark:text-black">{eventInfo.event.title}</div>
+      <div className="fc-event-time text-black">{eventInfo.timeText}</div>
+      <div className="fc-event-title text-black">{eventInfo.event.title}</div>
     </div>
   );
 };

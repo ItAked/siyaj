@@ -17,4 +17,13 @@ export const getToken = (): string | undefined => {
 // Remove token on logout
 export const removeToken = () => {
   Cookies.remove('authToken');
+  Cookies.remove('role')
 };
+
+export const setRole = (role: string) => {
+  Cookies.set('role', role)
+}
+
+export const getRole = (): string | undefined => {
+  return Cookies.get('role')
+}

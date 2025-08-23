@@ -153,8 +153,11 @@ const AppSidebarLawyers: React.FC = () => {
 
             {/* Sign out button at the bottom */}
             <div className="mt-auto pb-6">
-              <button onClick={handleSignout} className="btn no-underline gap-3 px-3 py-2 font-medium text-white rounded-lg group text-theme-sm dark:text-gray-400
-              bg-transparent border-none shadow-none">
+              <button onClick={() => {const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+              if (modal) {
+                modal.showModal();
+              }}} className="btn no-underline gap-3 px-3 py-2 font-medium text-white rounded-lg group text-theme-sm dark:text-gray-400 bg-transparent border-none
+              shadow-none">
                 <svg className="fill-white dark:fill-gray-300" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M15.1007 19.247C14.6865 19.247 14.3507 18.9112 14.3507 18.497L14.3507 14.245H12.8507V18.497C12.8507 19.7396
@@ -169,6 +172,17 @@ const AppSidebarLawyers: React.FC = () => {
                 {isExpanded || isMobileOpen ? "تسجيل الخروج" : ""}
               </button>
             </div>
+            <dialog id="my_modal_1" className="modal">
+              <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
+                <h3 className="font-medium text-2xl">هل تود تسجيل الخروج؟</h3>
+                <div className="modal-action flex items-center justify-start mt-20">
+                  <button className="btn bg-brand-500 text-white w-36 border-none shadow-none" onClick={handleSignout}>نعم</button>
+                  <form method="dialog">
+                    <button className="btn bg-transparent shadow-none rounded-lg text-brand-500 border-brand-500 dark:border-white dark:text-white w-36">إلغاء</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </nav>
       </div>

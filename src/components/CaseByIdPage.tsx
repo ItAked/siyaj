@@ -5,41 +5,39 @@ import { readCaseById } from "../../services/cases";
 import CaseTitleCard from "./cards/CaseTitleCard";
 import CaseDescriptionCard from "./cards/CaseDescriptionCard";
 import CaseAttachmentsCard from "./cards/CaseAttachmentsCard";
-import CaseLawyerDataCard from "./cards/CaseLawyerDataCard";
+import CasePractitionerDataCard from "./cards/CasePractitionerDataCard";
 
-type CaseData = {
+interface Attachments {
     id?: number;
-    case?: Cases;
-    file_name?: string;
-    file_path?: string;
-    lawyer?: Lawyer;
+    file_name: string;
+    file_path: string;
 }
 type Cases = {
+    case?: string;
+    date?: string;
     id?: number;
-    case_number?: number;
-    created_at?: string;
-    description?: string;
-    stages?: string;
+    practitioner_email?: string;
+    practitioner_name?: string;
+    practitioner_phone?: string;
     status?: string;
-    title?: string;
-}
-type Lawyer = {
-    id?: number;
-    name?: string;
-    email?: string;
-    phone?: string;
+    stages?: string;
+    case_number?: number;
+    description?: string;
+    practitioner_medical?: string;
 }
 
 const CaseById = ({ id }) => {
-    const[caseData, setCaseData] = useState<CaseData>({})
+    const[caseData, setCaseData] = useState<Cases>({})
+    const[caseAttachments, setCaseAttachments] = useState<Attachments[]>([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getCaseData() {
             try {
                 setLoading(true)
-                const response = await readCaseById(id)                
-                setCaseData(response.data)  
+                const response = await readCaseById(id)
+                setCaseData(response.cases)
+                setCaseAttachments(response.attachments)
             } catch (error) {
                 console.log(error?.response?.data?.message);
                 
@@ -56,10 +54,10 @@ const CaseById = ({ id }) => {
 
     return (
     <>
-        <CaseTitleCard titleData={caseData.case} />
-        <CaseDescriptionCard descriptionData={caseData.case} />
-        <CaseAttachmentsCard attachmentsData={caseData} />
-        <CaseLawyerDataCard lawyerData={caseData.lawyer} />
+        <CaseTitleCard titleData={caseData} />
+        <CaseDescriptionCard descriptionData={caseData} />
+        <CaseAttachmentsCard attachmentsData={caseAttachments} />
+        <CasePractitionerDataCard practitionerData={caseData} />
     </>
   );
 }

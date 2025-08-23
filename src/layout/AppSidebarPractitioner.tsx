@@ -28,11 +28,6 @@ const navItems: NavItem[] = [
   },
   {
     icon: <File />,
-    name: "الاشتراكات",
-    path: '/practitioner/subscription'
-  },
-  {
-    icon: <File />,
     name: "الخدمات",
     path: '/practitioner/services'
   },
