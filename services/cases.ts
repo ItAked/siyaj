@@ -32,3 +32,8 @@ export const assignCases = async (id: number, data: { cases: number[], is_checke
         console.error('failed to assign cases: ', error)
     }
 }
+
+export async function readCaseById(id: number) {    
+    const response = await api.get(`/case/${id}`);
+    return response.data
+}

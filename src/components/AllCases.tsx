@@ -74,16 +74,21 @@ export default function AllCases() {
           {/* Table Header */}
           <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
             <TableRow>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">#</TableCell>
+              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">عنوان الدعوى</TableCell>
               <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">اسم الممارس الصحي</TableCell>
               <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">التاريخ</TableCell>
-              <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الدعوة</TableCell>
               <TableCell isHeader className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">الحالة</TableCell>
             </TableRow>
           </TableHeader>
 
           <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {cases.map((item) => (
+            {cases.map((item, index) => (
               <TableRow key={item.id} className="">
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>
+                  <a href={`/admin/case/${item.id}`} className="py-3 text-gray-500 text-theme-sm dark:text-gray-400 link">{item.case}</a>
+                </TableCell>
                 <TableCell className="py-3">
                   <div className="flex items-center gap-3">
                     <div>
@@ -91,8 +96,7 @@ export default function AllCases() {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.date}</TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.case}</TableCell>
+                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{item.date.substring(0, item.date.indexOf('T'))}</TableCell>
                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   <Badge size="sm" color={ item.status === "منظورة لمنصة تراضي" ? "success" : item.status === "منظورة لدى الدائرة القضائية" ? "info" : "warning"}>
                     {item.status}

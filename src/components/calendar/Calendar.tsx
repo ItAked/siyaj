@@ -126,14 +126,14 @@ const Calendar: React.FC = () => {
             <div>
               <p className="text-black dark:text-white/90 text-center">تفاصيل القضية</p>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان الدعوة</label>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">عنوان الدعوى</label>
                 <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
                 value={appointmentName} readOnly />
               </div>
             </div>
             <div className="my-8">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">رقم الدعوة</label>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">رقم الدعوى</label>
                 <input type="text" className="input dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
                 value={caseNumber} readOnly />
               </div>
@@ -153,13 +153,13 @@ const Calendar: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوة</label>
+              <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">حالة الدعوى</label>
               <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                 <Badge color='primary'>{appointmentStatus}</Badge>
               </div>
             </div>
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">موعد الدعوة</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">موعد الدعوى</label>
               <div className="relative">
                 <input id="appointment-time" type="text" value={`الساعة ${appointmentTime} بتاريخ ${appointmentDate}`} readOnly className="dark:bg-dark-900 h-11 w-full
                 appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs
@@ -174,9 +174,9 @@ const Calendar: React.FC = () => {
               readOnly></textarea>
             </div>
             <div className="mt-6">
-              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات الدعوة</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">ملفات الدعوى</label>
               <div className="relative">
-                <a href={appointmentAttachment} className="btn btn-link" download={true}>تحميل ملف الدعوة</a>
+                <a href={appointmentAttachment} className="btn btn-link" download={true}>تحميل ملف الدعوى</a>
               </div>
             </div>
           </div>
