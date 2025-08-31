@@ -1,10 +1,24 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
 import { Ellipsis } from "lucide-react";
-import { createService } from "../../../services/services";
+import { createService, readServices, removeService, updateService } from "../../../services/services";
 import Alert from "../ui/alert/Alert";
+import Pagination from "./Pagination";
+
+type Meta = {
+  current_page?: number;
+  last_page?: number;
+}
+
+interface Services {
+    id: number;
+    description: string;
+    price: number;
+    title: string;
+    type: string;
+}
 
 const ServicesTable = () => {
     const [errorMsg, setErrorMsg] = useState('')
@@ -15,9 +29,9 @@ const ServicesTable = () => {
     const [priceService, setPriceService] = useState(0);
     const [checkType, setCheckType] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    // const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
-    // const [pages, setPages] = useState<Meta>({})
-    // const [subscreptionId, setSubscriptionId] = useState(0)
+    const [services, setServices] = useState<Services[]>([]);
+    const [pages, setPages] = useState<Meta>({})
+    const [serviceId, setServiceId] = useState(0)
 
     async function handleAddService() {
         try {
@@ -25,7 +39,7 @@ const ServicesTable = () => {
             const response = await createService({title: titleService, description: descriptionService, type: typeService, price: priceService})
             setIsError(false)
             setErrorMsg(response.message)
-            // getSubscriptions();
+            getServices();
         } catch (error) {
             setIsError(true)
             setErrorMsg(error.response.data.message)
@@ -33,39 +47,50 @@ const ServicesTable = () => {
             setIsLoading(false)
         }
     }
-    // async function handleUpdateSubscription (id: number) {
-    //     try {
-    //         const response = await updateSubscription(id, {name: titleFeature, price: featurePrice})
-    //         setIsError(false)
-    //         setErrorMsg(response.message)
-    //         getSubscriptions();
-    //         setTitleFeature('')
-    //         setFeaturePrice(0)
-    //     } catch (error) {
-    //         setIsError(true)
-    //         setErrorMsg(error.response.data.message)
-    //     }
-    // }
-    // async function getSubscriptions(page = 1) {
-    //     setIsLoading(true);
-    //     try {
-    //         const response = await readSubscriptions(page);
-    //         setSubscriptions(response.data);
-    //         setPages(response.meta)
-    //     } catch (error) {
-    //         console.error("Failed to fetch lawyers:", error);
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
-    // async function handleRemoveSubscription(id: number) {
-    //     await deleteSubscriptions(id)
-    //     getSubscriptions();
-    // }
+    async function handleUpdateSubscription (id: number) {
+        try {
+            const response = await updateService(id, {title: titleService, description: descriptionService, type: typeService, price: priceService})
+            setIsError(false)
+            setErrorMsg(response.message)
+            getServices();
+            setTitleService('')
+            setDescriptionService('')
+            setTypeService('')
+            setPriceService(0)
+        } catch (error) {
+            setIsError(true)
+            setErrorMsg(error.response.data.message)
+        }
+    }
+    async function getServices(page = 1) {
+        setIsLoading(true);
+        try {
+            const response = await readServices(page);
+            setServices(response.data);
+            setPages(response.meta)
+        } catch (error) {
+            setIsError(true)
+            setErrorMsg(error.response.data.message)
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    async function handleRemoveService(id: number) {
+        try {
+            setIsLoading(true)
+            await removeService(id)
+            getServices();
+        } catch (error) {
+            setIsError(true)
+            setErrorMsg(error.response.data.message)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
-    // useEffect(() => {
-    //     getSubscriptions();
-    // }, []);
+    useEffect(() => {
+        getServices();
+    }, []);
     
     return(
         <>
@@ -192,45 +217,98 @@ const ServicesTable = () => {
                 <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
-                            {/* <div>
-                                <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">تعديل التصنيف</h5>
+                            <div>
+                                <h5 className="mb-2 font-semibold text-gray-800 modal-title text-center text-theme-xl dark:text-white/90 lg:text-2xl">تعديل الاستشارة</h5>
                                 { errorMsg != '' && (
                                     isError ? <Alert variant={"error"} title={"حدث خطأ!"} message={errorMsg} />
                                     : <Alert variant={"success"} title="" message={errorMsg} />
                                 )}
-                            </div> */}
-                            {/* <div className="mt-8">
+                            </div>
+                            <div className="mt-8">
                                 <div>
-                                    <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">التصنيف</label>
-                                        <input name="name" type="text" value={titleFeature} onChange={(e) => setTitleFeature(e.target.value)}
-                                        className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
-                                        shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">العنوان</label>
+                                    <input name="name" type="text" value={titleService} onChange={(e) => setTitleService(e.target.value)}
+                                    className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
+                                    shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
+                                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                </div>
+                            </div>
+                            <div className="mt-8">
+                                <div>
+                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">التفاصيل</label>
+                                    <textarea name="description" value={descriptionService} onChange={(e) => setDescriptionService(e.target.value)}
+                                    className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
+                                    shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
+                                    dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
+                                    dark:focus:border-brand-800"></textarea>
+                                </div>
+                            </div>
+                            <div className="mt-8">
+                                <div>
+                                    <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">النوع</label>
+                                    <div className="grid gap-y-3.5">
+                                        <label className="flex items-center gap-x-1.5 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
+                                        dark:focus:border-brand-800">
+                                            <input type="radio" name="type" value="consultant" checked={typeService === 'consultant'}
+                                            onChange={(event) => setTypeService(event.target.value)} className="radio checked:text-brand-500" />
+                                            <p>استشارة</p>
+                                        </label>
+                                        <label className="flex items-center gap-x-1.5 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
+                                        dark:focus:border-brand-800">
+                                            <input type="radio" name="type" value="service" onChange={(event) => setTypeService(event.target.value)}
+                                            className="radio checked:text-brand-500" checked={typeService === 'service'} />
+                                            <p>خدمة أخرى</p>
+                                        </label>
                                     </div>
                                 </div>
-                            </div> */}
-                            {/* <div className="mt-8">
+                            </div>
+                            <div className="mt-8">
                                 <div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر التصنيف</label>
-                                        <input name="price" type="number" value={featurePrice} onChange={(e) => setFeaturePrice(Number(e.target.value))}
-                                        className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
-                                        shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
-                                        dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                        <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">التسعيرة
+                                            <span className="text-error">*</span></label>
+                                        <div className="grid gap-y-3.5">
+                                            <label className="flex items-center gap-x-1.5 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
+                                            dark:focus:border-brand-800">
+                                                <input type="radio" name="checkType" value={1} onChange={(event) => setCheckType(Number(event.target.value))}
+                                                className="radio checked:text-brand-500" checked={checkType === 1} />
+                                                <p>مدفوعة</p>
+                                            </label>
+                                            <label className="flex items-center gap-x-1.5 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
+                                            dark:focus:border-brand-800">
+                                                <input type="radio" name="checkType" value={0} onChange={(event) => setCheckType(Number(event.target.value))}
+                                                className="radio checked:text-brand-500" checked={checkType === 0} />
+                                                <p>مجانية</p>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div> */}
-                            {/* <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-start modal-action">
+                            </div>
+                            { checkType === 1 && (
+                                <div className="mt-8">
+                                    <div>
+                                        <div>
+                                            <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">سعر الاستشارة</label>
+                                            <input name="price" type="number" value={priceService} onChange={(e) => setPriceService(Number(e.target.value))}
+                                            className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800
+                                            shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10
+                                            dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            <div className="flex items-center gap-3 mt-6 modal-footer sm:justify-start modal-action">
                                 <button type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                py-2.5 text-sm font-medium text-white sm:w-auto" onClick={() => handleUpdateSubscription(subscreptionId)}>تعديل التصنيف</button>
+                                py-2.5 text-sm font-medium text-white sm:w-auto" onClick={() => handleUpdateSubscription(serviceId)}>تعديل الخدمةأو الاستشارة</button>
                                 <form method="dialog">
                                     <button className="btn border-black bg-transparent text-black dark:text-white dark:border-white" onClick={() => {
-                                        setFeaturePrice(0)
-                                        setTitleFeature('')
+                                        setPriceService(0)
+                                        setTitleService('')
+                                        setDescriptionService('')
+                                        setTypeService('')
                                         setErrorMsg('')}}>إلغاء</button>
                                 </form>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 </dialog>
@@ -248,50 +326,51 @@ const ServicesTable = () => {
                     </TableHeader>
 
                     <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {/* {isLoading ? (
+                        {isLoading ? (
                             <TableRow>
                                 <TableCell className="text-center py-4">جار التحميل...</TableCell>
                             </TableRow>
-                        ) : subscriptions.map((subscription) => ( */}
-                            <TableRow>
-                                <TableCell className="py-3">#</TableCell>
+                        ) : services.map((service, index) => (
+                            <TableRow key={index}>
+                                <TableCell className="py-3">{index + 1}</TableCell>
                                 <TableCell className="py-3">
                                     <div className="flex items-center gap-3">
-                                        <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">عنوان الاستشارة</p>
+                                        <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">{service.title}</p>
                                     </div>
                                 </TableCell>
-                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">نوع الاتسشارة</TableCell>
-                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">سعر الاتسشارة</TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{service.type}</TableCell>
+                                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{service.price === 0 ? 'مجانًا' : service.price}</TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     <details className="dropdown">
                                         <summary className="btn btn-ghost dark:text-white hover:bg-transparent shadow-none border-none m-1">
                                             <Ellipsis className="dark:text-white" /></summary>
-                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm left-4 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
+                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm left-4 dark:border-gray-700 dark:bg-gray-900
+                                        dark:text-white/90 dark:focus:border-brand-800">
                                             <li>
                                                 <button onClick={() => {
                                                     const modal = document.getElementById('my_modal_2') as HTMLDialogElement | null;
                                                     if (modal) modal.showModal();
-                                                    // setTitleFeature(subscription.name)
-                                                    // setFeaturePrice(subscription.price)
-                                                    // setSubscriptionId(subscription.id)
+                                                    setTitleService(service.title)
+                                                    setPriceService(service.price)
+                                                    setDescriptionService(service.description)
+                                                    setServiceId(service.id)
+                                                    setTypeService(service.type)
                                                 }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg btn-ghost px-4
                                                 py-2.5 text-sm font-medium hover:bg-transparent dark:text-white text-black sm:w-auto shadow-none">تعديل</button>
                                             </li>
-                                            {/* <li>
-                                                <button onClick={() => handleRemoveSubscription(subscription.id)} type="button" className="btn btn-update-event flex w-full
+                                            <li>
+                                                <button onClick={() => handleRemoveService(service.id)} type="button" className="btn btn-update-event flex w-full
                                                 justify-center rounded-lg btn-ghost px-4 py-2.5 text-sm font-medium hover:bg-transparent text-error shadow-none
                                                 sm:w-auto">حذف</button>
-                                            </li> */}
+                                            </li>
                                         </ul>
                                     </details>
                                 </TableCell>
                             </TableRow>
-                        {/* ))} */}
+                        ))}
                     </TableBody>
                 </Table>
-                {/* <Pagination currentPage={pages.current_page} totalPages={pages.last_page} onPageChange={function (page: number): void {
-                    getSubscriptions(page)
-                } } /> */}
+                <Pagination currentPage={pages.current_page} totalPages={pages.last_page} onPageChange={function (page: number): void {getServices(page)}} />
             </div>
         </>
     )
