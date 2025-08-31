@@ -20,6 +20,7 @@ interface Lawyer {
     name: string;
     email: string;
 }
+
 type Meta = {
   current_page?: number;
   last_page?: number;
@@ -40,30 +41,25 @@ export default function Lawyers() {
         setLawyerEmail("");
         setLawyerPassword("");
     }
-
     async function getLawyers(search?: string, page: number = 1) {
         setIsLoading(true);
         try {
             const response = await readLawyers(search, page);
             setLawyers(response.data.data);
-            setPagination(response.data.meta)            
-            
+            setPagination(response.data.meta)
         } catch (error) {
             console.error("Failed to fetch lawyers:", error);
         } finally {
             setIsLoading(false);
         }
     }
-
     async function handleAddLawyer() {
         const formData = new FormData();
         formData.append('email', lawyerEmail);
         formData.append('name', lawyerName);
         formData.append('password', lawyerPassword);
-        
         try {
             const response = await createLawyer(formData);
-            
             setIsError(false)
             setErrorMsg(response.message)
             resetModalField();
@@ -77,13 +73,11 @@ export default function Lawyers() {
     async function handleCheckCases(event: ChangeEvent<HTMLInputElement>, lawyerId: number) {
         const caseId = Number(event.target.value);
         const isChecked = event.target.checked;
-
         try {
             await assignCases(lawyerId, { 
                 cases: [caseId], 
                 is_checked: isChecked 
             });
-
             setLawyers(prev => prev.map(lawyer => {
                 if (lawyer.id !== lawyerId) return lawyer;
 
@@ -166,7 +160,8 @@ export default function Lawyers() {
                                 <button onClick={handleAddLawyer} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                                 py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto shadow-none border-none">إضافة محامي</button>
                                 <form method="dialog">
-                                    <button className="btn border-black bg-transparent text-black dark:text-white dark:border-white" onClick={() => setErrorMsg('')}>إلغاء</button>
+                                    <button className="btn border-black bg-transparent text-black dark:text-white dark:border-white"
+                                    onClick={() => setErrorMsg('')}>إلغاء</button>
                                 </form>
                             </div>
                         </div>
@@ -174,7 +169,8 @@ export default function Lawyers() {
                 </dialog>
 
             <div className="flex items-center justify-between max-sm:grid max-sm:gap-y-4">
-                <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="input w-1/2 max-sm:w-full dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800" placeholder="ابحث بإسم المحامي" />
+                <input name="search" onChange={(e) => getLawyers(e.target.value)} type="search" className="input w-1/2 max-sm:w-full dark:border-gray-700 dark:bg-gray-900
+                dark:text-white/90 dark:focus:border-brand-800" placeholder="ابحث بإسم المحامي" />
                 <button onClick={() => {const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                     if (modal) modal.showModal();}} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
                     py-2.5 text-sm font-medium text-white hover:bg-brand-500 sm:w-auto shadow-none border-none">إضافة محامي</button>
@@ -189,8 +185,27 @@ export default function Lawyers() {
                                     <div className="grid grid-cols-1 gap-2">
                                         <details className="dropdown">
                                             <summary className="btn m-1 text-base font-normal bg-blue-300 border-none
-                                            text-white rounded-lg shadow-none">إسناد قضايا</summary>
-                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
+                                            text-white rounded-lg shadow-none">إسناد دعوى</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900
+                                            dark:text-white/90 dark:focus:border-brand-800">
+                                                {lawyer.unassigned_cases.map((caseItem) => (
+                                                    <i key={caseItem.id} className="my-2">
+                                                        <label className="flex items-center gap-2">
+                                                            <input type="checkbox" value={caseItem.id} checked={false} onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            className="checkbox dark:border-white" />
+                                                            <span>{caseItem.title}</span>
+                                                        </label>
+                                                    </i>
+                                                ))}
+                                            </ul>
+                                        </details>
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        <details className="dropdown">
+                                            <summary className="btn m-1 text-base font-normal bg-brand-500 border-none
+                                            text-white rounded-lg shadow-none">إسناد استشارة</summary>
+                                            <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900
+                                            dark:text-white/90 dark:focus:border-brand-800">
                                                 {lawyer.unassigned_cases.map((caseItem) => (
                                                     <i key={caseItem.id} className="my-2">
                                                         <label className="flex items-center gap-2">
@@ -208,6 +223,26 @@ export default function Lawyers() {
                                     <input type="checkbox" className="peer" />
                                     <div className="collapse-title flex items-center justify-between">
                                         <p>الدعاوى المسندة</p>
+                                        <ChevronDown />
+                                    </div>
+                                    <div className="collapse-content">
+                                        <ul className="menu dropdown-content grid grid-cols-6 gap-x-16 rounded-box z-1 p-2">
+                                            {lawyer.assigned_cases.map((caseItem) => (
+                                                <i key={caseItem.id} className="my-2">
+                                                    <label className="flex items-center gap-2">
+                                                        <input type="checkbox" value={caseItem.id} checked={true} onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                        className="checkbox dark:text-white" />
+                                                        <span>{caseItem.title}</span>
+                                                    </label>
+                                                </i>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="collapse border">
+                                    <input type="checkbox" className="peer" />
+                                    <div className="collapse-title flex items-center justify-between">
+                                        <p>الاستشارات المسندة</p>
                                         <ChevronDown />
                                     </div>
                                     <div className="collapse-content">

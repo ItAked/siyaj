@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import { logout } from "../../services/auth";
-import { Calendar, ChevronDown, LayoutGrid, Table, User } from 'lucide-react'
+import { ChevronDown, Folders, Gavel, LayoutGrid, Table, User } from 'lucide-react'
 
 type NavItem = {
   name: string;
@@ -22,24 +22,19 @@ const navItems: NavItem[] = [
     path: "/admin"
   },
   {
-    icon: <Calendar />,
-    name: "جدولة الدعاوى",
-    path: "/admin/calendar",
+    icon: <Folders />,
+    name: "الخدمات",
+    path: "/admin/services"
   },
   {
     name: "المحامين",
-    icon: <Table />,
+    icon: <Gavel />,
     path: "/admin/lawyers"
   },
   {
     name: "الممارسين الصحيين",
     icon: <Table />,
     path: "/admin/practitioners"
-  },
-  {
-    name: "الإشتراكات",
-    icon: <Table />,
-    path: "/admin/subscriptions"
   },
   {
     icon: <User />,

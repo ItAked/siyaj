@@ -84,7 +84,7 @@ export default function UserInfoCard() {
         </div>
 
         {/* You can open the modal using document.getElementById('ID').showModal() method */}
-<dialog id="my_modal_3" className="modal">
+<dialog id="my_modal_4" className="modal">
   <div className="modal-box dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
     <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 lg:p-11 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800">
       {msg && (
@@ -121,7 +121,7 @@ export default function UserInfoCard() {
             <div className="flex items-center gap-3 mt-6 justify-start">
               <button type="submit" className="btn w-36 bg-black shadow-none border-none text-white dark:bg-gray-800">تعديل</button>
               <button className="btn w-36 bg-transparent border-black text-black dark:border-white dark:text-white shadow-none" onClick={() => {
-        const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+        const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
     if (dialog) dialog.close();
       }}>إلغاء</button>
             </div>
@@ -132,7 +132,7 @@ export default function UserInfoCard() {
 
         <button
           onClick={() => {
-    const dialog = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+    const dialog = document.getElementById('my_modal_4') as HTMLDialogElement | null;
     if (dialog) dialog.showModal();
   }}
           className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 lg:inline-flex lg:w-auto"

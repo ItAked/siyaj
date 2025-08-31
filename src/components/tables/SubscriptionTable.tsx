@@ -1,11 +1,11 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../../../../components/ui/table";
+import { Ellipsis } from "lucide-react";
+import Alert from "../ui/alert/Alert";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
+import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
-import Pagination from "../../../../../components/tables/Pagination";
-import Alert from "../../../../../components/ui/alert/Alert";
-import { createSubscriptions, deleteSubscriptions, readSubscriptions, updateSubscription } from "../../../../../../services/subscriptions";
-import { Ellipsis } from 'lucide-react';
+import { createSubscriptions, deleteSubscriptions, readSubscriptions, updateSubscription } from "../../../services/subscriptions";
 
 interface Subscription {
     id: number;
@@ -18,28 +18,15 @@ type Meta = {
   last_page?: number;
 }
 
-export default function Subscriptions() {
-    const [titleFeature, setTitleFeature] = useState("");
-    const [featurePrice, setFeaturePrice] = useState(0);
-    const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [subscreptionId, setSubscriptionId] = useState(0)
-    const [pages, setPages] = useState<Meta>({})
+const SubscriptionTable = () => {
     const [errorMsg, setErrorMsg] = useState('')
     const [isError, setIsError] = useState(false)
-
-    async function getSubscriptions(page = 1) {
-        setIsLoading(true);
-        try {
-            const response = await readSubscriptions(page);
-            setSubscriptions(response.data);
-            setPages(response.meta)
-        } catch (error) {
-            console.error("Failed to fetch lawyers:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
+    const [titleFeature, setTitleFeature] = useState("");
+    const [featurePrice, setFeaturePrice] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+    const [pages, setPages] = useState<Meta>({})
+    const [subscreptionId, setSubscriptionId] = useState(0)
 
     async function handleAddSubscription() {
         try {
@@ -52,11 +39,9 @@ export default function Subscriptions() {
             setErrorMsg(error.response.data.message)
         }
     }
-
     async function handleUpdateSubscription (id: number) {
         try {
             const response = await updateSubscription(id, {name: titleFeature, price: featurePrice})
-    
             setIsError(false)
             setErrorMsg(response.message)
             getSubscriptions();
@@ -67,7 +52,18 @@ export default function Subscriptions() {
             setErrorMsg(error.response.data.message)
         }
     }
-
+    async function getSubscriptions(page = 1) {
+        setIsLoading(true);
+        try {
+            const response = await readSubscriptions(page);
+            setSubscriptions(response.data);
+            setPages(response.meta)
+        } catch (error) {
+            console.error("Failed to fetch lawyers:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     async function handleRemoveSubscription(id: number) {
         await deleteSubscriptions(id)
         getSubscriptions();
@@ -76,22 +72,20 @@ export default function Subscriptions() {
     useEffect(() => {
         getSubscriptions();
     }, []);
-
-    return (
-        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
-            <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="grid gap-y-4">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">الإشتراكات</h3>
-                    <div className="flex items-center gap-x-4">
-                        <button onClick={() => {
-                                const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
-                                if (modal) modal.showModal();
-                            }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
-                                        py-2.5 text-base font-medium text-white sm:w-auto shadow-none border-none">+ إضافة تصنيف جديد</button>
-                    </div>
+    
+    return(
+        <>
+            <div className="flex flex-col gap-2 mb-4">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-2xl font-medium text-gray-800 dark:text-white/90">الإشتراكات</h3>
+                    <button onClick={() => {
+                            const modal = document.getElementById('my_modal_6') as HTMLDialogElement | null;
+                            if (modal) modal.showModal();
+                        }} type="button" className="btn btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4
+                                    py-2.5 text-base font-medium text-white sm:w-auto shadow-none border-none">+ إضافة</button>
                 </div>
 
-                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box dark:bg-gray-900">
                         <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
                             <div>
@@ -239,6 +233,7 @@ export default function Subscriptions() {
                     getSubscriptions(page)
                 } } />
             </div>
-        </div>
-    );
+        </>
+    )
 }
+export default SubscriptionTable
