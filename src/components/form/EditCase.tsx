@@ -209,12 +209,7 @@ export default function EditCase(props: {id: number;}) {
                     {/* New Attachments */}
                     <div className="col-span-2">
                         <Label>إضافة ملفات جديدة</Label>
-                        <Input 
-                            type="file" 
-                            name="attachments" 
-                            onChange={handleInputChange}
-                            multiple
-                        />
+                        <Input type="file" name="attachments" onChange={handleInputChange} multiple />
                         
                         {newAttachments.length > 0 && (
                             <div className="mt-3 space-y-2">
