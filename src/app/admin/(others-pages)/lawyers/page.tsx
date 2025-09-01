@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Pagination from "../../../../components/tables/Pagination";
 import Alert from "../../../../components/ui/alert/Alert";
-import { assignCases } from "../../../../../services/cases";
+import { assignCases, assignServices } from "../../../../../services/cases";
 import { createLawyer, readLawyers } from "../../../../../services/lawyers";
 import { ChevronDown } from 'lucide-react'
 
@@ -12,10 +12,17 @@ interface CaseItem {
     title: string;
     is_checked?: boolean;
 }
+interface ServiceItem {
+    id: number;
+    title: string;
+    is_checked?: boolean;
+}
 interface Lawyer {
     id: number;
     assigned_cases: CaseItem[];
     unassigned_cases: CaseItem[];
+    assigned_services: ServiceItem[];
+    unassigned_services: ServiceItem[];
     phone: string;
     name: string;
     email: string;
@@ -97,6 +104,44 @@ export default function Lawyers() {
                             ...lawyer,
                             assigned_cases: lawyer.assigned_cases.filter(c => c.id !== caseId),
                             unassigned_cases: [...lawyer.unassigned_cases, { ...caseItem, is_checked: false }]
+                        };
+                    }
+                }
+                return lawyer;
+            }));
+        } catch (error) {
+            console.error('Failed to update case status:', error);
+            getLawyers("", 1);
+        }
+    }
+
+    async function handleCheckServices(event: ChangeEvent<HTMLInputElement>, lawyerId: number) {
+        const serviceId = Number(event.target.value);
+        const isChecked = event.target.checked;
+        try {
+            await assignServices(lawyerId, { 
+                services: [serviceId], 
+                is_checked: isChecked 
+            });
+            setLawyers(prev => prev.map(lawyer => {
+                if (lawyer.id !== lawyerId) return lawyer;
+
+                if (isChecked) {
+                    const serviceItem = lawyer.unassigned_services.find(c => c.id === serviceId);
+                    if (serviceItem) {
+                        return {
+                            ...lawyer,
+                            unassigned_services: lawyer.unassigned_services.filter(c => c.id !== serviceId),
+                            assigned_services: [...lawyer.assigned_services, { ...serviceItem, is_checked: true }]
+                        };
+                    }
+                } else {
+                    const serviceItem = lawyer.assigned_services.find(c => c.id === serviceId);
+                    if (serviceItem) {
+                        return {
+                            ...lawyer,
+                            assigned_services: lawyer.assigned_services.filter(c => c.id !== serviceId),
+                            unassigned_services: [...lawyer.unassigned_services, { ...serviceItem, is_checked: false }]
                         };
                     }
                 }
@@ -206,12 +251,12 @@ export default function Lawyers() {
                                             text-white rounded-lg shadow-none">إسناد استشارة</summary>
                                             <ul className="menu dropdown-content bg-base-100 rounded-box z-1 p-2 shadow-sm dark:border-gray-700 dark:bg-gray-900
                                             dark:text-white/90 dark:focus:border-brand-800">
-                                                {lawyer.unassigned_cases.map((caseItem) => (
-                                                    <i key={caseItem.id} className="my-2">
+                                                {lawyer.unassigned_services.map((serviceItem) => (
+                                                    <i key={serviceItem.id} className="my-2">
                                                         <label className="flex items-center gap-2">
-                                                            <input type="checkbox" value={caseItem.id} checked={false} onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                            <input type="checkbox" value={serviceItem.id} checked={false} onChange={(e) => handleCheckServices(e, lawyer.id)}
                                                             className="checkbox dark:border-white" />
-                                                            <span>{caseItem.title}</span>
+                                                            <span>{serviceItem.title}</span>
                                                         </label>
                                                     </i>
                                                 ))}
@@ -247,12 +292,12 @@ export default function Lawyers() {
                                     </div>
                                     <div className="collapse-content">
                                         <ul className="menu dropdown-content grid grid-cols-6 gap-x-16 rounded-box z-1 p-2">
-                                            {lawyer.assigned_cases.map((caseItem) => (
-                                                <i key={caseItem.id} className="my-2">
+                                            {lawyer.assigned_services.map((serviceItem) => (
+                                                <i key={serviceItem.id} className="my-2">
                                                     <label className="flex items-center gap-2">
-                                                        <input type="checkbox" value={caseItem.id} checked={true} onChange={(e) => handleCheckCases(e, lawyer.id)}
+                                                        <input type="checkbox" value={serviceItem.id} checked={true} onChange={(e) => handleCheckServices(e, lawyer.id)}
                                                         className="checkbox dark:text-white" />
-                                                        <span>{caseItem.title}</span>
+                                                        <span>{serviceItem.title}</span>
                                                     </label>
                                                 </i>
                                             ))}

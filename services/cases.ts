@@ -33,6 +33,11 @@ export const assignCases = async (id: number, data: { cases: number[], is_checke
     }
 }
 
+export const assignServices = async (id: number, data: { services: number[], is_checked: boolean }) => {
+    const response = await api.post(`/assign-services/${id}`, data)
+    return response.data
+}
+
 export async function readCaseById(id: number) {    
     const response = await api.get(`/case/${id}`);
     return response.data
