@@ -5,7 +5,7 @@ export const setToken = (token: string, expiresIn: number = 24 * 60 * 60) => {
   Cookies.set('authToken', token, { 
     expires: expiresIn / 86400,
     secure: true,
-    sameSite: 'lax'
+    sameSite: 'none'
   });
 };
 
@@ -20,8 +20,10 @@ export const removeToken = () => {
   Cookies.remove('role')
 };
 
-export const setRole = (role: string) => {
-  Cookies.set('role', role)
+export const setRole = (role: string, expiresIn: number = 24 * 60 * 60) => {
+  Cookies.set('role', role, {
+    expires: expiresIn / 86400
+  })
 }
 
 export const getRole = (): string | undefined => {

@@ -30,6 +30,7 @@ const CaseById = ({ id }) => {
     const[caseData, setCaseData] = useState<Cases>({})
     const[caseAttachments, setCaseAttachments] = useState<Attachments[]>([])
     const [loading, setLoading] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
         async function getCaseData() {
@@ -39,8 +40,7 @@ const CaseById = ({ id }) => {
                 setCaseData(response.cases)
                 setCaseAttachments(response.attachments)
             } catch (error) {
-                console.log(error?.response?.data?.message);
-                
+                setErrorMsg(error?.response?.data?.message);
             } finally {
                 setLoading(false)
             }  
@@ -50,6 +50,10 @@ const CaseById = ({ id }) => {
 
     if (loading) {
         return <div>Loading...</div>;
+    }
+
+    if (errorMsg !== '') {
+        return <div className="text-error text-center my-auto">هذه القضية غير مسندة لك</div>;
     }
 
     return (
