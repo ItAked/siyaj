@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    const response = NextResponse.next()
     
     const token = request.cookies.get('authToken');
     const role = request.cookies.get('role');
+
+    response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+    response.headers.set('Content-Security-Policy', "frame-ancestors 'self'");
     
     // If accessing lawyer routes
     if (pathname.startsWith('/lawyer')) {
