@@ -34,7 +34,7 @@ export default function Home() {
             <Vision />
             <OurGoals />
             <OurServices />
-            <OurLawyers />
+            {/* <OurLawyers /> */}
             <Subscriptions />
             <ContactUs />
             <Footer />
