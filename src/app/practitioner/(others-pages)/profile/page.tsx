@@ -5,7 +5,7 @@ import UserInfoCard from "../../../../components/user-profile/UserInfoCard";
 import React from "react";
 import UserHealthCard from "../../../../components/user-profile/UserHealthCard";
 import PageBreadcrumb from "../../../../components/common/PageBreadCrumb";
-import CategoryCard from "../../../../components/cards/CategoryCard";
+// import CategoryCard from "../../../../components/cards/CategoryCard";
 import { deleteAccount } from "../../../../../services/setting";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default function Profile() {
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         <PageBreadcrumb pageTitle={"الإعدادات"} />
         <div className="space-y-6">
-          <CategoryCard />
+          {/* <CategoryCard /> */}
           <UserMetaCard />
           <UserInfoCard />
           <UserHealthCard />
