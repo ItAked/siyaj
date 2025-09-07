@@ -53,7 +53,7 @@ export default function SignUp() {
       await loginGoogleAuth();
       setErrorMsg('');
     } catch (error) {
-      setErrorMsg(error instanceof Error ? error.message : String(error));
+      setErrorMsg(error.response.data.message)
     }
   }
 
@@ -76,7 +76,7 @@ export default function SignUp() {
       setErrorMsg('');
       router.push('/practitioner');
     } catch (error) {
-      setErrorMsg(error instanceof Error ? error.message : String(error));
+      setErrorMsg(error.response.data.message)
     }
   }
 
