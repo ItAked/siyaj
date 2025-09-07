@@ -18,6 +18,8 @@ const CategoryCard = () => {
     
     async function showLastCategory() {
         const response = await readLastSubscribe()
+        console.log(response.data);
+        
         setLastCategoy(response.data)   
     }
     async function handleSubmitPayment(event: FormEvent) {
@@ -60,7 +62,7 @@ const CategoryCard = () => {
             {lastCategory ? (
                 <div className="card-body dark:text-white">
                     <h2 className="card-title text-2xl font-medium">التصنيف الحالي</h2>
-                    <p className="text-2xl font-base">{lastCategory.name}</p>
+                    <p className="text-2xl font-base">{lastCategory.name ?? ''}</p>
                     <p className="text-gray-500">{lastCategory.expire_at !== null ? `تاريخ بداية الإشتراك: ${lastCategory.expire_at}` : ''}</p>
                     <p className="text-error">ملاحظة: ينتهي الإشتراك بعد سنة من تاريخ بداية الإشتراك</p>
                     { lastCategory.expire_at === null && (

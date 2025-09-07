@@ -1,9 +1,9 @@
 'use client'
 
-// import UserMetaCard from "../../../../components/user-profile/UserMetaCard";
-// import UserInfoCard from "../../../../components/user-profile/UserInfoCard";
+import UserMetaCard from "../../../../components/user-profile/UserMetaCard";
+import UserInfoCard from "../../../../components/user-profile/UserInfoCard";
 import React from "react";
-// import UserHealthCard from "../../../../components/user-profile/UserHealthCard";
+import UserHealthCard from "../../../../components/user-profile/UserHealthCard";
 import PageBreadcrumb from "../../../../components/common/PageBreadCrumb";
 import CategoryCard from "../../../../components/cards/CategoryCard";
 import { deleteAccount } from "../../../../../services/setting";
@@ -18,9 +18,9 @@ export default function Profile() {
         <PageBreadcrumb pageTitle={"الإعدادات"} />
         <div className="space-y-6">
           <CategoryCard />
-          {/* <UserMetaCard />
+          <UserMetaCard />
           <UserInfoCard />
-          <UserHealthCard /> */}
+          <UserHealthCard />
         </div>
         <button className="btn text-error bg-transparent border-none text-center mt-32 mr-96 shadow-none max-sm:mr-40 font-normal"
         onClick={() => {const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
