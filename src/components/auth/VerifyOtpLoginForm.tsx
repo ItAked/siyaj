@@ -30,6 +30,8 @@ const VerifyOtpLoginForm = () => {
     formData.append('otp', user.otp)
     try {
       const response = await verifyOtpLogin(formData)
+      console.log(response);
+      
       setIsError(false)
       setRole(response.role)
       if(response.role === 'lawyer') {
@@ -54,7 +56,7 @@ const VerifyOtpLoginForm = () => {
           <div>
             <div className="mb-5 sm:mb-8">
               { msg != '' && (<Alert variant={isError ? "error" : "success"} title={isError ? "حدث خطأ !" : ""} message={msg} /> )}
-              <h1 className="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md ">أدخل رمز التحقق</h1>
+              <h1 className="font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md mt-8">أدخل رمز التحقق</h1>
               <p className="font-normal text-sm text-gray-500 mt-6">يرجى إدخال رمز التحقق المكون من ٦ أرقام المرسل إلى بريدك الإلكتروني</p>
             </div>
             <form onSubmit={handleOnSubmit} className="max-sm:w-full max-sm:mt-4">
