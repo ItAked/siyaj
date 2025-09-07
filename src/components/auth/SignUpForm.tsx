@@ -134,7 +134,7 @@ export default function SignUp() {
                   </div>
                   <div>
                     <Label>رقم الجوال <span className="text-error-500">*</span></Label>
-                    <Input placeholder="555527557" name="phone" defaultValue={step1Data.phone} type="tel" onChange={handleStep1Change} />
+                    <Input placeholder="53**********" name="phone" defaultValue={step1Data.phone} type="tel" onChange={handleStep1Change} />
                   </div>
                   <div>
                     <Label>كلمة المرور <span className="text-error-500">*</span></Label>

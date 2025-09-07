@@ -52,7 +52,7 @@ export default function ContactUs(){
                         <div>
                             <label className="mb-1 block text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800" htmlFor="email">البريد الإلكتروني</label>
                             <input id="email" name="email" value={contactData.email} onChange={handleContactChange} className="input form-input w-full py-2 dark:bg-gray-800 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" type="email"
-                            placeholder="lujain@akedco.com" required />
+                            placeholder="email@example.com" required />
                         </div>
                         <div>
                             <label className="mb-1 block text-sm font-medium text-gray-700 dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800" htmlFor="message">الرسالة</label>
@@ -83,7 +83,7 @@ export default function ContactUs(){
                         </div>
                         <div className="flex items-center gap-x-2">
                             <Mail className="text-white p-1 mb-1 rounded-full bg-sky-950" />
-                            <span>lujain@akedco.com</span>
+                            <span>email@example.com</span>
                         </div>
                     </div>
                     <Map />
