@@ -9,7 +9,6 @@ import OurServices from "../components/home/our-services";
 import Subscriptions from "../components/home/Categories";
 import ContactUs from "../components/home/ContactUs";
 import Footer from "../components/home/footer";
-// import OurLawyers from "../components/home/OurLawyers";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { getRole, getToken } from "../utils/auth";
@@ -34,7 +33,6 @@ export default function Home() {
             <Vision />
             <OurGoals />
             <OurServices />
-            {/* <OurLawyers /> */}
             <Subscriptions />
             <ContactUs />
             <Footer />
